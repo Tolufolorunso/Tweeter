@@ -1,0 +1,11 @@
+{
+  "name": "tweeter",
+  "version": "1.0.0",
+  "description": "tweeter is a twitter clone",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tolulope folorunso",
+  "license": "ISC"
+}
