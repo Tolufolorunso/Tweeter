@@ -16,8 +16,6 @@ const RegisterModal = ({ closeModal }) => {
   const [stepName, setStepName] = useState('stepOne');
 
   const nextSlide = (stepNumber) => {
-    console.log(stepNumber);
-
     if (stepNumber === 'step-1') {
       setPreStepOne(true);
       setStepOne(false);
@@ -39,7 +37,6 @@ const RegisterModal = ({ closeModal }) => {
 
   const goBack = () => {
     if (stepNum <= 1) return;
-    console.log(stepName);
 
     if (stepName === 'stepTwo') {
       setStepOne(true);
