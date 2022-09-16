@@ -1,7 +1,7 @@
 import { Heading } from '../../components';
 import Logo from '../../assets/images/tweeter-small.svg';
 
-const Main = () => {
+const Main = ({ openModal, registerModal }) => {
   return (
     <>
       <img src={Logo} alt="tweeter logo" className="content-logo" />
@@ -26,7 +26,7 @@ const Main = () => {
             <p>or</p>
             <div></div>
           </div>
-          <div className="email-btn btn">
+          <div className="email-btn btn" onClick={() => openModal('register')}>
             <span>Sign up with phone or email</span>
           </div>
           <div className="term">
@@ -45,7 +45,7 @@ const Main = () => {
           </div>
         </div>
         <p className="have-account">Already have an account?</p>
-        <div className="email-btn btn">
+        <div className="login-btn btn" onClick={() => openModal('login')}>
           <span>Login</span>
         </div>
       </div>

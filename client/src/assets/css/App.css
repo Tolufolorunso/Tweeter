@@ -276,3 +276,17 @@ svg {
   margin-inline: auto;
   padding-inline: 1rem;
 } */
+
+.overlay {
+  z-index: 1;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.modal-open {
+  overflow: hidden;
+}

@@ -75,13 +75,21 @@ const Wrapper = styled.main`
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
-  .apple-btn:hover {
+  .apple-btn:hover,
+  .google-btn:hover {
     background-color: var(--clr-neutral-800);
   }
 
-  .email-btn {
+  .email-btn,
+  .login-btn {
     background-color: #2f80ed;
   }
+
+  .email-btn:hover,
+  .login-btn:hover {
+    opacity: 0.8;
+  }
+
   .or {
     width: 100%;
     display: flex;
