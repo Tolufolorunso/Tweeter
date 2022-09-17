@@ -95,7 +95,8 @@ const RegisterModal = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    // alert('saved');
+    // console.log(values);
   };
 
   return (
