@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { ImEyeBlocked, ImEye } from 'react-icons/im';
+
 import { Heading } from '../../../components';
 
 const initialState = {
@@ -15,6 +17,7 @@ const RegisterStepOne = ({ nextSlide }) => {
   const [activeInput, setActiveInput] = useState('');
 
   const [emailOrPhone, setEmailOrPhone] = useState('email');
+  const [isVisible, setIsVisible] = useState(true);
 
   const focusHandler = (e) => {
     setActiveInput(e.target.name);
@@ -30,6 +33,10 @@ const RegisterStepOne = ({ nextSlide }) => {
     } else {
       setEmailOrPhone('email');
     }
+  };
+
+  const passwordVisibleHandler = () => {
+    setIsVisible(!isVisible);
   };
 
   const handleChange = (e) => {
@@ -93,7 +100,7 @@ const RegisterStepOne = ({ nextSlide }) => {
           Use phone instead
         </button>
         <div
-          className={`formGroup ${
+          className={`passwordInput formGroup ${
             activeInput === 'password' ? 'activeInput' : ''
           }`}
         >
@@ -101,7 +108,7 @@ const RegisterStepOne = ({ nextSlide }) => {
             <label htmlFor="email">password</label>
           </div>
           <input
-            type="text"
+            type={isVisible ? 'password' : 'text'}
             name="password"
             className="input passwordName"
             maxLength="50"
@@ -111,9 +118,22 @@ const RegisterStepOne = ({ nextSlide }) => {
             value={values.password}
             id="password"
           />
+          <span className="visiblePassword" onClick={passwordVisibleHandler}>
+            {isVisible ? <ImEyeBlocked /> : <ImEye />}
+          </span>
+        </div>
+        <div className="birthYear">
+          <p>Date of birth</p>
+          <div className="birthYear__inputs">
+            <div className="formGroup">hello</div>
+            <div className="formGroup">hello</div>
+            <div className="formGroup">hello</div>
+          </div>
         </div>
       </form>
-      <button onClick={() => nextSlide('step-1')}>Next</button>
+      <button onClick={() => nextSlide('step-1')} className="btn">
+        Next
+      </button>
     </>
   );
 };
