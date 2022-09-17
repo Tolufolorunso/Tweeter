@@ -9,7 +9,7 @@ const AuthWrapper = styled.div`
   transform: translate(-50%, -50%);
   z-index: 2;
   border-radius: 20px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
   overflow: hidden;
   .nav {
     display: flex;
@@ -35,22 +35,49 @@ const AuthWrapper = styled.div`
   /* register style */
   .steps {
     width: 100%;
+    /* height: auto; */
     overflow: hidden;
+    /* min-height: 500px; */
   }
 
   .step {
     padding-inline: 1.8rem;
-    position: absolute;
     min-width: 100%;
-    transform: translateX(200%);
+    /* position: absolute; */
+    /* min-height: 500px; */
+    /* transform: translateX(200%); */
+    display: none;
     transition: all 0.3s ease-in;
   }
 
   .pre {
-    transform: translateX(-200%);
+    /* transform: translateX(-200%); */
   }
   .active {
-    transform: translateX(0);
+    /* transform: translateX(0); */
+    display: block;
+  }
+
+  .formGroup {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    line-height: 1;
+    font-size: var(--size-300);
+    padding: 2px 5px;
+  }
+
+  .label-counter-box {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .input {
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+
+  .formGroup.activeInput {
+    border: 1px solid green;
   }
 `;
 

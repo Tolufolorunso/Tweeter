@@ -32,9 +32,7 @@ const Landing = () => {
 
   return (
     <Wrapper>
-      {isOverLayOPen ? (
-        <div className="overlay" onClick={closeModal}></div>
-      ) : null}
+      {isOverLayOPen ? <div className="overlay"></div> : null}
       {registerModal ? <RegisterModal closeModal={closeModal} /> : null}
       {loginModal ? <LoginModal closeModal={closeModal} /> : null}
 
