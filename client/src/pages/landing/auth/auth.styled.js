@@ -65,6 +65,10 @@ const AuthWrapper = styled.div`
     padding: 2px 5px;
     margin-top: 20px;
     border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+  .formGroup label {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .label-counter-box {
@@ -76,6 +80,8 @@ const AuthWrapper = styled.div`
     border: none;
     outline: none;
     width: 100%;
+    padding-block: 5px;
+    background-color: transparent;
   }
 
   .formGroup.activeInput {
@@ -89,6 +95,7 @@ const AuthWrapper = styled.div`
     right: 10px;
     top: 10px;
     font-size: 1.2rem;
+    cursor: pointer;
   }
 
   .birthYear__inputs {
@@ -101,6 +108,11 @@ const AuthWrapper = styled.div`
     width: 100%;
     background-color: rgb(15, 20, 25);
     opacity: 0.8;
+  }
+
+  .submit-btn,
+  .next-btn {
+    margin-top: 40px;
   }
   .terms {
     font-weight: 300;
@@ -115,6 +127,20 @@ const AuthWrapper = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 2px;
+  }
+
+  /* utilities */
+  .instead {
+    border: none;
+    outline: none;
+    color: var(--clr-primary-400);
+    transition: text-decoration 0.3s ease;
+    background-color: transparent;
+    font-size: 1rem;
+    align-self: flex-end;
+  }
+  .instead:hover {
+    text-decoration: underline;
   }
 `;
 

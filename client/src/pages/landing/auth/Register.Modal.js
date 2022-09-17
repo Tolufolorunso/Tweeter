@@ -5,7 +5,18 @@ import RegisterStepOne from './Register.stepOne';
 import RegisterSteptwo from './Register.stepTwo';
 import RegisterStepThree from './Register.stepThree';
 
+const initialState = {
+  name: '',
+  email: '',
+  phone: '',
+  password: '',
+  birthYear: '',
+};
+
 const RegisterModal = ({ closeModal }) => {
+  const [values, setValues] = useState(initialState);
+  const [nameLength, setNameLength] = useState(0);
+
   const [stepOne, setStepOne] = useState(true);
   const [stepTwo, setStepTWo] = useState(false);
   const [stepThree, setStepThree] = useState(false);
@@ -14,6 +25,34 @@ const RegisterModal = ({ closeModal }) => {
   const [preArrow, setPreArrow] = useState(false);
   const [stepNum, setStepNum] = useState(1);
   const [stepName, setStepName] = useState('stepOne');
+
+  const [emailOrPhone, setEmailOrPhone] = useState('email');
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    if (e.target.name === 'name') {
+      setNameLength(e.target.value.length);
+    }
+  };
+
+  const handleEmailPhone = () => {
+    if (emailOrPhone === 'email') {
+      setEmailOrPhone('phone');
+      setValues({ ...values, email: '' });
+    } else {
+      setEmailOrPhone('email');
+      setValues({ ...values, phone: '' });
+    }
+  };
+
+  const editFormAgain = () => {
+    setStepOne(true);
+    setStepTWo(false);
+    setStepThree(false);
+    setStepNum(1);
+    setStepName('stepOne');
+    setPreArrow(false);
+  };
 
   const nextSlide = (stepNumber) => {
     if (stepNumber === 'step-1') {
@@ -54,6 +93,11 @@ const RegisterModal = ({ closeModal }) => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
+
   return (
     <AuthWrapper>
       <div className="nav">
@@ -76,7 +120,14 @@ const RegisterModal = ({ closeModal }) => {
             preStepOne ? 'pre' : ''
           }`}
         >
-          <RegisterStepOne nextSlide={nextSlide} />
+          <RegisterStepOne
+            nextSlide={nextSlide}
+            nameLength={nameLength}
+            values={values}
+            handleChange={handleChange}
+            handleEmailPhone={handleEmailPhone}
+            emailOrPhone={emailOrPhone}
+          />
         </div>
         <div
           className={`step step-2 ${stepTwo ? 'active' : ''}  ${
@@ -86,7 +137,13 @@ const RegisterModal = ({ closeModal }) => {
           <RegisterSteptwo nextSlide={nextSlide} />
         </div>
         <div className={`step step-3 ${stepThree ? 'active' : ''} `}>
-          <RegisterStepThree />
+          <RegisterStepThree
+            goBack={goBack}
+            setStepName={setStepName}
+            editFormAgain={editFormAgain}
+            values={values}
+            handleSubmit={handleSubmit}
+          />
         </div>
       </div>
     </AuthWrapper>
