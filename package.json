@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/Tolufolorunso/Tweeter/issues"
   },
-  "homepage": "https://github.com/Tolufolorunso/Tweeter#readme"
+  "homepage": "https://github.com/Tolufolorunso/Tweeter#readme",
+  "engines": {
+    "node": "16.x"
+  }
 }
