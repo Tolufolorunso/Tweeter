@@ -33,7 +33,7 @@ const RegisterModal = ({ closeModal }) => {
   const [stepName, setStepName] = useState('stepOne');
   const [emailOrPhone, setEmailOrPhone] = useState('email');
 
-  const { register } = useAppContext();
+  const { isLoading, register } = useAppContext();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -154,6 +154,7 @@ const RegisterModal = ({ closeModal }) => {
               values={values}
               handleSubmit={handleSubmit}
               handleChange={handleChange}
+              isLoading={isLoading}
             />
           </div>
         </div>

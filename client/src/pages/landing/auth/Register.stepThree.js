@@ -7,10 +7,13 @@ const RegisterStepThree = ({
   values,
   handleSubmit,
   handleChange,
+  isLoading,
 }) => {
   const focusHandler = () => {
     editFormAgain();
   };
+
+  console.log(isLoading);
 
   return (
     <>
@@ -75,7 +78,9 @@ const RegisterStepThree = ({
             id="birth-date"
           />
         </div>
-        <button className="btn submit-btn">Submit</button>
+        <button className="btn submit-btn">
+          {isLoading ? 'Submiting...' : 'Submit'}
+        </button>
       </form>
     </>
   );

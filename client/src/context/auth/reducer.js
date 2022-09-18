@@ -6,11 +6,11 @@ const reducer = (state, action) => {
   }
 
   if (REGISTER_SUCCESS === action.type) {
-    return { ...state, isLoading: true };
+    return { ...state, isLoading: false };
   }
 
   if (REGISTER_ERROR === action.type) {
-    return { ...state, isLoading: true };
+    return { ...state, isLoading: false };
   }
 
   throw new Error(`No such acyion :${action.type}`);

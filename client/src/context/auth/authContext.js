@@ -2,7 +2,7 @@ import React, { useReducer, useContext } from 'react';
 
 import axios from 'axios';
 
-import { REGISTER_BEGIN } from './action';
+import { REGISTER_BEGIN, REGISTER_SUCCESS } from './action';
 import reducer from './reducer';
 
 const token = localStorage.getItem('token');
@@ -54,9 +54,13 @@ const AppProvider = ({ children }) => {
   const register = async (data) => {
     dispatch({ type: REGISTER_BEGIN });
     console.log(data);
-    // try {
-    //   const res = await authFetch.post('/users/register', data);
-    // } catch (error) {}
+    try {
+      const res = await authFetch.post('/users/register', data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch({ type: REGISTER_SUCCESS });
   };
 
   return (
