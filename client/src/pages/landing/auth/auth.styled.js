@@ -127,6 +127,9 @@ const AuthWrapper = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 2px;
+    .step {
+      padding-inline: 2rem;
+    }
   }
 
   /* utilities */

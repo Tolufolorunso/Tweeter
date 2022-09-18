@@ -4,6 +4,7 @@ import { useState } from 'react';
 import RegisterStepOne from './Register.stepOne';
 import RegisterSteptwo from './Register.stepTwo';
 import RegisterStepThree from './Register.stepThree';
+import { useAppContext } from '../../../context/auth/authContext';
 
 const initialState = {
   name: '',
@@ -25,9 +26,10 @@ const RegisterModal = ({ closeModal }) => {
   const [preArrow, setPreArrow] = useState(false);
   const [stepNum, setStepNum] = useState(1);
   const [stepName, setStepName] = useState('stepOne');
-
   const [emailOrPhone, setEmailOrPhone] = useState('email');
 
+  const { isLoading, register } = useAppContext();
+  console.log(isLoading);
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     if (e.target.name === 'name') {
@@ -95,6 +97,7 @@ const RegisterModal = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    register(values);
     // alert('saved');
     // console.log(values);
   };
