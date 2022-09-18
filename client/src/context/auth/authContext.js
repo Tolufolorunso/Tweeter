@@ -53,9 +53,10 @@ const AppProvider = ({ children }) => {
 
   const register = async (data) => {
     dispatch({ type: REGISTER_BEGIN });
-    try {
-      const res = await authFetch.post('/users/register', data);
-    } catch (error) {}
+    console.log(data);
+    // try {
+    //   const res = await authFetch.post('/users/register', data);
+    // } catch (error) {}
   };
 
   return (

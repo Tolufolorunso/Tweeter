@@ -11,7 +11,12 @@ const initialState = {
   email: '',
   phone: '',
   password: '',
-  birthYear: '',
+  month: '',
+  day: '',
+  year: '',
+  calcBirthYear() {
+    return `${this.day} ${this.month} ${this.year}`;
+  },
 };
 
 const RegisterModal = ({ closeModal }) => {
@@ -28,8 +33,8 @@ const RegisterModal = ({ closeModal }) => {
   const [stepName, setStepName] = useState('stepOne');
   const [emailOrPhone, setEmailOrPhone] = useState('email');
 
-  const { isLoading, register } = useAppContext();
-  console.log(isLoading);
+  const { register } = useAppContext();
+
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     if (e.target.name === 'name') {
@@ -97,57 +102,60 @@ const RegisterModal = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    values.birthYear = values.calcBirthYear();
     register(values);
-    // alert('saved');
     // console.log(values);
   };
 
   return (
     <AuthWrapper>
-      <div className="nav">
-        {preArrow ? (
-          <button className="close" onClick={goBack}>
-            <GrFormPreviousLink />
-          </button>
-        ) : (
-          <button className="close" onClick={closeModal}>
-            <GrClose />
-          </button>
-        )}
+      <div>
+        <div className="nav">
+          {preArrow ? (
+            <button className="close" onClick={goBack}>
+              <GrFormPreviousLink />
+            </button>
+          ) : (
+            <button className="close" onClick={closeModal}>
+              <GrClose />
+            </button>
+          )}
 
-        <span>{stepNum} of 3</span>
-      </div>
+          <span>{stepNum} of 3</span>
+        </div>
 
-      <div className="steps">
-        <div
-          className={`step step-1 ${stepOne ? 'active' : ''} ${
-            preStepOne ? 'pre' : ''
-          }`}
-        >
-          <RegisterStepOne
-            nextSlide={nextSlide}
-            nameLength={nameLength}
-            values={values}
-            handleChange={handleChange}
-            handleEmailPhone={handleEmailPhone}
-            emailOrPhone={emailOrPhone}
-          />
-        </div>
-        <div
-          className={`step step-2 ${stepTwo ? 'active' : ''}  ${
-            preStepTwo ? 'pre' : ''
-          }`}
-        >
-          <RegisterSteptwo nextSlide={nextSlide} />
-        </div>
-        <div className={`step step-3 ${stepThree ? 'active' : ''} `}>
-          <RegisterStepThree
-            goBack={goBack}
-            setStepName={setStepName}
-            editFormAgain={editFormAgain}
-            values={values}
-            handleSubmit={handleSubmit}
-          />
+        <div className="steps">
+          <div
+            className={`step step-1 ${stepOne ? 'active' : ''} ${
+              preStepOne ? 'pre' : ''
+            }`}
+          >
+            <RegisterStepOne
+              nextSlide={nextSlide}
+              nameLength={nameLength}
+              values={values}
+              handleChange={handleChange}
+              handleEmailPhone={handleEmailPhone}
+              emailOrPhone={emailOrPhone}
+            />
+          </div>
+          <div
+            className={`step step-2 ${stepTwo ? 'active' : ''}  ${
+              preStepTwo ? 'pre' : ''
+            }`}
+          >
+            <RegisterSteptwo nextSlide={nextSlide} />
+          </div>
+          <div className={`step step-3 ${stepThree ? 'active' : ''} `}>
+            <RegisterStepThree
+              goBack={goBack}
+              setStepName={setStepName}
+              editFormAgain={editFormAgain}
+              values={values}
+              handleSubmit={handleSubmit}
+              handleChange={handleChange}
+            />
+          </div>
         </div>
       </div>
     </AuthWrapper>

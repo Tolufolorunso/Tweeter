@@ -2,11 +2,16 @@ import React from 'react';
 
 import { Heading } from '../../../components';
 
-const RegisterStepThree = ({ editFormAgain, values, handleSubmit }) => {
-  console.log(values);
+const RegisterStepThree = ({
+  editFormAgain,
+  values,
+  handleSubmit,
+  handleChange,
+}) => {
   const focusHandler = () => {
     editFormAgain();
   };
+
   return (
     <>
       <Heading text="Ready to submit?" tag="h2" size={2} className="hi" />
@@ -20,6 +25,7 @@ const RegisterStepThree = ({ editFormAgain, values, handleSubmit }) => {
             name="name"
             className="input inputName"
             onFocus={focusHandler}
+            onChange={handleChange}
             value={values.name}
             id="name"
           />
@@ -37,6 +43,7 @@ const RegisterStepThree = ({ editFormAgain, values, handleSubmit }) => {
             value={values.email || values.phone}
             id={values.email ? 'email' : 'phone'}
             onFocus={focusHandler}
+            onChange={handleChange}
           />
         </div>
 
@@ -49,6 +56,7 @@ const RegisterStepThree = ({ editFormAgain, values, handleSubmit }) => {
             name="password"
             className="input passwordName"
             onFocus={focusHandler}
+            onChange={handleChange}
             value={values.password}
             id="password"
           />
@@ -62,7 +70,8 @@ const RegisterStepThree = ({ editFormAgain, values, handleSubmit }) => {
             name="date"
             className="input inputName"
             onFocus={focusHandler}
-            value={values.birthYear}
+            onChange={handleChange}
+            value={values.calcBirthYear()}
             id="birth-date"
           />
         </div>

@@ -31,7 +31,7 @@ const Landing = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper style={{ overFlow: 'auto' }}>
       {isOverLayOPen ? <div className="overlay"></div> : null}
       {registerModal ? <RegisterModal closeModal={closeModal} /> : null}
       {loginModal ? <LoginModal closeModal={closeModal} /> : null}

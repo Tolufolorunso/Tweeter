@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const AuthWrapper = styled.div`
   width: min(600px, 100% - 2rem);
   background-color: var(--clr-neutral-100);
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -69,13 +69,20 @@ const AuthWrapper = styled.div`
   }
   .formGroup label {
     color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    text-align: left;
   }
 
   .label-counter-box {
     display: flex;
     justify-content: space-between;
+    width: 100%;
   }
 
+  .char-number {
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.5);
+  }
   .input {
     border: none;
     outline: none;
@@ -93,7 +100,7 @@ const AuthWrapper = styled.div`
   .visiblePassword {
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 25px;
     font-size: 1.2rem;
     cursor: pointer;
   }
@@ -101,6 +108,10 @@ const AuthWrapper = styled.div`
   .birthYear__inputs {
     display: flex;
     width: 100%;
+  }
+
+  .birthYear__inputs option {
+    padding: 20px;
   }
 
   .btn {
@@ -144,6 +155,48 @@ const AuthWrapper = styled.div`
   }
   .instead:hover {
     text-decoration: underline;
+  }
+
+  .eye-color {
+    color: red;
+  }
+
+  /* Login style */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 35%;
+  }
+
+  .login-content {
+    width: 60%;
+    margin-inline: auto;
+    text-align: center;
+
+    .google-btn,
+    .apple-btn {
+      background-color: transparent;
+    }
+
+    .google-btn:hover,
+    .apple-btn:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .label-counter-box {
+      /* background-color: red; */
+      transform: translateY(23px);
+      pointer-events: none;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .label-up {
+      transform: translateY(0);
+    }
+
+    .submit-btn {
+      padding-block: 5px;
+    }
   }
 `;
 

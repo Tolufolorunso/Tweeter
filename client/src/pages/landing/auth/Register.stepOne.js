@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImEyeBlocked, ImEye } from 'react-icons/im';
+import { getDaysInMonth, months, years } from '../../../utils/date';
 
 import { Heading } from '../../../components';
 
@@ -13,6 +14,7 @@ const RegisterStepOne = ({
 }) => {
   const [activeInput, setActiveInput] = useState('');
   const [isVisible, setIsVisible] = useState(true);
+  const [daysInMonth, setDaysInMonth] = useState(31);
 
   const focusHandler = (e) => {
     setActiveInput(e.target.name);
@@ -25,6 +27,12 @@ const RegisterStepOne = ({
   const passwordVisibleHandler = () => {
     setIsVisible(!isVisible);
   };
+
+  useEffect(() => {
+    setDaysInMonth(
+      getDaysInMonth(months.indexOf(values.month) + 1, values.year)
+    );
+  }, [values.month, values.year]);
 
   return (
     <>
@@ -98,15 +106,71 @@ const RegisterStepOne = ({
             id="password"
           />
           <span className="visiblePassword" onClick={passwordVisibleHandler}>
-            {isVisible ? <ImEyeBlocked /> : <ImEye />}
+            {isVisible ? <ImEyeBlocked /> : <ImEye className="eye-color" />}
           </span>
         </div>
         <div className="birthYear">
           <p>Date of birth</p>
           <div className="birthYear__inputs">
-            <div className="formGroup">hello</div>
-            <div className="formGroup">hello</div>
-            <div className="formGroup">hello</div>
+            <div className="formGroup" style={{ flex: 3 }}>
+              <div className="label-counter-box">
+                <label htmlFor="month">Month</label>
+              </div>
+              <select
+                className="input"
+                name="month"
+                id="month"
+                onChange={handleChange}
+                defaultValue={'DEFAULT'}
+              >
+                <option value="DEFAULT" disabled></option>
+                {months.map((month) => {
+                  return (
+                    <option key={month} value={month}>
+                      {month}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="formGroup" style={{ flex: 1 }}>
+              <div className="label-counter-box">
+                <label htmlFor="day">Day</label>
+              </div>
+              <select
+                className="input"
+                name="day"
+                id="day"
+                onChange={handleChange}
+                defaultValue={'DEFAULT'}
+              >
+                <option value="DEFAULT" disabled></option>
+                {[...Array(daysInMonth)].map((_, idx) => (
+                  <option value={idx + 1} key={idx}>
+                    {idx + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="formGroup" style={{ flex: 2 }}>
+              <div className="label-counter-box">
+                <label htmlFor="year">Year</label>
+              </div>
+              <select
+                className="input"
+                name="year"
+                id="year"
+                onChange={handleChange}
+                defaultValue={'DEFAULT'}
+              >
+                <option value="DEFAULT" disabled></option>
+                {years.map((year) => (
+                  <option value={year} key={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </form>
