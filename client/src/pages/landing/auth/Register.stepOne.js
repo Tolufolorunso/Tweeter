@@ -41,7 +41,11 @@ const RegisterStepOne = ({
         <div
           className={`formGroup ${activeInput === 'name' ? 'activeInput' : ''}`}
         >
-          <div className="label-counter-box">
+          <div
+            className={`label-counter-box  ${
+              activeInput === 'name' || values.name ? 'label-up' : ''
+            }`}
+          >
             <label htmlFor="name">Name</label>
             {activeInput === 'name' ? (
               <div className="char-number">{nameLength} / 50</div>
@@ -65,7 +69,11 @@ const RegisterStepOne = ({
               activeInput === 'email' ? 'activeInput' : ''
             }`}
           >
-            <div className="label-counter-box">
+            <div
+              className={`label-counter-box  ${
+                activeInput === 'email' || values.email ? 'label-up' : ''
+              }`}
+            >
               <label htmlFor={emailOrPhone === 'email' ? 'email' : 'phone'}>
                 {emailOrPhone === 'email' ? 'Email' : 'Phone'}
               </label>
@@ -91,7 +99,11 @@ const RegisterStepOne = ({
             activeInput === 'password' ? 'activeInput' : ''
           }`}
         >
-          <div className="label-counter-box">
+          <div
+            className={`label-counter-box  ${
+              activeInput === 'password' || values.password ? 'label-up' : ''
+            }`}
+          >
             <label htmlFor="email">password</label>
           </div>
           <input

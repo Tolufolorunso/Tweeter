@@ -77,6 +77,13 @@ const AuthWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    transform: translateY(23px);
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .label-counter-box.label-up {
+    transform: translateY(0);
   }
 
   .char-number {
@@ -105,11 +112,19 @@ const AuthWrapper = styled.div`
     cursor: pointer;
   }
 
+  .birthYear {
+    margin-top: 20px;
+  }
+
   .birthYear__inputs {
     display: flex;
+    gap: 3px;
     width: 100%;
   }
 
+  .birthYear__inputs .formGroup {
+    margin-top: 0;
+  }
   .birthYear__inputs option {
     padding: 20px;
   }
@@ -183,16 +198,15 @@ const AuthWrapper = styled.div`
       background-color: rgba(0, 0, 0, 0.2);
     }
 
-    .label-counter-box {
-      /* background-color: red; */
+    /* .label-counter-box {
       transform: translateY(23px);
       pointer-events: none;
       transition: all 0.2s ease-in-out;
-    }
+    } */
 
-    .label-up {
+    /* .label-up {
       transform: translateY(0);
-    }
+    } */
 
     .submit-btn {
       padding-block: 5px;
