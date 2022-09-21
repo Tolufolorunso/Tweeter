@@ -36,6 +36,11 @@ const LoginModal = ({ closeModal }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    if (!password || !username) {
+      alert('enter all fields');
+      return false;
+    }
+
     alert(password + ' ' + username);
   };
 

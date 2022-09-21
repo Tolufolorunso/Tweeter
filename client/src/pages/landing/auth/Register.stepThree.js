@@ -13,8 +13,6 @@ const RegisterStepThree = ({
     editFormAgain();
   };
 
-  console.log(isLoading);
-
   return (
     <>
       <Heading text="Ready to submit?" tag="h2" size={2} className="hi" />

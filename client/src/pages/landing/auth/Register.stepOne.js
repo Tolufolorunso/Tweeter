@@ -18,6 +18,7 @@ const RegisterStepOne = ({
 
   const focusHandler = (e) => {
     setActiveInput(e.target.name);
+    console.log(e.target.name);
   };
 
   const blurHandler = () => {
@@ -125,7 +126,11 @@ const RegisterStepOne = ({
           <p>Date of birth</p>
           <div className="birthYear__inputs">
             <div className="formGroup" style={{ flex: 3 }}>
-              <div className="label-counter-box">
+              <div
+                className={`label-counter-box  ${
+                  activeInput === 'month' || values.month ? 'label-up' : ''
+                }`}
+              >
                 <label htmlFor="month">Month</label>
               </div>
               <select
@@ -146,7 +151,11 @@ const RegisterStepOne = ({
               </select>
             </div>
             <div className="formGroup" style={{ flex: 1 }}>
-              <div className="label-counter-box">
+              <div
+                className={`label-counter-box  ${
+                  activeInput === 'day' || values.day ? 'label-up' : ''
+                }`}
+              >
                 <label htmlFor="day">Day</label>
               </div>
               <select
@@ -165,7 +174,11 @@ const RegisterStepOne = ({
               </select>
             </div>
             <div className="formGroup" style={{ flex: 2 }}>
-              <div className="label-counter-box">
+              <div
+                className={`label-counter-box  ${
+                  activeInput === 'year' || values.year ? 'label-up' : ''
+                }`}
+              >
                 <label htmlFor="year">Year</label>
               </div>
               <select
