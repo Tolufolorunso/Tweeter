@@ -1,7 +1,14 @@
 import React from 'react';
+import HomeWrapper from './home.styled';
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <HomeWrapper>
+      <div className="container">
+        <h1>Home</h1>
+      </div>
+    </HomeWrapper>
+  );
 };
 
 export default Home;
