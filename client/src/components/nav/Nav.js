@@ -1,4 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
+import { IoMdHome } from 'react-icons/io';
+import { MdExplore } from 'react-icons/md';
+import { BsFillBookmarkFill } from 'react-icons/bs';
 
 import NavWrapper from './nav.styled';
 import Logo from '../../assets/images/tweeter.svg';
@@ -22,7 +25,9 @@ const Nav = () => {
           <div className="nav__links fs-300 fw-semi-bold">
             <ul>
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink end to="/">
+                  Home
+                </NavLink>
               </li>
               <li>
                 <NavLink to="/explore">Explore</NavLink>
@@ -36,6 +41,25 @@ const Nav = () => {
             <img src="" alt="" />
             <span>tolulope</span>
           </div>
+        </div>
+        <div className="mobile-nav">
+          <ul>
+            <li>
+              <NavLink end to="/">
+                <IoMdHome />
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/explore">
+                <MdExplore />
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/bookmarks">
+                <BsFillBookmarkFill />
+              </NavLink>
+            </li>
+          </ul>
         </div>
       </div>
     </NavWrapper>
