@@ -12,7 +12,11 @@ const TweetBox = ({ handleTweet }) => {
       <form action="">
         <div className="input-box">
           <Avater src={AvaterImage} alt="user avater" />
-          <textarea onChange={handleTweet} className="tweetbox"></textarea>
+          <textarea
+            onChange={handleTweet}
+            className="tweetbox"
+            placeholder="What's happening?"
+          ></textarea>
         </div>
         <div className="footer">
           <label htmlFor="upload">
@@ -24,7 +28,7 @@ const TweetBox = ({ handleTweet }) => {
               id="upload"
             />
           </label>
-          <p style={{ display: 'flex', gap: '5px' }}>
+          <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
             <BiWorld className="footer-icons" />
             <span>Everyone can reply</span>
           </p>
