@@ -11,9 +11,13 @@ const HomeWrapper = styled.main`
     /* max-width: 46.5625rem; */
   }
 
-  .home__aside {
-    /* max-width: 19.125rem; */
-    background-color: white;
+  @media (max-width: 45em) {
+    .home {
+      grid-template-columns: 1fr;
+    }
+    .home__aside {
+      display: none;
+    }
   }
 `;
 

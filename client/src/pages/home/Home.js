@@ -1,5 +1,6 @@
 import React from 'react';
 import HomeWrapper from './home.styled';
+import Trend from './Trend';
 import TweetBox from './TweetBox';
 
 const Home = () => {
@@ -10,7 +11,9 @@ const Home = () => {
           <div className="home__main">
             <TweetBox />
           </div>
-          <aside className="home__aside"></aside>
+          <aside className="home__aside">
+            <Trend />
+          </aside>
         </div>
       </div>
     </HomeWrapper>

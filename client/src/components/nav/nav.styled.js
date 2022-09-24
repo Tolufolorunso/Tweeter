@@ -41,10 +41,10 @@ const NavWrapper = styled.nav`
 
   .nav__links a {
     color: var(--clr-neutral-900);
-    font-family: inherit;
+    /* font-family: inherit; */
     letter-spacing: -0.035em;
-    transition: all 3s ease;
     position: relative;
+    transition: all 3s ease;
   }
 
   .nav__links .active {
