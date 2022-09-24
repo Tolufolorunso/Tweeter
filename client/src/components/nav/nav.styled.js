@@ -66,6 +66,12 @@ const NavWrapper = styled.nav`
     color: var(--clr-primary-400);
   }
 
+  .nav__profile {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   .mobile-nav {
     display: none;
   }
@@ -128,6 +134,10 @@ const NavWrapper = styled.nav`
     .mobile-nav a:hover {
       color: var(--clr-primary-400);
       background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .nav__profile span {
+      display: none;
     }
   }
 `;

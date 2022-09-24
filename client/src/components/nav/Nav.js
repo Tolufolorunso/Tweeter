@@ -6,6 +6,8 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import NavWrapper from './nav.styled';
 import Logo from '../../assets/images/tweeter.svg';
 import LogoMobile from '../../assets/images/tweeter-small.svg';
+import AvaterImage from '../../assets/images/landingpageimage.png';
+import Avater from '../Avater';
 
 const Nav = () => {
   return (
@@ -38,7 +40,7 @@ const Nav = () => {
             </ul>
           </div>
           <div className="nav__profile fs-300 fw-semi-bold">
-            <img src="" alt="" />
+            <Avater src={AvaterImage} alt="user avater" />
             <span>tolulope</span>
           </div>
         </div>

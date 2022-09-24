@@ -4,16 +4,21 @@ import { Avater, Text } from '../../components';
 
 import AvaterImage from '../../assets/images/landingpageimage.png';
 
-const TweetBox = ({ handleTweet }) => {
+const TweetBox = ({ handleChange }) => {
+  const handleTweet = (e) => {
+    e.preventDefault();
+    alert('Work in progress. Thank you');
+  };
+
   return (
     <Wrapper>
       <Text title="Tweet something" tag="h3" style={{ color: '#4F4F4F' }} />
       <div className="line"></div>
-      <form action="">
+      <form onSubmit={handleTweet}>
         <div className="input-box">
           <Avater src={AvaterImage} alt="user avater" />
           <textarea
-            onChange={handleTweet}
+            onChange={handleChange}
             className="tweetbox"
             placeholder="What's happening?"
           ></textarea>

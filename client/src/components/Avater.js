@@ -9,12 +9,13 @@ const Avater = ({ src, alt }) => {
 };
 
 const Wrapper = styled.div`
-  height: 50px;
+  height: 40px;
   width: 50px;
 
   img {
     width: 100%;
-    display: inline-block;
+    min-height: 100%;
+    display: block;
     object-fit: cover;
     border-radius: 3px;
   }
