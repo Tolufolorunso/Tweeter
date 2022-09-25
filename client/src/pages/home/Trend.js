@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { Text } from '../../components';
 import { trendings } from './tweetData';
 
-const TrendLists = ({ text, numOfTweets }) => {
+const TrendLists = ({ trendTitle, numOfTweets }) => {
   return (
     <div className="popularTweet">
-      <p>{text}</p>
+      <p>{trendTitle}</p>
       <span>{numOfTweets} tweets</span>
     </div>
   );
@@ -18,10 +18,11 @@ const Trend = () => {
       <div className="line"></div>
       <div className="trends">
         {trendings.map((t) => {
+          console.log(t);
           return (
             <TrendLists
-              text={t.trendTitle}
               trendTitle={t.trendTitle}
+              numOfTweets={t.numOfTweets}
               key={t.id}
             />
           );
@@ -42,7 +43,7 @@ const Wrapper = styled.div`
     padding-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 0.75rem;
   }
 
   .popularTweet {

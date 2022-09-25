@@ -9,7 +9,7 @@ const Button = ({ text, size, radius, bgColor, color, icon, style }) => {
       color={color}
       style={style}
     >
-      {icon ? <span>{icon}</span> : null} {text}
+      {icon ? <span>{icon}</span> : null} <span>{text}</span>
     </Wrapper>
   );
 };
@@ -25,6 +25,9 @@ const Wrapper = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 
   &:hover {
     opacity: 0.8;

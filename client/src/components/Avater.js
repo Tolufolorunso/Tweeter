@@ -1,16 +1,17 @@
 import styled from 'styled-components';
+import DefaultImage from '../assets/images/landingpageimage.png';
 
 const Avater = ({ src, alt }) => {
   return (
     <Wrapper>
-      <img src={src} alt={alt} />
+      <img src={src || DefaultImage} alt={alt} />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   height: 40px;
-  width: 50px;
+  width: 40px;
 
   img {
     width: 100%;

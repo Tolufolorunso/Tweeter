@@ -4,6 +4,7 @@ import HomeWrapper from './home.styled';
 import Trend from './Trend';
 import TweetBox from './TweetBox';
 import { tweetData } from './tweetData';
+import WhoToFollow from './WhoToFollow';
 
 const Home = () => {
   return (
@@ -22,7 +23,7 @@ const Home = () => {
           </div>
           <aside className="home__aside">
             <Trend />
-            {/* <Trend /> */}
+            <WhoToFollow />
           </aside>
         </div>
       </div>

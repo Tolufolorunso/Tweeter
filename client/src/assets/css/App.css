@@ -328,7 +328,7 @@ svg {
 }
 
 .container {
-  --max-width: 1100px;
+  --max-width: 1200px;
   --padding: 1rem;
 
   width: min(var(--max-width), 100% - var(--padding) * 2);
