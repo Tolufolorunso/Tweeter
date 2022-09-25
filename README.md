@@ -1,6 +1,6 @@
 <!-- Please update value in the {}  -->
 
-<h1 align="center">Tweeter</h1>
+<h1 align="center">Tweeter: <a href="https://tweeter-baww.onrender.com/">https://tweeter-baww.onrender.com/</a></h1>
 
 <div align="center">
    Solution for a challenge from  <a href="http://devchallenges.io" target="_blank">Devchallenges.io</a>.
@@ -8,7 +8,7 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://tweeter-baww.onrender.com/">
       Demo
     </a>
     <span> | </span>

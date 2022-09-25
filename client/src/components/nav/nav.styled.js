@@ -7,6 +7,10 @@ const NavWrapper = styled.nav`
   font-family: var(--ff-secondary);
   padding-block: 10px;
   margin-bottom: 1.5rem;
+  position: sticky;
+  top: 0;
+  /* width: 100%; */
+  /* z-index: 100; */
 
   .nav-container {
     width: min(1400px, 100% - 2rem);

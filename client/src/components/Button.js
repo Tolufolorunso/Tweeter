@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
-const Button = ({ text, size, radius, bgColor, color, icon }) => {
+const Button = ({ text, size, radius, bgColor, color, icon, style }) => {
   return (
-    <Wrapper size={size} radius={radius} bgColor={bgColor} color={color}>
+    <Wrapper
+      size={size}
+      radius={radius}
+      bgColor={bgColor}
+      color={color}
+      style={style}
+    >
       {icon ? <span>{icon}</span> : null} {text}
     </Wrapper>
   );
@@ -16,6 +22,13 @@ const Wrapper = styled.button`
   outline: none;
   border: none;
   font: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 export default Button;

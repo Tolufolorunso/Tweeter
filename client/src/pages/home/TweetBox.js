@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BiImage, BiWorld } from 'react-icons/bi';
-import { Avater, Text } from '../../components';
+import { Avater, Button, Text } from '../../components';
 
 import AvaterImage from '../../assets/images/landingpageimage.png';
 
@@ -37,7 +37,7 @@ const TweetBox = ({ handleChange }) => {
             <BiWorld className="footer-icons" />
             <span>Everyone can reply</span>
           </p>
-          <button className="btn">Tweet</button>
+          <Button text="Tweet" style={{ marginLeft: 'auto' }} />
         </div>
       </form>
     </Wrapper>
@@ -51,13 +51,6 @@ const Wrapper = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
   font-family: var(--ff-secondary);
   font-size: var(--fs-12);
-
-  .line {
-    height: 1px;
-    width: 100%;
-    background-color: #e0e0e0;
-    margin-block: 8px;
-  }
 
   .input-box {
     display: flex;
@@ -95,21 +88,6 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
 
-  .btn {
-    background-color: var(--clr-primary-400);
-    border: none;
-    outline: none;
-    border-radius: 4px;
-    padding: 7px 20px;
-    color: white;
-    font: inherit;
-    letter-spacing: 1px;
-    margin-left: auto;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .btn:hover,
   .footer label:hover {
     opacity: 0.8;
   }

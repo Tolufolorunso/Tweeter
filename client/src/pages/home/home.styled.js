@@ -8,7 +8,7 @@ const HomeWrapper = styled.main`
   }
 
   .home__main {
-    /* max-width: 46.5625rem; */
+    /* margin-bottom: ; */
   }
 
   @media (max-width: 45em) {

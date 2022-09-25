@@ -3,5 +3,6 @@ import Button from './Button';
 import Nav from './nav/Nav';
 import Text from './Text';
 import Avater from './Avater';
+import Tweet from './tweet/Tweet';
 
-export { Heading, Button, Nav, Text, Avater };
+export { Tweet, Heading, Button, Nav, Text, Avater };

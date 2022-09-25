@@ -35,13 +35,6 @@ const Wrapper = styled.div`
   font-family: var(--ff-secondary);
   font-size: var(--fs-12);
 
-  .line {
-    height: 1px;
-    width: 100%;
-    background-color: #e0e0e0;
-    margin-block: 8px;
-  }
-
   .trends {
     padding-top: 20px;
     display: flex;
