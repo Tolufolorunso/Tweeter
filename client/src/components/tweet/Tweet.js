@@ -1,10 +1,20 @@
 import React from 'react';
 import TweetWrapper from './tweet.styled';
 import AvaterImage from '../../assets/images/landingpageimage.png';
-import TweetHeader from './TweetHeader';
+// import TweetHeader from './TweetHeader';
 import Text from '../Text';
-import TweetInfo from './TweetInfo';
-import TweetActions from './TweetActions';
+// import TweetInfo from './TweetInfo';
+// import TweetActions from './TweetActions';
+// import ReplyToTweet from './ReplyToTweet';
+// import Replies from './Replies';
+
+import {
+  Replies,
+  ReplyToTweet,
+  TweetActions,
+  TweetHeader,
+  TweetInfo,
+} from './';
 
 const tweetTextStyle = {
   marginBlock: '1.25rem',
@@ -23,7 +33,9 @@ const Tweet = ({ tweet }) => {
       </div>
       <TweetInfo />
       <TweetActions />
-      <p>I will continue later</p>
+      <ReplyToTweet />
+      <div className="line"></div>
+      <Replies />
     </TweetWrapper>
   );
 };

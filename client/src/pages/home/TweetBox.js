@@ -62,7 +62,7 @@ const TweetBox = ({ handleChange }) => {
           <Button text="Tweet" style={{ marginLeft: 'auto' }} />
         </div>
       </form>
-      {/* {!isCanReplyOpen || (
+      {!isCanReplyOpen || (
         <div className="can-reply">
           <Text title="Who can reply" tag="h3" />
           <Text title="Choose who can reply to this Tweet" tag="p" fs="0.75" />
@@ -89,7 +89,7 @@ const TweetBox = ({ handleChange }) => {
             />
           </label>
         </div>
-      )} */}
+      )}
     </Wrapper>
   );
 };

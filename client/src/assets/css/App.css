@@ -366,3 +366,19 @@ a {
   background-color: #e0e0e0;
   margin-block: 8px;
 }
+
+.flex {
+  display: flex;
+}
+
+.f-align-c {
+  align-items: center;
+}
+
+.f-justify-c {
+  justify-content: center;
+}
+
+.gap-small {
+  gap: var(--fs-12);
+}

@@ -10,6 +10,7 @@ const Text = ({ title, tag, fs, style }) => {
 
 const Wrapper = styled.p`
   font-size: ${(prop) => prop.fs + 'rem' || '1rem'};
+  color: #4f4f4f;
 `;
 
 export default Text;
