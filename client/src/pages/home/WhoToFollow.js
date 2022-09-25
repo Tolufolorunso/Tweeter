@@ -35,8 +35,8 @@ const WhoToFollow = () => {
       <Text title="Who to follow" tag="h3" style={{ color: '#4F4F4F' }} />
       <div className="line"></div>
       <ul>
-        {[...new Array(2)].map((i) => {
-          return <WhoToFollows />;
+        {[...new Array(2)].map((i, idx) => {
+          return <WhoToFollows key={idx} />;
         })}
       </ul>
     </Wrapper>

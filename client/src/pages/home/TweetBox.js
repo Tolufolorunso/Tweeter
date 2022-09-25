@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BiImage, BiWorld } from 'react-icons/bi';
+import { HiUsers } from 'react-icons/hi';
 import { Avater, Button, Text } from '../../components';
 
 import AvaterImage from '../../assets/images/landingpageimage.png';
@@ -61,12 +62,13 @@ const TweetBox = ({ handleChange }) => {
           <Button text="Tweet" style={{ marginLeft: 'auto' }} />
         </div>
       </form>
-      {!isCanReplyOpen || (
+      {/* {!isCanReplyOpen || (
         <div className="can-reply">
           <Text title="Who can reply" tag="h3" />
           <Text title="Choose who can reply to this Tweet" tag="p" fs="0.75" />
           <label htmlFor="everyone">
-            Everyone
+            <BiWorld />
+            <span>Everyone</span>
             <input
               type="radio"
               name="replyTo"
@@ -76,7 +78,8 @@ const TweetBox = ({ handleChange }) => {
             />
           </label>
           <label htmlFor="followers">
-            People you follow
+            <HiUsers />
+            <span>People you follow</span>
             <input
               type="radio"
               name="replyTo"
@@ -86,7 +89,7 @@ const TweetBox = ({ handleChange }) => {
             />
           </label>
         </div>
-      )}
+      )} */}
     </Wrapper>
   );
 };
@@ -164,6 +167,10 @@ const Wrapper = styled.div`
     padding: 10px;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    display: flex;
+
+    align-items: center;
+    gap: 9px;
   }
 
   .can-reply p {
@@ -178,6 +185,12 @@ const Wrapper = styled.div`
 
   .can-reply label input {
     display: none;
+  }
+
+  img,
+  picture,
+  svg {
+    font-size: 1rem;
   }
 `;
 

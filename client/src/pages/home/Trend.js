@@ -18,7 +18,6 @@ const Trend = () => {
       <div className="line"></div>
       <div className="trends">
         {trendings.map((t) => {
-          console.log(t);
           return (
             <TrendLists
               trendTitle={t.trendTitle}

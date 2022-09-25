@@ -25,7 +25,7 @@ export const tweetData = [
     title: 'Youngest coder at Kinplus technologies',
     src: Kin2,
     alt: 'tolulope',
-    id: 2,
+    id: 4,
   },
 ];
 
