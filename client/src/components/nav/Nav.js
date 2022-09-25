@@ -15,7 +15,7 @@ const Nav = () => {
       <div className="nav-container">
         <div className="nav__wrapper">
           <div className="nav__logo">
-            <Link>
+            <Link to="/">
               <img src={Logo} alt="tweeter logo" className="nav__logo-web" />
               <img
                 src={LogoMobile}
