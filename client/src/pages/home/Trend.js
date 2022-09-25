@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Text } from '../../components';
+import { trendings } from './tweetData';
 
 const TrendLists = ({ text, numOfTweets }) => {
   return (
@@ -16,13 +17,15 @@ const Trend = () => {
       <Text title="Trends for you" tag="h3" style={{ color: '#4F4F4F' }} />
       <div className="line"></div>
       <div className="trends">
-        <TrendLists text="#Programming" numOfTweets="213k" />
-        <TrendLists text="#Programming" numOfTweets="213k" />
-        <TrendLists text="#Programming" numOfTweets="213k" />
-        <TrendLists text="#Programming" numOfTweets="213k" />
-        <TrendLists text="#Programming" numOfTweets="213k" />
-        <TrendLists text="#Programming" numOfTweets="213k" />
-        <TrendLists text="#Programming" numOfTweets="213k" />
+        {trendings.map((t) => {
+          return (
+            <TrendLists
+              text={t.trendTitle}
+              trendTitle={t.trendTitle}
+              key={t.id}
+            />
+          );
+        })}
       </div>
     </Wrapper>
   );

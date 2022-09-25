@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const NavWrapper = styled.nav`
+  background-color: var(--clr-neutral-100);
   display: flex;
   align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -10,7 +11,7 @@ const NavWrapper = styled.nav`
   position: sticky;
   top: 0;
   /* width: 100%; */
-  /* z-index: 100; */
+  z-index: 100;
 
   .nav-container {
     width: min(1400px, 100% - 2rem);

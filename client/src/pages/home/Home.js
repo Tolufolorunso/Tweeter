@@ -11,10 +11,10 @@ const Home = () => {
       <div className="container">
         <div className="home">
           <div className="home__main">
-            <div className="mb-6">
+            <div className="mb-5">
               <TweetBox />
             </div>
-            <div className="mb-2 tweets">
+            <div className="mb-6 tweets">
               {tweetData.map((tweet) => {
                 return <Tweet tweet={tweet} key={tweet.id} />;
               })}
@@ -22,6 +22,7 @@ const Home = () => {
           </div>
           <aside className="home__aside">
             <Trend />
+            {/* <Trend /> */}
           </aside>
         </div>
       </div>

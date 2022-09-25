@@ -14,7 +14,6 @@ const tweetTextStyle = {
 };
 
 const Tweet = ({ tweet }) => {
-  console.log(tweet);
   return (
     <TweetWrapper className="mb-2">
       <TweetHeader AvaterImage={AvaterImage} />

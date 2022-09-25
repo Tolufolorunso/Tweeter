@@ -19,7 +19,7 @@ const TweetWrapper = styled.section`
   }
 
   .imageWrapper {
-    height: 375.73px;
+    height: 23rem;
   }
   img {
     width: 100%;
@@ -82,6 +82,17 @@ const TweetWrapper = styled.section`
 
   .saved {
     color: #2d9cdb;
+  }
+
+  @media (max-width: 45em) {
+    font-size: var(--fs-14);
+    .imageWrapper {
+      height: 12rem;
+    }
+
+    .tweetActions ul li span {
+      display: none;
+    }
   }
 `;
 
