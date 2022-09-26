@@ -9,7 +9,7 @@ const Text = ({ title, tag, fs, style }) => {
 };
 
 const Wrapper = styled.p`
-  font-size: ${(prop) => prop.fs + 'rem' || '1rem'};
+  font-size: ${(prop) => (prop.fs ? prop.fs + 'rem' : '1rem')};
   color: #4f4f4f;
 `;
 
