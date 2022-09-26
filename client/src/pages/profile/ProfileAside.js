@@ -11,7 +11,7 @@ const ProfileAside = () => {
         {lists.map((li) => {
           return (
             <li
-              className={active === li && 'aside__active'}
+              className={active === li ? 'aside__active' : undefined}
               onClick={() => setActive(li)}
               key={li}
             >

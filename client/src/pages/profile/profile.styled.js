@@ -54,7 +54,6 @@ const ProfileWrapper = styled.main`
     gap: 10px;
     align-items: center;
     cursor: pointer;
-    /* font-weight: 600; */
     font-size: var(--fs-14);
     line-height: 21px;
     letter-spacing: -0.035em;
@@ -91,9 +90,16 @@ const ProfileWrapper = styled.main`
     background-color: var(--clr-primary-400);
   }
 
-  @media (max-width: 30em) {
+  @media (max-width: 45em) {
     .cover-picture {
       height: 150px;
+    }
+    .home {
+      grid-template-columns: 1fr;
+    }
+    .profile-detail {
+      display: flex;
+      justify-content: center;
     }
   }
 `;

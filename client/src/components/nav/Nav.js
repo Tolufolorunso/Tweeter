@@ -40,7 +40,9 @@ const Nav = () => {
             </ul>
           </div>
           <div className="nav__profile fs-300 fw-semi-bold">
-            <Avater src={AvaterImage} alt="user avater" />
+            <Link to="/profile">
+              <Avater src={AvaterImage} alt="user avater" />
+            </Link>
             <Link to="/profile">
               <span>tolulope</span>
             </Link>
