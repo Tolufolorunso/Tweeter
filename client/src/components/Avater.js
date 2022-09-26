@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import DefaultImage from '../assets/images/landingpageimage.png';
 
-const Avater = ({ src, alt }) => {
+const Avater = ({ src, alt, style }) => {
   return (
-    <Wrapper>
+    <Wrapper style={style}>
       <img src={src || DefaultImage} alt={alt} />
     </Wrapper>
   );
