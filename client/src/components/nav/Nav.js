@@ -2,14 +2,21 @@ import { Link, NavLink } from 'react-router-dom';
 import { IoMdHome } from 'react-icons/io';
 import { MdExplore } from 'react-icons/md';
 import { BsFillBookmarkFill } from 'react-icons/bs';
+import { GiArrowDunk } from 'react-icons/gi';
 
 import NavWrapper from './nav.styled';
 import Logo from '../../assets/images/tweeter.svg';
 import LogoMobile from '../../assets/images/tweeter-small.svg';
 import AvaterImage from '../../assets/images/landingpageimage.png';
 import Avater from '../Avater';
+import NavProfileDropdown from './NavProfileDropdown';
+import { useState } from 'react';
 
 const Nav = () => {
+  const [dropdown, setDropdown] = useState(false);
+  const handleDropdown = () => {
+    setDropdown(!dropdown);
+  };
   return (
     <NavWrapper>
       <div className="nav-container">
@@ -40,12 +47,16 @@ const Nav = () => {
             </ul>
           </div>
           <div className="nav__profile fs-300 fw-semi-bold">
-            <Link to="/profile">
+            <div onClick={handleDropdown}>
               <Avater src={AvaterImage} alt="user avater" />
-            </Link>
+            </div>
+
             <Link to="/profile">
               <span>tolulope</span>
             </Link>
+            <span onClick={handleDropdown} style={{ cursor: 'pointer' }}>
+              <GiArrowDunk />
+            </span>
           </div>
         </div>
         <div className="mobile-nav">
@@ -68,6 +79,7 @@ const Nav = () => {
           </ul>
         </div>
       </div>
+      {dropdown ? <NavProfileDropdown /> : null}
     </NavWrapper>
   );
 };

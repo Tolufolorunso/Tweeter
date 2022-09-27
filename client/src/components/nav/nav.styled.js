@@ -4,7 +4,7 @@ const NavWrapper = styled.nav`
   background-color: var(--clr-neutral-100);
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px -2px 3px 3px rgb(0 0 0 / 30%);
   font-family: var(--ff-secondary);
   padding-block: 10px;
   margin-bottom: 1.5rem;
