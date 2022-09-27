@@ -14,7 +14,8 @@ import { useState } from 'react';
 
 const Nav = () => {
   const [dropdown, setDropdown] = useState(false);
-  const handleDropdown = () => {
+  const handleDropdown = (e) => {
+    console.log(e.target.className);
     setDropdown(!dropdown);
   };
   return (
@@ -50,10 +51,7 @@ const Nav = () => {
             <div onClick={handleDropdown}>
               <Avater src={AvaterImage} alt="user avater" />
             </div>
-
-            <Link to="/profile">
-              <span>tolulope</span>
-            </Link>
+            <span>tolulope</span>
             <span onClick={handleDropdown} style={{ cursor: 'pointer' }}>
               <GiArrowDunk />
             </span>
@@ -79,7 +77,7 @@ const Nav = () => {
           </ul>
         </div>
       </div>
-      {dropdown ? <NavProfileDropdown /> : null}
+      {dropdown ? <NavProfileDropdown handleDropdown={handleDropdown} /> : null}
     </NavWrapper>
   );
 };

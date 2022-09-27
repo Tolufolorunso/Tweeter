@@ -7,12 +7,14 @@ import { AiFillSetting } from 'react-icons/ai';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NavProfileDropdown = () => {
+const NavProfileDropdown = ({ handleDropdown }) => {
   return (
-    <Wrapper>
+    <Wrapper onClick={handleDropdown}>
       <div className="link">
         <FaUserCircle />
-        <Link to="/profile">My Profile</Link>
+        <Link to="/profile" className="hey">
+          My Profile
+        </Link>
       </div>
       <div className="link">
         <MdGroup />
@@ -50,12 +52,16 @@ const Wrapper = styled.div`
     color: #4f4f4f;
     font-size: var(--fs-12);
     font-weight: 500;
+    width: 100%;
     transition: all 0.3s ease-in;
+    cursor: pointer;
   }
 
-  .link a {
+  .link a,
+  .link a:active {
     color: #4f4f4f;
-    padding: 0 5px;
+    /* padding: 0 5px; */
+    width: 100%;
   }
 
   .link:hover {
