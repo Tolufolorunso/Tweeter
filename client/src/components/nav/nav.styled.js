@@ -74,7 +74,7 @@ const NavWrapper = styled.nav`
   .nav__profile {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 7px;
   }
 
   .mobile-nav {

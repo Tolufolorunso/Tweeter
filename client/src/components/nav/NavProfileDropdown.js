@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   .link {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 7px;
     padding: 5px 10px;
     color: #4f4f4f;
     font-size: var(--fs-12);
@@ -62,12 +62,17 @@ const Wrapper = styled.div`
     color: #4f4f4f;
     /* padding: 0 5px; */
     width: 100%;
+    transition: all 0.3s ease-in;
   }
 
   .link:hover {
     background: #f2f2f2;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .link a:hover {
+    transform: translateX(10px);
   }
 `;
 
