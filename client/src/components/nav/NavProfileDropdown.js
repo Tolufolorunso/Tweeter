@@ -65,14 +65,21 @@ const Wrapper = styled.div`
     transition: all 0.3s ease-in;
   }
 
+  .link svg {
+    transition: all 0.3s ease-in;
+  }
+
   .link:hover {
     background: #f2f2f2;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
   }
 
-  .link a:hover {
-    transform: translateX(10px);
+  .link:hover a {
+    transform: translateX(2px);
+  }
+  .link:hover svg {
+    transform: scale(1.2);
   }
 `;
 

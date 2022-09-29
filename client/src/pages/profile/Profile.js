@@ -3,8 +3,10 @@ import ProfileWrapper from './profile.styled';
 import CoverImage from '../../assets/images/kin.jpg';
 import ProfileDetail from './ProfileDetail';
 import { tweetData } from '../home/tweetData';
-import { Text, Tweet } from '../../components';
-import ProfileAside from './ProfileAside';
+import { ProfileAside, Text, Tweet } from '../../components';
+// import ProfileAside from './ProfileAside';
+
+const lists = ['Tweets', 'Tweets & replies', 'media', 'Likes'];
 
 const Profile = () => {
   return (
@@ -13,7 +15,7 @@ const Profile = () => {
       <div className="container">
         <ProfileDetail />
         <div className="home">
-          <ProfileAside />
+          <ProfileAside lists={lists} />
           <div className="home__main">
             <Text
               title="Daniel Jensen Retweeted"
