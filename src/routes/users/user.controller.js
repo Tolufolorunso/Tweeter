@@ -15,7 +15,10 @@ const register = async (req, res) => {
   }
 
   await User.create({ name, email, password, dateOfBirth });
-  res.status(200).json(req.body);
+  res.status(StatusCodes.CREATED).json({
+    status: true,
+    message: `User created successfully`,
+  });
 };
 
 module.exports = {
