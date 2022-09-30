@@ -15,10 +15,14 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
     "http-status-codes": "^2.2.0",
-    "mongoose": "^6.6.1"
+    "moment": "^2.29.4",
+    "mongoose": "^6.6.1",
+    "morgan": "^1.10.0",
+    "validator": "^13.7.0"
   },
   "repository": {
     "type": "git",

@@ -15,7 +15,6 @@ import { useState } from 'react';
 const Nav = () => {
   const [dropdown, setDropdown] = useState(false);
   const handleDropdown = (e) => {
-    console.log(e.target.className);
     setDropdown(!dropdown);
   };
   return (
