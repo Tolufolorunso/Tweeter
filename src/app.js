@@ -1,5 +1,5 @@
-require('dotenv').config();
 require('express-async-errors');
+
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
@@ -20,12 +20,14 @@ app.use(express.json());
 // Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// App Routes
 app.use('/api/v1/users', require('./routes/users/user.route'));
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// APP ErrorHandler
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
