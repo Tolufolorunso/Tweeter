@@ -1,46 +1,33 @@
-const moment = require('moment');
+const { StatusCodes } = require('http-status-codes');
 
 const User = require('../../models/user.model');
-const { createCustomError } = require('../../errors/custom-error');
+const { BadRequest, NotFoundError } = require('../../errors');
 
-const register = async (req, res, next) => {
-  let { name, email, password, dateOfBirth } = req.body;
-  dateOfBirth = moment('1995-12-25');
+const getUser = async (req, res) => {
+  const { userID } = req.params;
 
-  const userExist = await User.findOne({ email });
-  console.log(userExist);
+  const user = await User.findById(userID);
 
-  if (userExist) {
-    return next(createCustomError('User already exist', 400));
-    // throw new CustomError.BadRequestError('User already exist');
+  if (!user) {
+    throw new NotFoundError(`User with the ${userID}, doesn't exist`);
   }
 
-  await User.create({ name, email, password, dateOfBirth });
-  res.status(StatusCodes.CREATED).json({
+  res.status(StatusCodes.OK).json({
     status: true,
-    message: `User created successfully`,
+    message: 'successful',
+    user,
   });
-};
-
-const login = async (req, res) => {
-  res.send('login');
 };
 
 const updateUser = async (req, res) => {
   res.send('updateUser');
 };
 
-const getUser = async (req, res) => {
-  res.send('getUser');
-};
-
 const getAllUsers = async (req, res) => {
-  res.send('getAllUsers');
+  res.status(StatusCodes.OK).json({ message: 'getAllUsers' });
 };
 
 module.exports = {
-  register,
-  login,
   updateUser,
   getUser,
   getAllUsers,
