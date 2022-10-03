@@ -3,33 +3,38 @@ import React, { useReducer, useContext } from 'react';
 import {
   LOGIN_BEGIN,
   LOGIN_SUCCESS,
+  LOGIN_ERROR,
   REGISTER_BEGIN,
   REGISTER_ERROR,
   REGISTER_SUCCESS,
+  LOGOUT,
   CLEAR_ERROR,
 } from './action';
 import reducer from './authReducer';
 import authFetch from '../../api/fetchApi';
+// import { useEffect } from 'react';
 
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
 
 const initialState = {
   isLoading: false,
-  showAlert: true,
   user: user ? JSON.parse(user) : null,
   token: token ? token : null,
   error: '',
 };
 
-const AppContext = React.createContext();
+const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // useEffect(() => {
+  //   console.log('auth context');
+  // }, []);
+
   const register = async (data) => {
     dispatch({ type: REGISTER_BEGIN });
-    console.log(data);
     try {
       const res = await authFetch.post('/auth/register', data);
       if (res.data.status) {
@@ -55,14 +60,38 @@ const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     dispatch({ type: LOGIN_BEGIN });
-
     try {
       const res = await authFetch.post('/auth/login', data);
-      console.log(res);
+      if (res.data.status) {
+        console.log(60, res.data);
+
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      }
     } catch (error) {
       console.log(error);
+      if (error.response?.data) {
+        // console.log(error.response?.data);
+        dispatch({
+          type: LOGIN_ERROR,
+          payload: error.response.data.message,
+        });
+      } else {
+        dispatch({
+          type: LOGIN_ERROR,
+          payload: 'Something went wrong',
+        });
+      }
+      clearError();
     }
-    dispatch({ type: LOGIN_SUCCESS });
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    dispatch({
+      type: LOGOUT,
+    });
   };
 
   const clearError = (duration = 3000) => {
@@ -72,14 +101,14 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ ...state, register, login }}>
+    <AuthContext.Provider value={{ ...state, register, login, logout }}>
       {children}
-    </AppContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
 const useAuthContext = () => {
-  return useContext(AppContext);
+  return useContext(AuthContext);
 };
 
 export { AuthProvider, useAuthContext };

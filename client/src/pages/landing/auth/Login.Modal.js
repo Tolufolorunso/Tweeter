@@ -1,12 +1,16 @@
-import AuthWrapper from './auth.styled';
 import { GrClose } from 'react-icons/gr';
 import { ImEyeBlocked, ImEye } from 'react-icons/im';
+import { Link } from 'react-router-dom';
 
+import AuthWrapper from './auth.styled';
 import Logo from '../../../assets/images/tweeter-small.svg';
 import { Heading } from '../../../components';
 import { useState } from 'react';
+import { useAuthContext } from '../../../context/auth/authContext';
 
 const LoginModal = ({ closeModal }) => {
+  const { isLoading, login, error } = useAuthContext();
+
   // const [preArrow, setPreArrow] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,8 +44,7 @@ const LoginModal = ({ closeModal }) => {
       alert('enter all fields');
       return false;
     }
-
-    alert(password + ' ' + username);
+    login({ username, password });
   };
 
   return (
@@ -123,17 +126,17 @@ const LoginModal = ({ closeModal }) => {
                 {isVisible ? <ImEyeBlocked /> : <ImEye className="eye-color" />}
               </span>
             </div>
-
-            <button type="submit" className="btn submit-btn">
+            {error && <div className="error">{error}</div>}
+            <button
+              type="submit"
+              className="btn submit-btn"
+              disabled={isLoading}
+            >
               Submit
             </button>
-            <button
-              type="button"
-              className="btn submit-btn"
-              style={{ marginTop: '5px' }}
-            >
+            <Link to="/login" style={{ marginTop: '5px' }}>
               Forgot password
-            </button>
+            </Link>
           </form>
         </div>
       </div>

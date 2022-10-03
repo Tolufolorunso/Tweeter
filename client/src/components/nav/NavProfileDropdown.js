@@ -6,8 +6,13 @@ import { AiFillSetting } from 'react-icons/ai';
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../context/auth/authContext';
 
 const NavProfileDropdown = ({ handleDropdown }) => {
+  const { logout } = useAuthContext();
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <Wrapper onClick={handleDropdown}>
       <div className="link">
@@ -27,7 +32,9 @@ const NavProfileDropdown = ({ handleDropdown }) => {
       <div className="line"></div>
       <div className="link">
         <BiLogOut />
-        <Link to="/logout">Logout</Link>
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </Wrapper>
   );
@@ -80,6 +87,12 @@ const Wrapper = styled.div`
   }
   .link:hover svg {
     transform: scale(1.2);
+  }
+
+  .logout-btn {
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 `;
 

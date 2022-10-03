@@ -75,7 +75,7 @@ const RegisterStepThree = ({
           />
         </div>
         {error && <div className="error">{error}</div>}
-        <button className="btn submit-btn">
+        <button className="btn submit-btn" disabled={isLoading}>
           {isLoading ? 'Submiting...' : 'Submit'}
         </button>
       </form>

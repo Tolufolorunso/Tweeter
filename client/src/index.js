@@ -4,6 +4,7 @@ import App from './App';
 // import 'normalize.css';
 import './assets/css/App.css';
 import { AuthProvider } from './context/auth/authContext';
+import { TweetProvider } from './context/tweets/tweetContext';
 
 // console.log(process.env.NODE_ENV);
 import { StyleSheetManager } from 'styled-components';
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <StyleSheetManager>
-        <App />
-      </StyleSheetManager>
+      <TweetProvider>
+        <StyleSheetManager>
+          <App />
+        </StyleSheetManager>
+      </TweetProvider>
     </AuthProvider>
   </React.StrictMode>
 );

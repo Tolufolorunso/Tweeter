@@ -5,6 +5,7 @@ import {
   LOGIN_BEGIN,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
+  LOGOUT,
   CLEAR_ERROR,
 } from './action';
 
@@ -36,11 +37,20 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (LOGIN_SUCCESS === type) {
-    return { ...state, isLoading: false };
+    return {
+      ...state,
+      isLoading: false,
+      user: payload.user,
+      token: payload.token,
+    };
   }
 
   if (LOGIN_ERROR === type) {
-    return { ...state, isLoading: false };
+    return { ...state, isLoading: false, error: payload };
+  }
+
+  if (LOGOUT === type) {
+    return { ...state, isLoading: false, error: '', user: null, token: null };
   }
 
   if (CLEAR_ERROR === type) {

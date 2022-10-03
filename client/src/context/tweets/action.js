@@ -1,3 +1,3 @@
-export const _BEGIN = '_BEGIN';
-export const _SUCCESS = '_SUCCESS';
-export const _ERROR = '_ERROR';
+export const GET_TWEETS_BEGIN = 'GET_TWEETS_BEGIN';
+export const GET_TWEETS_SUCCESS = 'GET_TWEETS_SUCCESS';
+export const GET_TWEETS_ERROR = 'GET_TWEETS_ERROR';

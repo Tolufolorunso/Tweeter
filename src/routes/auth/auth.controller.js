@@ -33,12 +33,23 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res) => {
+  console.log(req.body);
   const { email, password, username } = req.body;
-  if (!email || !password) {
+  const loginObj = {};
+  if (email) {
+    loginObj.email = email;
+  }
+
+  if (username) {
+    loginObj.username = username;
+  }
+  if ((!email && !username) || !password) {
     throw new BadRequestError('Enter all fields');
   }
 
-  let user = await User.findOne({ email }).select('+password');
+  console.log(loginObj);
+
+  let user = await User.findOne(loginObj).select('+password');
 
   if (!user) {
     throw new UnauthenticatedError('invalid credentials');

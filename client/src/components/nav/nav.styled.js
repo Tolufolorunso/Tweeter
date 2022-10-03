@@ -80,6 +80,7 @@ const NavWrapper = styled.nav`
   .mobile-nav {
     display: none;
   }
+
   @media (max-width: 45em) {
     .nav__logo {
       .nav__logo-mobile {

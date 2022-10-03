@@ -1,25 +1,33 @@
 import React, { useReducer, useContext } from 'react';
 
-import {} from './action';
-import reducer from './authReducer';
-// import authFetch from '../../api/fetchApi';
+import {
+  GET_TWEETS_BEGIN,
+  GET_TWEETS_SUCCESS,
+  GET_TWEETS_ERROR,
+} from './action';
+import reducer from './tweetReducer';
+import authFetch from '../../api/fetchApi';
 
 const initialState = {
   isLoading: false,
+  error: '',
+  tweets: [],
 };
 
-const AppContext = React.createContext();
+const TweetContext = React.createContext();
 
-const AppProvider = ({ children }) => {
+const TweetProvider = ({ children }) => {
   const [state] = useReducer(reducer, initialState);
 
   return (
-    <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
+    <TweetContext.Provider value={{ ...state }}>
+      {children}
+    </TweetContext.Provider>
   );
 };
 
 const useTweetContext = () => {
-  return useContext(AppContext);
+  return useContext(TweetContext);
 };
 
-export { AppProvider, useTweetContext };
+export { TweetProvider, useTweetContext };
