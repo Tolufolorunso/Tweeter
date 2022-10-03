@@ -212,6 +212,13 @@ const AuthWrapper = styled.div`
       padding-block: 5px;
     }
   }
+
+  .error {
+    font-size: 14px;
+    font-weight: 400;
+    color: red;
+    margin-top: 15px;
+  }
 `;
 
 export default AuthWrapper;

@@ -8,6 +8,7 @@ const RegisterStepThree = ({
   handleSubmit,
   handleChange,
   isLoading,
+  error,
 }) => {
   const focusHandler = () => {
     editFormAgain();
@@ -18,9 +19,6 @@ const RegisterStepThree = ({
       <Heading text="Ready to submit?" tag="h2" size={2} className="hi" />
       <form onSubmit={handleSubmit}>
         <div className="formGroup">
-          <div className="label-counter-box">
-            <label htmlFor="name">Name</label>
-          </div>
           <input
             type="text"
             name="name"
@@ -32,11 +30,17 @@ const RegisterStepThree = ({
           />
         </div>
         <div className="formGroup">
-          <div className="label-counter-box">
-            <label htmlFor={values.email ? 'email' : 'phone'}>
-              {values.email ? 'Email' : 'Phone'}
-            </label>
-          </div>
+          <input
+            type="text"
+            name="name"
+            className="input inputName"
+            onFocus={focusHandler}
+            onChange={handleChange}
+            value={values.username}
+            id="username"
+          />
+        </div>
+        <div className="formGroup">
           <input
             type={values.email ? 'email' : 'tel'}
             name={values.email ? 'email' : 'phone'}
@@ -49,9 +53,6 @@ const RegisterStepThree = ({
         </div>
 
         <div className="passwordInput formGroup">
-          <div className="label-counter-box">
-            <label htmlFor="email">password</label>
-          </div>
           <input
             type="text"
             name="password"
@@ -63,9 +64,6 @@ const RegisterStepThree = ({
           />
         </div>
         <div className="formGroup">
-          <div className="label-counter-box">
-            <label htmlFor="birth-date">Birth Date</label>
-          </div>
           <input
             type="text"
             name="date"
@@ -76,6 +74,7 @@ const RegisterStepThree = ({
             id="birth-date"
           />
         </div>
+        {error && <div className="error">{error}</div>}
         <button className="btn submit-btn">
           {isLoading ? 'Submiting...' : 'Submit'}
         </button>

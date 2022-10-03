@@ -4,16 +4,17 @@ import { useState } from 'react';
 import RegisterStepOne from './Register.stepOne';
 import RegisterSteptwo from './Register.stepTwo';
 import RegisterStepThree from './Register.stepThree';
-import { useAppContext } from '../../../context/auth/authContext';
+import { useAuthContext } from '../../../context/auth/authContext';
 
 const initialState = {
-  name: '',
-  email: '',
+  username: 'tolufolorunso',
+  name: 'kola jide',
+  email: 'tolu@yahoo.com',
   phone: '',
-  password: '',
-  month: '',
-  day: '',
-  year: '',
+  password: '12345',
+  month: 'january',
+  day: '20',
+  year: '2006',
   calcBirthYear() {
     return `${this.day} ${this.month} ${this.year}`;
   },
@@ -22,6 +23,7 @@ const initialState = {
 const RegisterModal = ({ closeModal }) => {
   const [values, setValues] = useState(initialState);
   const [nameLength, setNameLength] = useState(0);
+  const [usernameLength, setUsernameLength] = useState(0);
 
   const [stepOne, setStepOne] = useState(true);
   const [stepTwo, setStepTWo] = useState(false);
@@ -33,12 +35,16 @@ const RegisterModal = ({ closeModal }) => {
   const [stepName, setStepName] = useState('stepOne');
   const [emailOrPhone, setEmailOrPhone] = useState('email');
 
-  const { isLoading, register } = useAppContext();
+  const { isLoading, register, error } = useAuthContext();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     if (e.target.name === 'name') {
       setNameLength(e.target.value.length);
+    }
+
+    if (e.target.username === 'username') {
+      setUsernameLength(e.target.value.length);
     }
   };
 
@@ -104,7 +110,6 @@ const RegisterModal = ({ closeModal }) => {
     e.preventDefault();
     values.birthYear = values.calcBirthYear();
     register(values);
-    // console.log(values);
   };
 
   return (
@@ -133,6 +138,7 @@ const RegisterModal = ({ closeModal }) => {
             <RegisterStepOne
               nextSlide={nextSlide}
               nameLength={nameLength}
+              usernameLength={usernameLength}
               values={values}
               handleChange={handleChange}
               handleEmailPhone={handleEmailPhone}
@@ -155,6 +161,7 @@ const RegisterModal = ({ closeModal }) => {
               handleSubmit={handleSubmit}
               handleChange={handleChange}
               isLoading={isLoading}
+              error={error}
             />
           </div>
         </div>

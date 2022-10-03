@@ -4,9 +4,11 @@ import {
   LOGIN_BEGIN,
   LOGIN_SUCCESS,
   REGISTER_BEGIN,
+  REGISTER_ERROR,
   REGISTER_SUCCESS,
+  CLEAR_ERROR,
 } from './action';
-import reducer from './reducer';
+import reducer from './authReducer';
 import authFetch from '../../api/fetchApi';
 
 const token = localStorage.getItem('token');
@@ -14,39 +16,59 @@ const user = localStorage.getItem('user');
 
 const initialState = {
   isLoading: false,
-  showAlert: false,
+  showAlert: true,
   user: user ? JSON.parse(user) : null,
-  token: token,
-  errors: null,
+  token: token ? token : null,
+  error: '',
 };
 
 const AppContext = React.createContext();
 
-const AppProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const register = async (data) => {
     dispatch({ type: REGISTER_BEGIN });
     console.log(data);
     try {
-      const res = await authFetch.post('/users/register', data);
-      console.log(res);
+      const res = await authFetch.post('/auth/register', data);
+      if (res.data.status) {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      }
     } catch (error) {
-      console.log(error);
+      if (error.response?.data) {
+        dispatch({
+          type: REGISTER_ERROR,
+          payload: error.response.data.message,
+        });
+      } else {
+        dispatch({
+          type: REGISTER_ERROR,
+          payload: 'Something went wrong',
+        });
+      }
+      clearError();
     }
-    dispatch({ type: REGISTER_SUCCESS });
   };
 
   const login = async (data) => {
     dispatch({ type: LOGIN_BEGIN });
-    console.log(data);
+
     try {
-      const res = await authFetch.post('/users/login', data);
+      const res = await authFetch.post('/auth/login', data);
       console.log(res);
     } catch (error) {
       console.log(error);
     }
     dispatch({ type: LOGIN_SUCCESS });
+  };
+
+  const clearError = (duration = 3000) => {
+    setTimeout(function () {
+      dispatch({ type: CLEAR_ERROR });
+    }, duration);
   };
 
   return (
@@ -56,8 +78,8 @@ const AppProvider = ({ children }) => {
   );
 };
 
-const useAppContext = () => {
+const useAuthContext = () => {
   return useContext(AppContext);
 };
 
-export { AppProvider, useAppContext };
+export { AuthProvider, useAuthContext };

@@ -7,6 +7,7 @@ import { Heading } from '../../../components';
 const RegisterStepOne = ({
   nextSlide,
   nameLength,
+  usernameLength,
   values,
   handleChange,
   handleEmailPhone,
@@ -18,7 +19,6 @@ const RegisterStepOne = ({
 
   const focusHandler = (e) => {
     setActiveInput(e.target.name);
-    console.log(e.target.name);
   };
 
   const blurHandler = () => {
@@ -64,6 +64,33 @@ const RegisterStepOne = ({
             id="name"
           />
         </div>
+        <div
+          className={`formGroup ${
+            activeInput === 'username' ? 'activeInput' : ''
+          }`}
+        >
+          <div
+            className={`label-counter-box  ${
+              activeInput === 'username' || values.username ? 'label-up' : ''
+            }`}
+          >
+            <label htmlFor="username">Username</label>
+            {activeInput === 'username' ? (
+              <div className="char-number">{usernameLength} / 50</div>
+            ) : null}
+          </div>
+          <input
+            type="text"
+            name="username"
+            className="input inputName"
+            maxLength="50"
+            onChange={handleChange}
+            onFocus={focusHandler}
+            onBlur={blurHandler}
+            value={values.username}
+            id="username"
+          />
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             className={`formGroup ${
@@ -105,7 +132,7 @@ const RegisterStepOne = ({
               activeInput === 'password' || values.password ? 'label-up' : ''
             }`}
           >
-            <label htmlFor="email">password</label>
+            <label htmlFor="password">password</label>
           </div>
           <input
             type={isVisible ? 'password' : 'text'}

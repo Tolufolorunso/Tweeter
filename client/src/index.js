@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 // import 'normalize.css';
 import './assets/css/App.css';
-import { AppProvider } from './context/auth/authContext';
+import { AuthProvider } from './context/auth/authContext';
 
 // console.log(process.env.NODE_ENV);
 import { StyleSheetManager } from 'styled-components';
@@ -11,10 +11,10 @@ import { StyleSheetManager } from 'styled-components';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppProvider>
+    <AuthProvider>
       <StyleSheetManager>
         <App />
       </StyleSheetManager>
-    </AppProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
