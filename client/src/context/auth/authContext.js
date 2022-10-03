@@ -12,7 +12,6 @@ import {
 } from './action';
 import reducer from './authReducer';
 import authFetch from '../../api/fetchApi';
-// import { useEffect } from 'react';
 
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
@@ -28,10 +27,6 @@ const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  // useEffect(() => {
-  //   console.log('auth context');
-  // }, []);
 
   const register = async (data) => {
     dispatch({ type: REGISTER_BEGIN });
@@ -63,16 +58,12 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await authFetch.post('/auth/login', data);
       if (res.data.status) {
-        console.log(60, res.data);
-
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       }
     } catch (error) {
-      console.log(error);
       if (error.response?.data) {
-        // console.log(error.response?.data);
         dispatch({
           type: LOGIN_ERROR,
           payload: error.response.data.message,

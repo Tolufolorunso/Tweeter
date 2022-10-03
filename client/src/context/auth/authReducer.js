@@ -24,7 +24,6 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (REGISTER_ERROR === type) {
-    console.log(payload);
     return {
       ...state,
       isLoading: false,

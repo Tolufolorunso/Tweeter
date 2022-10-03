@@ -105,6 +105,19 @@ const RegisterModal = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let isEmailOrPhone = values.email || values.phone;
+    if (
+      !isEmailOrPhone ||
+      !values.day ||
+      !values.month ||
+      !values.username ||
+      !values.year ||
+      !values.password ||
+      !values.name
+    ) {
+      alert('All fields required');
+      return;
+    }
     register(values);
   };
 
