@@ -26,7 +26,6 @@ const RegisterStepThree = ({
             onFocus={focusHandler}
             onChange={handleChange}
             value={values.name}
-            id="name"
           />
         </div>
         <div className="formGroup">
@@ -37,7 +36,6 @@ const RegisterStepThree = ({
             onFocus={focusHandler}
             onChange={handleChange}
             value={values.username}
-            id="username"
           />
         </div>
         <div className="formGroup">
@@ -46,7 +44,6 @@ const RegisterStepThree = ({
             name={values.email ? 'email' : 'phone'}
             className="input inputName"
             value={values.email || values.phone}
-            id={values.email ? 'email' : 'phone'}
             onFocus={focusHandler}
             onChange={handleChange}
           />
@@ -60,7 +57,6 @@ const RegisterStepThree = ({
             onFocus={focusHandler}
             onChange={handleChange}
             value={values.password}
-            id="password"
           />
         </div>
         <div className="formGroup">
@@ -70,8 +66,7 @@ const RegisterStepThree = ({
             className="input inputName"
             onFocus={focusHandler}
             onChange={handleChange}
-            value={values.calcBirthYear()}
-            id="birth-date"
+            value={`${values.month} ${values.day} ${values.year}`}
           />
         </div>
         {error && <div className="error">{error}</div>}

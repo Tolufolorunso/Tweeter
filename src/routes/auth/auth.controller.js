@@ -1,4 +1,4 @@
-const moment = require('moment');
+// const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
 
@@ -7,15 +7,32 @@ const { BadRequestError, UnauthenticatedError } = require('../../errors');
 const { createJWT } = require('../../utils/jwt');
 
 const register = async (req, res, next) => {
-  let { email, dateOfBirth } = req.body;
-  dateOfBirth = moment('1995-12-25');
+  console.log(req.body);
+  let { email, username, phone, day, month, year } = req.body;
+  dateOfBirth = new Date(`${year}-${month}-${day}`);
+  // console.log(dateOfBirth);
 
-  const userExist = await User.findOne({ email });
+  // Checking for either email or phone
+  let emailOrPhoneExistObj = {};
+  if (email) {
+    emailOrPhoneExistObj.email = email;
+    delete req.body.phone;
+  }
 
-  // if (userExist) {
-  //   throw new BadRequestError('User already exist');
-  // }
+  if (phone) {
+    emailOrPhoneExistObj.phone = phone;
+    delete req.body.email;
+  }
 
+  console.log(emailOrPhoneExistObj);
+
+  const emailOrPhoneExist = await User.findOne(emailOrPhoneExistObj);
+  const usernameExist = await User.findOne({ username });
+
+  if (usernameExist || emailOrPhoneExist) {
+    throw new BadRequestError('User already exist');
+  }
+  console.log(req.body);
   const user = await User.create({ ...req.body, dateOfBirth });
 
   const token = createJWT({
@@ -46,8 +63,6 @@ const login = async (req, res) => {
   if ((!email && !username) || !password) {
     throw new BadRequestError('Enter all fields');
   }
-
-  console.log(loginObj);
 
   let user = await User.findOne(loginObj).select('+password');
 

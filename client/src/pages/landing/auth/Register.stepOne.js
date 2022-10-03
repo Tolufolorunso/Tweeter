@@ -99,7 +99,12 @@ const RegisterStepOne = ({
           >
             <div
               className={`label-counter-box  ${
-                activeInput === 'email' || values.email ? 'label-up' : ''
+                activeInput === 'email' ||
+                values.email ||
+                activeInput === 'phone' ||
+                values.phone
+                  ? 'label-up'
+                  : ''
               }`}
             >
               <label htmlFor={emailOrPhone === 'email' ? 'email' : 'phone'}>
@@ -119,7 +124,9 @@ const RegisterStepOne = ({
             />
           </div>
           <button type="button" className="instead" onClick={handleEmailPhone}>
-            Use phone instead
+            {emailOrPhone === 'phone'
+              ? 'Use email instead'
+              : 'Use phone instead'}
           </button>
         </div>
         <div

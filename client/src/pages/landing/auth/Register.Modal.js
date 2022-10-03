@@ -15,9 +15,6 @@ const initialState = {
   month: 'january',
   day: '20',
   year: '2006',
-  calcBirthYear() {
-    return `${this.day} ${this.month} ${this.year}`;
-  },
 };
 
 const RegisterModal = ({ closeModal }) => {
@@ -108,7 +105,6 @@ const RegisterModal = ({ closeModal }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    values.birthYear = values.calcBirthYear();
     register(values);
   };
 

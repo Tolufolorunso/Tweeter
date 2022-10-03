@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema(
       maxlength: 100,
       trim: true,
       lowercase: true,
+      unique: true,
     },
     email: {
       type: String,
@@ -26,9 +27,16 @@ const UserSchema = new mongoose.Schema(
         validator: validator.isEmail,
         message: (props) => `${props.value} is not a valid email!`,
       },
-      required: [true, 'Email required'],
       unique: true,
       lowercase: true,
+    },
+    phone: {
+      type: String,
+      validate: {
+        validator: validator.isMobilePhone,
+        message: (props) => `${props.value} is not a valid phone!`,
+      },
+      unique: true,
     },
     password: {
       type: String,
