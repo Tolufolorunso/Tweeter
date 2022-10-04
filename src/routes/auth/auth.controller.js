@@ -5,6 +5,7 @@ const { StatusCodes } = require('http-status-codes');
 const User = require('../../models/user.model');
 const { BadRequestError, UnauthenticatedError } = require('../../errors');
 const { createJWT } = require('../../utils/jwt');
+const { validateEmail, validateOnlyNumbers } = require('../../utils/loginType');
 
 const register = async (req, res, next) => {
   console.log(req.body);
@@ -50,17 +51,18 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res) => {
-  console.log(req.body);
-  const { email, password, username } = req.body;
+  const { loginData, password } = req.body;
   const loginObj = {};
-  if (email) {
-    loginObj.email = email;
+
+  if (validateEmail(loginData)) {
+    loginObj.email = loginData;
+  } else if (validateOnlyNumbers(loginData)) {
+    loginObj.phone = loginData;
+  } else {
+    loginObj.username = loginData;
   }
 
-  if (username) {
-    loginObj.username = username;
-  }
-  if ((!email && !username) || !password) {
+  if (!loginData || !password) {
     throw new BadRequestError('Enter all fields');
   }
 
@@ -69,7 +71,6 @@ const login = async (req, res) => {
   if (!user) {
     throw new UnauthenticatedError('invalid credentials');
   }
-  console.log(user);
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {

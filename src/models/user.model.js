@@ -48,6 +48,28 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       required: [true, 'Date of birth required'],
     },
+    followers: {
+      type: Array,
+      default: [],
+    },
+    following: {
+      type: Array,
+      default: [],
+    },
+    savedTweet: {
+      type: Array,
+      default: [],
+    },
+    userImg: {
+      type: String,
+    },
+    coverImg: {
+      type: String,
+    },
+    bio: {
+      type: String,
+      default: '',
+    },
   },
   { timestamps: true }
 );

@@ -20,6 +20,8 @@ if (process.env.NODE_ENV === 'development') {
 const notFoundMiddleware = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/error-handler');
 
+const authenticateUser = require('./middlewares/authentication');
+
 // Body Parser Middleware
 
 app.set('trust proxy', 1);
@@ -41,6 +43,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // App Routes
 app.use('/api/v1/auth', require('./routes/auth/auth.route'));
 app.use('/api/v1/users', require('./routes/users/user.route'));
+app.use(
+  '/api/v1/tweets',
+  authenticateUser,
+  require('./routes/tweet/tweet.route')
+);
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
