@@ -18,6 +18,10 @@ const TweetSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    replyBy: {
+      type: String,
+      default: 'everyone',
+    },
     likes: {
       type: Array,
       default: [],

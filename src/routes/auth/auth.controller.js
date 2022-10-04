@@ -42,6 +42,9 @@ const register = async (req, res, next) => {
     id: user._id,
   });
 
+  user = user.toObject();
+  delete user.password;
+
   res.status(StatusCodes.CREATED).json({
     status: true,
     message: 'User created successfully',
@@ -51,18 +54,20 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res) => {
-  const { loginData, password } = req.body;
+  const { loginValue, password } = req.body;
   const loginObj = {};
 
-  if (validateEmail(loginData)) {
-    loginObj.email = loginData;
-  } else if (validateOnlyNumbers(loginData)) {
-    loginObj.phone = loginData;
+  console.log(loginValue);
+
+  if (validateEmail(loginValue)) {
+    loginObj.email = loginValue;
+  } else if (validateOnlyNumbers(loginValue)) {
+    loginObj.phone = loginValue;
   } else {
-    loginObj.username = loginData;
+    loginObj.username = loginValue;
   }
 
-  if (!loginData || !password) {
+  if (!loginValue || !password) {
     throw new BadRequestError('Enter all fields');
   }
 

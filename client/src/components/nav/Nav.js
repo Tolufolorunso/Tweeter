@@ -7,13 +7,21 @@ import { GiArrowDunk } from 'react-icons/gi';
 import NavWrapper from './nav.styled';
 import Logo from '../../assets/images/tweeter.svg';
 import LogoMobile from '../../assets/images/tweeter-small.svg';
-import AvaterImage from '../../assets/images/landingpageimage.png';
+// import AvaterImage from '../../assets/images/landingpageimage.png';
 import Avater from '../Avater';
 import NavProfileDropdown from './NavProfileDropdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuthContext } from '../../context/auth/authContext';
 
 const Nav = () => {
   const [dropdown, setDropdown] = useState(false);
+  const [avaterImage, setAvaterImage] = useState('');
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    setAvaterImage(user.userImg);
+  }, [user]);
+
   const handleDropdown = (e) => {
     setDropdown(!dropdown);
   };
@@ -48,7 +56,7 @@ const Nav = () => {
           </div>
           <div className="nav__profile fs-300 fw-semi-bold">
             <div onClick={handleDropdown}>
-              <Avater src={AvaterImage} alt="user avater" />
+              <Avater src={avaterImage} alt="user avater" />
             </div>
             <span>tolulope</span>
             <span onClick={handleDropdown} style={{ cursor: 'pointer' }}>

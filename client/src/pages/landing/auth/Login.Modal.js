@@ -12,14 +12,14 @@ const LoginModal = ({ closeModal }) => {
   const { isLoading, login, error } = useAuthContext();
 
   // const [preArrow, setPreArrow] = useState(false);
-  const [username, setUsername] = useState('');
+  const [loginValue, setLoginValue] = useState('');
   const [password, setPassword] = useState('');
   const [activeInput, setActiveInput] = useState('');
   const [isVisible, setIsVisible] = useState(true);
 
   const handleChange = (e) => {
-    if (e.target.name === 'username') {
-      setUsername(e.target.value);
+    if (e.target.name === 'loginValue') {
+      setLoginValue(e.target.value);
     }
     if (e.target.name === 'password') {
       setPassword(e.target.value);
@@ -40,11 +40,11 @@ const LoginModal = ({ closeModal }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (!password || !username) {
+    if (!password || !loginValue) {
       alert('Enter all fields');
       return false;
     }
-    login({ username, password });
+    login({ loginValue, password });
   };
 
   return (
@@ -79,21 +79,21 @@ const LoginModal = ({ closeModal }) => {
             >
               <div
                 className={`label-counter-box  ${
-                  activeInput === 'username' || username ? 'label-up' : ''
+                  activeInput === 'loginValue' || loginValue ? 'label-up' : ''
                 }`}
               >
-                <label htmlFor="username">Phone, email, or username</label>
+                <label htmlFor="loginValue">Phone, email, or username</label>
               </div>
               <input
                 type="text"
-                name="username"
+                name="loginValue"
                 className="input inputName"
                 maxLength="50"
                 onChange={handleChange}
                 onFocus={focusHandler}
                 onBlur={blurHandler}
-                value={username}
-                id="username"
+                value={loginValue}
+                id="loginValue"
               />
             </div>
             <div

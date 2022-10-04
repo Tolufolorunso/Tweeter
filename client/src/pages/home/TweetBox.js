@@ -3,16 +3,54 @@ import { BiImage, BiWorld } from 'react-icons/bi';
 import { HiUsers } from 'react-icons/hi';
 import { Avater, Button, Text } from '../../components';
 
-import AvaterImage from '../../assets/images/landingpageimage.png';
-import { useState } from 'react';
+// import AvaterImage from '../../assets/images/landingpageimage.png';
+import { useEffect, useState } from 'react';
+import { useAuthContext } from '../../context/auth/authContext';
 
-const TweetBox = ({ handleChange }) => {
+const TweetBox = () => {
+  const { user } = useAuthContext();
   let [canReply, setCanReply] = useState('everyone');
   let [isCanReplyOpen, setIsCanReplyOpen] = useState(false);
+  const [tweetText, setTweetText] = useState('');
+  const [avaterImage, setAvaterImage] = useState('');
+
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    setAvaterImage(user.userImg);
+  }, [user]);
+
+  const handleChange = (e) => {
+    setTweetText(e.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    };
+    console.log(img.data.name);
+    setImage(img);
+  };
 
   const handleTweet = (e) => {
     e.preventDefault();
-    alert('Work in progress. Thank you');
+    // const formData = new FormData();
+    // formData.append('tweetImage', image);
+
+    if (image?.data?.name !== '' || tweetText !== '') {
+      alert('empty filed');
+      return;
+    }
+
+    // console.log(formData);
+    console.log({
+      userImg: avaterImage,
+      replyBy: canReply,
+      userId: user._id,
+      image,
+      tweetText,
+    });
   };
 
   const handleCanReply = (e) => {
@@ -30,7 +68,7 @@ const TweetBox = ({ handleChange }) => {
       <div className="line"></div>
       <form onSubmit={handleTweet}>
         <div className="input-box">
-          <Avater src={AvaterImage} alt="user avater" />
+          <Avater src={avaterImage} alt="user avater" />
           <textarea
             onChange={handleChange}
             className="tweetbox"
@@ -45,8 +83,11 @@ const TweetBox = ({ handleChange }) => {
               className="upload"
               name="tweet-image"
               id="upload"
+              onChange={handleFileChange}
             />
+            {image?.data?.name}
           </label>
+
           <p
             style={{
               display: 'flex',
