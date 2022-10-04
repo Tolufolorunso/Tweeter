@@ -3,12 +3,12 @@ import { BASEURL } from '../utils/contants';
 const token = localStorage.getItem('token');
 
 // axios
-const authFetch = axios.create({
+const fetchApi = axios.create({
   baseURL: BASEURL,
 });
 
 // request
-authFetch.interceptors.request.use(
+fetchApi.interceptors.request.use(
   (config) => {
     config.headers.common['Authorization'] = `Bearer ${token}`;
     return config;
@@ -19,7 +19,7 @@ authFetch.interceptors.request.use(
 );
 
 // response
-authFetch.interceptors.response.use(
+fetchApi.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -32,4 +32,4 @@ authFetch.interceptors.response.use(
   }
 );
 
-export default authFetch;
+export default fetchApi;

@@ -6,9 +6,11 @@ import { Avater, Button, Text } from '../../components';
 // import AvaterImage from '../../assets/images/landingpageimage.png';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../../context/auth/authContext';
+import { useTweetContext } from '../../context/tweets/tweetContext';
 
 const TweetBox = () => {
   const { user } = useAuthContext();
+  const { postTweet, isLoading } = useTweetContext();
   let [canReply, setCanReply] = useState('everyone');
   let [isCanReplyOpen, setIsCanReplyOpen] = useState(false);
   const [tweetText, setTweetText] = useState('');
@@ -38,13 +40,21 @@ const TweetBox = () => {
     // const formData = new FormData();
     // formData.append('tweetImage', image);
 
-    if (image?.data?.name !== '' || tweetText !== '') {
-      alert('empty filed');
-      return;
-    }
+    // if (image?.data?.name !== '' || tweetText !== '') {
+    //   alert('empty filed');
+    //   return;
+    // }
+
+    console.log({
+      userImg: avaterImage,
+      replyBy: canReply,
+      userId: user._id,
+      image,
+      tweetText,
+    });
 
     // console.log(formData);
-    console.log({
+    postTweet({
       userImg: avaterImage,
       replyBy: canReply,
       userId: user._id,
@@ -100,7 +110,11 @@ const TweetBox = () => {
             <BiWorld className="footer-icons" />
             <span>{canReply} can reply</span>
           </p>
-          <Button text="Tweet" style={{ marginLeft: 'auto' }} />
+          <Button
+            text={!isLoading ? 'Tweet' : 'Tweeting...'}
+            style={{ marginLeft: 'auto' }}
+            disabled={isLoading}
+          />
         </div>
       </form>
       {!isCanReplyOpen || (

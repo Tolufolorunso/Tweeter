@@ -1,15 +1,37 @@
 const { StatusCodes } = require('http-status-codes');
+const findHashtags = require('find-hashtags');
 
 const User = require('../../models/user.model');
+const Hash = require('../../models/hashTag.model');
 const Tweet = require('../../models/tweet.model');
 const { BadRequestError, UnauthenticatedError } = require('../../errors');
 
 const postTweet = async (req, res) => {
   console.log(req.file);
-  console.log(req.body.tweetText);
+  // console.log(req.body);
+
+  if (!req.file && !req.body.tweetText) {
+    throw new BadRequestError('Upload atleast one image or enter tweet');
+  }
+
+  let getHashTags = findHashtags(req.body.tweetText);
+
+  let hashTags = await Hash.find({});
+
+  console.log(hashTags.countDocument);
+
+  hashTags = [...hashTags, ...getHashTags];
+  console.log(22, hashTags);
+  await hashTags.save({
+    validateBeforeSave: false,
+  });
+
+  const tweet = await Tweet.create({ ...req.body, tweetImg: req.file?.path });
+
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'tweet successful',
+    tweet,
   });
 };
 
