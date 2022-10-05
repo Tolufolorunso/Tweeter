@@ -44,7 +44,40 @@ const getTweets = async (req, res) => {
   });
 };
 
+const setLike = async (req, res) => {
+  const { tweetId } = req.params;
+  const { userId } = req.body;
+
+  const like = await Tweet.updateOne(
+    { tweetId },
+    { $push: { likes: req.body } }
+  );
+  console.log(tweetId, userId, like);
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'fetched successfully',
+  });
+};
+
+const setRetweet = async (req, res) => {
+  const { tweetId } = req.params;
+  const retweet = await Tweet.updateOne(
+    { tweetId },
+    { $push: { retweet: req.body } }
+  );
+  console.log(tweetId, username, retweet);
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'retweeted',
+    // retweet,
+  });
+};
+
 module.exports = {
   postTweet,
   getTweets,
+  setLike,
+  setRetweet,
 };

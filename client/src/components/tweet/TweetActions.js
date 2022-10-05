@@ -3,19 +3,29 @@ import { AiOutlineRetweet } from 'react-icons/ai';
 import { FcLike } from 'react-icons/fc';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useTweetContext } from '../../context/tweets/tweetContext';
+import { useAuthContext } from '../../context/auth/authContext';
 
-const TweetActions = () => {
-  const { setLike } = useTweetContext();
+const TweetActions = ({ others: { retweet, _id } }) => {
+  const { setLike, setRetweet } = useTweetContext();
+  const { user } = useAuthContext();
+
+  // console.log(retweet, _id);
+
+  const isRetweet = () => {
+    return retweet.find((r) => r.username === user?.username);
+  };
+
   const handleComment = () => {
     console.log('clicked');
   };
 
   const handleRetweet = () => {
+    setRetweet({ username: user.username, tweetId: _id });
     console.log('retweet');
   };
 
   const handleLike = () => {
-    setLike();
+    setLike({ username: user.username, tweetId: _id });
   };
 
   const handleSave = () => {
@@ -28,11 +38,14 @@ const TweetActions = () => {
         <li className="tweetActions-li comment" onClick={handleComment}>
           <MdOutlineModeComment className="icons" /> <span>Comment</span>
         </li>
-        <li className="tweetActions-li retweeted" onClick={handleRetweet}>
+        <li
+          className={`tweetActions-li ${isRetweet() ? 'retweeted' : null}`}
+          onClick={handleRetweet}
+        >
           <AiOutlineRetweet className="icons" /> <span>Retweeted</span>
         </li>
         <li className="tweetActions-li liked" onClick={handleLike}>
-          <FcLike className="icons" /> <span>Liked</span>
+          <FcLike className="icons" /> <span>Like</span>
         </li>
         <li className="tweetActions-li saved" onClick={handleSave}>
           <BsFillBookmarkFill className="icons" /> <span>Saved</span>

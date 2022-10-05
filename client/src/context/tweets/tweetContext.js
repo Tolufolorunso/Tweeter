@@ -56,8 +56,36 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const setLike = async (data) => {
+    console.log(data._id);
+    try {
+      let res = await tweetsFetch.patch(`/tweets/likes/${data.tweetId}`, data);
+      if (res.data.status) {
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const setRetweet = async (data) => {
+    try {
+      let res = await tweetsFetch.patch(
+        `/tweets/retweets/${data.tweetId}`,
+        data
+      );
+      if (res.data.status) {
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
-    <TweetContext.Provider value={{ ...state, postTweet, getTweets }}>
+    <TweetContext.Provider
+      value={{ ...state, postTweet, getTweets, setLike, setRetweet }}
+    >
       {children}
     </TweetContext.Provider>
   );

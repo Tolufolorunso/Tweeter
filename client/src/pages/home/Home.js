@@ -20,7 +20,6 @@ const Home = () => {
   useEffect(() => {
     getTweets();
     setIsLoading(false);
-    console.log('getTweets');
 
     // eslint-disable-next-line
   }, []);

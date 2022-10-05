@@ -1,8 +1,8 @@
 import React from 'react';
 
 const TweetInfo = ({ others: { comments, likes, retweet } }) => {
-  console.log(comments, likes);
-  console.log(comments.length);
+  // console.log(comments, likes);
+  // console.log(comments.length);
   return (
     <div className="tweetInfo mx">
       <ul>
