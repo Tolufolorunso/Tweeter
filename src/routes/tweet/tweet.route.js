@@ -12,10 +12,13 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-const { postTweet } = require('./tweet.controller');
+const { postTweet, getTweets } = require('./tweet.controller');
 
 const tweetRouter = express.Router();
 
-tweetRouter.post('/', upload.single('tweetImg'), postTweet);
+tweetRouter
+  .router('/')
+  .post(upload.single('tweetImg'), postTweet)
+  .get(getTweets);
 
 module.exports = tweetRouter;

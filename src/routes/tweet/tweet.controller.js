@@ -35,6 +35,14 @@ const postTweet = async (req, res) => {
   });
 };
 
+const getTweets = async (req, res) => {
+  res.json(StatusCodes.OK).json({
+    status: true,
+    message: 'fetched successfully',
+  });
+};
+
 module.exports = {
   postTweet,
+  getTweets,
 };

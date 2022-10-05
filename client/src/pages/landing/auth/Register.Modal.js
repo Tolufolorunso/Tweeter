@@ -21,7 +21,6 @@ const RegisterModal = ({ closeModal }) => {
   const [values, setValues] = useState(initialState);
   const [nameLength, setNameLength] = useState(0);
   const [usernameLength, setUsernameLength] = useState(0);
-
   const [stepOne, setStepOne] = useState(true);
   const [stepTwo, setStepTWo] = useState(false);
   const [stepThree, setStepThree] = useState(false);
@@ -32,7 +31,7 @@ const RegisterModal = ({ closeModal }) => {
   const [stepName, setStepName] = useState('stepOne');
   const [emailOrPhone, setEmailOrPhone] = useState('email');
 
-  const { isLoading, register, error } = useAuthContext();
+  const { isLoading, register, error, hello } = useAuthContext();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });

@@ -1,9 +1,9 @@
 import React, { useReducer, useContext } from 'react';
 
 import {
-  // GET_TWEETS_BEGIN,
-  // GET_TWEETS_SUCCESS,
-  // GET_TWEETS_ERROR,
+  GET_TWEETS_BEGIN,
+  GET_TWEETS_SUCCESS,
+  GET_TWEETS_ERROR,
   POST_TWEET_BEGIN,
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
@@ -43,8 +43,22 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const getTweets = async () => {
+    dispatch({ type: GET_TWEETS_BEGIN });
+    try {
+      let res = await tweetsFetch.get('/tweets');
+      if (res.status) {
+        console.log(res.data);
+        dispatch({ type: GET_TWEETS_SUCCESS });
+      }
+    } catch (error) {
+      console.log(error.response);
+      dispatch({ type: GET_TWEETS_ERROR });
+    }
+  };
+
   return (
-    <TweetContext.Provider value={{ ...state, postTweet }}>
+    <TweetContext.Provider value={{ ...state, postTweet, getTweets }}>
       {children}
     </TweetContext.Provider>
   );
