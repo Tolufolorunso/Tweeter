@@ -84,6 +84,10 @@ const TweetWrapper = styled.section`
     color: #2d9cdb;
   }
 
+  .tweetActions-li {
+    cursor: pointer;
+  }
+
   @media (max-width: 45em) {
     font-size: var(--fs-14);
     .imageWrapper {

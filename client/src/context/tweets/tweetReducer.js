@@ -7,32 +7,32 @@ import {
   POST_TWEET_ERROR,
 } from './action';
 
-const reducer = (state, action) => {
-  if (GET_TWEETS_BEGIN === action.type) {
+const reducer = (state, { type, payload }) => {
+  if (GET_TWEETS_BEGIN === type) {
     return { ...state, isLoading: true };
   }
 
-  if (GET_TWEETS_SUCCESS === action.type) {
+  if (GET_TWEETS_SUCCESS === type) {
+    return { ...state, isLoading: false, tweets: payload };
+  }
+
+  if (GET_TWEETS_ERROR === type) {
     return { ...state, isLoading: false };
   }
 
-  if (GET_TWEETS_ERROR === action.type) {
-    return { ...state, isLoading: false };
-  }
-
-  if (POST_TWEET_BEGIN === action.type) {
+  if (POST_TWEET_BEGIN === type) {
     return { ...state, isLoading: true };
   }
 
-  if (POST_TWEET_SUCCESS === action.type) {
+  if (POST_TWEET_SUCCESS === type) {
     return { ...state, isLoading: false };
   }
 
-  if (POST_TWEET_ERROR === action.type) {
+  if (POST_TWEET_ERROR === type) {
     return { ...state, isLoading: false };
   }
 
-  throw new Error(`No such acyion :${action.type}`);
+  throw new Error(`No such acyion :${type}`);
 };
 
 export default reducer;

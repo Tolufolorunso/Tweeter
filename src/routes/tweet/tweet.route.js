@@ -16,9 +16,7 @@ const { postTweet, getTweets } = require('./tweet.controller');
 
 const tweetRouter = express.Router();
 
-tweetRouter
-  .router('/')
-  .post(upload.single('tweetImg'), postTweet)
-  .get(getTweets);
+tweetRouter.post('/', upload.single('tweetImg'), postTweet);
+tweetRouter.get('/', getTweets);
 
 module.exports = tweetRouter;

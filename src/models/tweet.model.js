@@ -34,6 +34,10 @@ const TweetSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    saved: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

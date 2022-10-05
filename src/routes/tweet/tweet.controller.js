@@ -18,13 +18,13 @@ const postTweet = async (req, res) => {
 
   let hashTags = await Hash.find({});
 
-  console.log(hashTags.countDocument);
+  // console.log(hashTags.countDocument);
 
-  hashTags = [...hashTags, ...getHashTags];
-  console.log(22, hashTags);
-  await hashTags.save({
-    validateBeforeSave: false,
-  });
+  // hashTags = [...hashTags, ...getHashTags];
+  // console.log(22, hashTags);
+  // await hashTags.save({
+  //   validateBeforeSave: false,
+  // });
 
   const tweet = await Tweet.create({ ...req.body, tweetImg: req.file?.path });
 
@@ -36,9 +36,11 @@ const postTweet = async (req, res) => {
 };
 
 const getTweets = async (req, res) => {
-  res.json(StatusCodes.OK).json({
+  const tweets = await Tweet.find({});
+  res.status(StatusCodes.OK).json({
     status: true,
     message: 'fetched successfully',
+    tweets,
   });
 };
 

@@ -50,10 +50,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // App Routes
 app.use('/api/v1/auth', require('./routes/auth/auth.route'));
-app.use('/api/v1/users', require('./routes/users/user.route'));
+app.use(
+  '/api/v1/users',
+  authenticateUser,
+  require('./routes/users/user.route')
+);
 app.use(
   '/api/v1/tweets',
-  authenticateUser,
+  // authenticateUser,
   require('./routes/tweet/tweet.route')
 );
 

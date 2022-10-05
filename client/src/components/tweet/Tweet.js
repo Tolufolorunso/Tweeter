@@ -1,6 +1,6 @@
 import React from 'react';
 import TweetWrapper from './tweet.styled';
-import AvaterImage from '../../assets/images/landingpageimage.png';
+// import AvaterImage from '../../assets/images/landingpageimage.png';
 // import TweetHeader from './TweetHeader';
 import Text from '../Text';
 // import TweetInfo from './TweetInfo';
@@ -23,16 +23,19 @@ const tweetTextStyle = {
   color: '#4F4F4F',
 };
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
+  console.log(others);
   return (
     <TweetWrapper className="mb-2">
-      <TweetHeader AvaterImage={AvaterImage} />
-      <Text title={tweet.title} style={tweetTextStyle} tag="p" />
-      <div className="imageWrapper">
-        <img src={tweet.src} alt={tweet.alt} />
-      </div>
-      <TweetInfo />
-      <TweetActions />
+      <TweetHeader AvaterImage={userImg} />
+      {tweetText && <Text title={tweetText} style={tweetTextStyle} tag="p" />}
+      {tweetImg && (
+        <div className="imageWrapper">
+          <img src={tweetImg} alt={tweetText.substring(0, 10)} />
+        </div>
+      )}
+      <TweetInfo others={others} />
+      <TweetActions others={others} />
       <ReplyToTweet />
       <div className="line"></div>
       <Replies />

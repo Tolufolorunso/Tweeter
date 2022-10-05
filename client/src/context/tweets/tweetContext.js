@@ -47,9 +47,8 @@ const TweetProvider = ({ children }) => {
     dispatch({ type: GET_TWEETS_BEGIN });
     try {
       let res = await tweetsFetch.get('/tweets');
-      if (res.status) {
-        console.log(res.data);
-        dispatch({ type: GET_TWEETS_SUCCESS });
+      if (res.data.status) {
+        dispatch({ type: GET_TWEETS_SUCCESS, payload: res.data.tweets });
       }
     } catch (error) {
       console.log(error.response);

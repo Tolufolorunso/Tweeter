@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tweet } from '../../components';
 import HomeWrapper from './home.styled';
 import Trend from './Trend';
 import TweetBox from './TweetBox';
-import { tweetData } from './tweetData';
+// import { tweetData } from './tweetData';
 import WhoToFollow from './WhoToFollow';
+import { useTweetContext } from '../../context/tweets/tweetContext';
+import { useEffect } from 'react';
 
 const Home = () => {
+  const { getTweets, tweets } = useTweetContext();
+  const [isLoading, setIsLoading] = useState(true);
+  const [tweetsArr, setTweetsArr] = useState([]);
+
+  useEffect(() => {
+    setTweetsArr(tweets);
+  }, [tweets]);
+
+  useEffect(() => {
+    getTweets();
+    setIsLoading(false);
+    console.log('getTweets');
+
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <HomeWrapper>
       <div className="container">
@@ -16,9 +34,16 @@ const Home = () => {
               <TweetBox />
             </div>
             <div className="mb-6 tweets">
-              {tweetData.map((tweet) => {
-                return <Tweet tweet={tweet} key={tweet.id} />;
-              })}
+              {isLoading ? (
+                <div style={{ textAlign: 'center', color: 'green' }}>
+                  <h2>Loading</h2>
+                </div>
+              ) : (
+                tweetsArr.map((tweet) => {
+                  // console.log(tweet);
+                  return <Tweet tweet={tweet} key={tweet._id} />;
+                })
+              )}
             </div>
           </div>
           <aside className="home__aside">
