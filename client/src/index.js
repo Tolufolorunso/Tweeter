@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-// import 'normalize.css';
 import './assets/css/App.css';
 import { AuthProvider } from './context/auth/authContext';
 import { TweetProvider } from './context/tweets/tweetContext';
