@@ -36,7 +36,6 @@ const UserSchema = new mongoose.Schema(
         validator: validator.isMobilePhone,
         message: (props) => `${props.value} is not a valid phone!`,
       },
-      unique: true,
     },
     password: {
       type: String,

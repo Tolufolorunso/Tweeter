@@ -3,9 +3,15 @@ import { Bookmarks, Explore, Home, Landing, NotFound, Profile } from './pages';
 import AuthLayout from './pages/AuthLayout';
 
 import { useAuthContext } from './context/auth/authContext';
+import { useEffect } from 'react';
 
 function App() {
-  const { user, token } = useAuthContext();
+  const { user, token, getMe } = useAuthContext();
+
+  // useEffect(() => {
+  //   getMe();
+  //   console.log('app');
+  // });
   return (
     <BrowserRouter>
       <Routes>

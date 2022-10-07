@@ -85,6 +85,18 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  const getMe = async () => {
+    try {
+      const res = await authFetch('/users/me');
+      console.log(res);
+    } catch (error) {
+      localStorage.clear();
+      dispatch({
+        type: LOGOUT,
+      });
+    }
+  };
+
   const clearError = (duration = 3000) => {
     setTimeout(function () {
       dispatch({ type: CLEAR_ERROR });
@@ -92,7 +104,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, register, login, logout }}>
+    <AuthContext.Provider value={{ ...state, register, login, logout, getMe }}>
       {children}
     </AuthContext.Provider>
   );

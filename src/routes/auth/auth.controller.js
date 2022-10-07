@@ -8,7 +8,7 @@ const { createJWT } = require('../../utils/jwt');
 const { validateEmail, validateOnlyNumbers } = require('../../utils/loginType');
 
 const register = async (req, res, next) => {
-  // console.log(req.body);
+  // console.log(11, req.body);
   let { email, username, phone, day, month, year } = req.body;
   dateOfBirth = new Date(`${year}-${month}-${day}`);
   // console.log(dateOfBirth);
@@ -25,6 +25,8 @@ const register = async (req, res, next) => {
     delete req.body.email;
   }
 
+  console.log(28, { ...req.body });
+
   const emailOrPhoneExist = await User.findOne(emailOrPhoneExistObj);
   const usernameExist = await User.findOne({ username });
 
@@ -33,11 +35,10 @@ const register = async (req, res, next) => {
   }
 
   let user = await User.create({ ...req.body, dateOfBirth });
-
+  console.log(36, user);
   const token = createJWT({
-    email: user.email,
+    name: user.name,
     username: user.username,
-    id: user._id,
   });
 
   user = user.toObject();
@@ -81,9 +82,8 @@ const login = async (req, res) => {
   }
 
   const token = createJWT({
-    email: user.email,
+    name: user.name,
     username: user.username,
-    id: user._id,
   });
 
   user = user.toObject();

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 import { BASEURL } from '../utils/contants';
 const token = localStorage.getItem('token');
 
@@ -27,8 +27,8 @@ fetchApi.interceptors.response.use(
   (error) => {
     // console.log(error.response)
     if (error.response.status === 401) {
-      localStorage.clear();
-      return <Navigate to="/landing" />;
+      // localStorage.clear();
+      // return <Navigate to="/landing" />;
       // logoutUser()
     }
     return Promise.reject(error);

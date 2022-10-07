@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
+const { invalid } = require('moment/moment');
 
 const { UnauthenticatedError } = require('../errors');
+const userModel = require('../models/user.model');
+const { isTokenValid } = require('../utils/jwt');
 
 const authenticationMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -10,20 +13,25 @@ const authenticationMiddleware = async (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1];
-
+  console.log(token);
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = await isTokenValid(token);
+    const { username, name } = decoded;
 
-    const { email, username, id } = decoded;
+    const currentUser = await userModel.findOne({ username });
+    console.log(currentUser);
 
-    const user = await User.find({ username });
-
-    console.log(21, user);
-
-    req.user = { email, username, id };
+    if (!currentUser) {
+      throw new UnauthenticatedError("The user doesn't exists");
+    }
+    req.user = { name, username };
     next();
   } catch (error) {
-    throw new UnauthenticatedError('Not authorized to access this route');
+    // console.log(29, error.message);
+    if (error.message === 'jwt malformed') {
+      throw new UnauthenticatedError('Invalid login.try to login again');
+    }
+    throw new UnauthenticatedError(error.message);
   }
 };
 

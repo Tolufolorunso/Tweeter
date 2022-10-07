@@ -20,7 +20,6 @@ const Home = () => {
   useEffect(() => {
     getTweets();
     setIsLoading(false);
-
     // eslint-disable-next-line
   }, []);
 
@@ -39,7 +38,7 @@ const Home = () => {
                 </div>
               ) : (
                 tweetsArr.map((tweet) => {
-                  // console.log(tweet);
+                  console.log(tweet.likes);
                   return <Tweet tweet={tweet} key={tweet._id} />;
                 })
               )}

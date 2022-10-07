@@ -8,7 +8,7 @@ const { BadRequestError, UnauthenticatedError } = require('../../errors');
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
-  console.log(req.body);
+  console.log(req.body.tweetText, 11);
 
   if (!req.file && !req.body.tweetText) {
     throw new BadRequestError('Upload atleast one image or enter tweet');
@@ -48,11 +48,11 @@ const setLike = async (req, res) => {
   const { tweetId } = req.params;
   const { userId } = req.body;
 
-  const like = await Tweet.updateOne(
-    { tweetId },
-    { $push: { likes: req.body } }
-  );
-  console.log(tweetId, userId, like);
+  // const like = await Tweet.updateOne(
+  //   { tweetId },
+  //   { $push: { likes: req.body } }
+  // );
+  // console.log(tweetId, userId, like);
 
   res.status(StatusCodes.OK).json({
     status: true,

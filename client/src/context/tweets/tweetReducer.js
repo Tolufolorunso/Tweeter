@@ -25,7 +25,8 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (POST_TWEET_SUCCESS === type) {
-    return { ...state, isLoading: false };
+    console.log(payload, state.tweets);
+    return { ...state, isLoading: false, tweets: [payload, ...state.tweets] };
   }
 
   if (POST_TWEET_ERROR === type) {

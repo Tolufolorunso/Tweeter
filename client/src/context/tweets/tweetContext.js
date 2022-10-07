@@ -33,9 +33,9 @@ const TweetProvider = ({ children }) => {
       formData.append('tweetText', data.tweetText);
       formData.append('userId', data.userId);
       const res = await tweetsFetch.post('/tweets', formData);
-      if (res.status) {
-        console.log(res.data);
-        dispatch({ type: POST_TWEET_SUCCESS });
+      if (res.data.status) {
+        console.log(37, res.data);
+        dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
       }
     } catch (error) {
       console.log(error.response);
@@ -56,30 +56,34 @@ const TweetProvider = ({ children }) => {
     }
   };
 
-  const setLike = async (data) => {
-    console.log(data._id);
-    try {
-      let res = await tweetsFetch.patch(`/tweets/likes/${data.tweetId}`, data);
-      if (res.data.status) {
-        console.log(res.data);
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
+  const setLike = async (tweetID) => {
+    console.log(tweetID);
+    // try {
+    //   let res = await tweetsFetch.patch(
+    //     `/tweets/likes/${data.tweetId}`,
+    //     tweetID
+    //   );
+    //   if (res.data.status) {
+    //     console.log(res.data);
+    //   }
+    // } catch (error) {
+    //   console.log(error.response);
+    // }
   };
 
-  const setRetweet = async (data) => {
-    try {
-      let res = await tweetsFetch.patch(
-        `/tweets/retweets/${data.tweetId}`,
-        data
-      );
-      if (res.data.status) {
-        console.log(res.data);
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
+  const setRetweet = async (tweetID) => {
+    console.log(tweetID);
+    // try {
+    //   let res = await tweetsFetch.patch(
+    //     `/tweets/retweets/${tweetID}`,
+    //     data
+    //   );
+    //   if (res.data.status) {
+    //     console.log(res.data);
+    //   }
+    // } catch (error) {
+    //   console.log(error.response);
+    // }
   };
 
   return (

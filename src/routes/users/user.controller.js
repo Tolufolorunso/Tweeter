@@ -1,7 +1,11 @@
 const { StatusCodes } = require('http-status-codes');
-
 const User = require('../../models/user.model');
-const { BadRequest, NotFoundError } = require('../../errors');
+
+const {
+  BadRequest,
+  NotFoundError,
+  UnauthenticatedError,
+} = require('../../errors');
 
 const getUser = async (req, res) => {
   const { userID } = req.params;
@@ -27,8 +31,22 @@ const getAllUsers = async (req, res) => {
   res.status(StatusCodes.OK).json({ message: 'getAllUsers' });
 };
 
+const getMe = async (req, res) => {
+  const username = req.user?.username;
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    throw new UnauthenticatedError('User not found');
+  }
+
+  res
+    .status(StatusCodes.OK)
+    .json({ status: true, message: 'successful', user });
+};
+
 module.exports = {
   updateUser,
   getUser,
   getAllUsers,
+  getMe,
 };

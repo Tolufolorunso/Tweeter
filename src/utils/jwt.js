@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 
-const createJWT = ({ email, id, username }) => {
-  // console.log(email, id, username);
-  const token = jwt.sign({ id, email, username }, process.env.JWT_SECRET, {
+const createJWT = ({ name, username }) => {
+  console.log(name, username);
+  const token = jwt.sign({ name, username }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
   return token;
