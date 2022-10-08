@@ -61,6 +61,24 @@ const setLike = async (req, res) => {
   });
 };
 
+const setUnLike = async (req, res) => {
+  const { username } = req.user;
+  const { tweetId } = req.params;
+
+  const unlike = await Tweet.updateOne(
+    { _id: tweetId },
+    { $pull: { likes: username } }
+  );
+
+  console.log(unlike);
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'fetched successfully',
+    unlike,
+  });
+};
+
 const setRetweet = async (req, res) => {
   const { username } = req.user;
   const { tweetId } = req.params;
@@ -80,5 +98,6 @@ module.exports = {
   postTweet,
   getTweets,
   setLike,
+  setUnLike,
   setRetweet,
 };

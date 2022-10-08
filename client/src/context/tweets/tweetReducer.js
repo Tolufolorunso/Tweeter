@@ -6,6 +6,7 @@ import {
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
+  UNLIKE_SUCCESS,
 } from './action';
 
 const reducer = (state, { type, payload }) => {
@@ -35,16 +36,32 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (LIKE_SUCCESS === type) {
-    console.log(payload);
-    let tweets = state.tweets.map((tweet) => {
+    // console.log(payload);
+    state.tweets.map((tweet) => {
       if (tweet._id === payload.tweetID) {
-        // console.log(payload, tweet.likes);
         return tweet.likes.push(payload.username);
       }
       return tweet;
     });
-    console.log(tweets);
+
     return { ...state, isLoading: false };
+  }
+
+  if (UNLIKE_SUCCESS === type) {
+    const newArr = state.tweets.map((tweet) => {
+      if (tweet._id === payload.tweetID) {
+        let i = tweet.likes.filter((like) => {
+          return like !== payload.username;
+        });
+        tweet.likes = i;
+        return tweet;
+      }
+      return tweet;
+    });
+
+    // console.log(newArr);
+
+    return { ...state, isLoading: false, tweets: newArr };
   }
 
   throw new Error(`No such acyion :${type}`);

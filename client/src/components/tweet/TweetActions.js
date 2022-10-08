@@ -5,8 +5,8 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useAuthContext } from '../../context/auth/authContext';
 
-const TweetActions = ({ others: { retweet, _id } }) => {
-  const { setLike, setRetweet } = useTweetContext();
+const TweetActions = ({ others: { retweet, likes, _id } }) => {
+  const { setLike, setRetweet, setUnlike } = useTweetContext();
   const { user } = useAuthContext();
 
   // console.log(_id);
@@ -24,7 +24,11 @@ const TweetActions = ({ others: { retweet, _id } }) => {
   };
 
   const handleLike = () => {
-    setLike(_id, user.username);
+    if (likes.includes(user.username)) {
+      setUnlike(_id, user.username);
+    } else {
+      setLike(_id, user.username);
+    }
   };
 
   const handleSave = () => {

@@ -13,13 +13,13 @@ const authenticationMiddleware = async (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1];
-  console.log(token);
+  // console.log(token);
   try {
     const decoded = await isTokenValid(token);
     const { username, name } = decoded;
 
     const currentUser = await userModel.findOne({ username });
-    console.log(currentUser);
+    // console.log(currentUser);
 
     if (!currentUser) {
       throw new UnauthenticatedError("The user doesn't exists");

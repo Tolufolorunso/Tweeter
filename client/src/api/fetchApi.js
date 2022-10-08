@@ -27,7 +27,7 @@ fetchApi.interceptors.response.use(
   (error) => {
     // console.log(error.response)
     if (error.response.status === 401) {
-      // localStorage.clear();
+      localStorage.clear();
       // return <Navigate to="/landing" />;
       // logoutUser()
     }

@@ -8,6 +8,7 @@ import {
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
+  UNLIKE_SUCCESS,
 } from './action';
 import reducer from './tweetReducer';
 import tweetsFetch from '../../api/fetchApi';
@@ -68,6 +69,17 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const setUnlike = async (tweetID, username) => {
+    try {
+      let res = await tweetsFetch.patch(`/tweets/unlikes/${tweetID}`);
+      if (res.data.status) {
+        dispatch({ type: UNLIKE_SUCCESS, payload: { tweetID, username } });
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   const setRetweet = async (tweetID) => {
     try {
       let res = await tweetsFetch.patch(`/tweets/retweets/${tweetID}`);
@@ -81,7 +93,7 @@ const TweetProvider = ({ children }) => {
 
   return (
     <TweetContext.Provider
-      value={{ ...state, postTweet, getTweets, setLike, setRetweet }}
+      value={{ ...state, postTweet, getTweets, setLike, setUnlike, setRetweet }}
     >
       {children}
     </TweetContext.Provider>
