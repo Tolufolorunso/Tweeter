@@ -9,7 +9,7 @@ const TweetActions = ({ others: { retweet, _id } }) => {
   const { setLike, setRetweet } = useTweetContext();
   const { user } = useAuthContext();
 
-  // console.log(retweet, _id);
+  // console.log(_id);
 
   const isRetweet = () => {
     return retweet.find((r) => r.username === user?.username);
@@ -20,12 +20,11 @@ const TweetActions = ({ others: { retweet, _id } }) => {
   };
 
   const handleRetweet = () => {
-    setRetweet({ username: user.username, tweetId: _id });
-    console.log('retweet');
+    setRetweet(_id);
   };
 
   const handleLike = () => {
-    setLike({ username: user.username, tweetId: _id });
+    setLike(_id);
   };
 
   const handleSave = () => {
@@ -44,7 +43,7 @@ const TweetActions = ({ others: { retweet, _id } }) => {
         >
           <AiOutlineRetweet className="icons" /> <span>Retweeted</span>
         </li>
-        <li className="tweetActions-li liked" onClick={handleLike}>
+        <li className="tweetActions-li" onClick={handleLike}>
           <FcLike className="icons" /> <span>Like</span>
         </li>
         <li className="tweetActions-li saved" onClick={handleSave}>

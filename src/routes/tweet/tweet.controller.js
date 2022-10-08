@@ -5,6 +5,7 @@ const User = require('../../models/user.model');
 const Hash = require('../../models/hashTag.model');
 const Tweet = require('../../models/tweet.model');
 const { BadRequestError, UnauthenticatedError } = require('../../errors');
+const { findOne } = require('../../models/tweet.model');
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
@@ -45,33 +46,33 @@ const getTweets = async (req, res) => {
 };
 
 const setLike = async (req, res) => {
+  const { username } = req.user;
   const { tweetId } = req.params;
-  const { userId } = req.body;
 
-  // const like = await Tweet.updateOne(
-  //   { tweetId },
-  //   { $push: { likes: req.body } }
-  // );
-  // console.log(tweetId, userId, like);
+  const like = await Tweet.updateOne(
+    { _id: tweetId },
+    { $push: { likes: { username, tweetId } } }
+  );
 
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'fetched successfully',
+    like,
   });
 };
 
 const setRetweet = async (req, res) => {
+  const { username } = req.user;
   const { tweetId } = req.params;
   const retweet = await Tweet.updateOne(
-    { tweetId },
-    { $push: { retweet: req.body } }
+    { _id: tweetId },
+    { $push: { retweet: { username, tweetId } } }
   );
-  console.log(tweetId, username, retweet);
 
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'retweeted',
-    // retweet,
+    retweet,
   });
 };
 

@@ -25,7 +25,7 @@ const tweetRouter = express.Router();
 
 tweetRouter.post('/', authenticateUser, upload.single('tweetImg'), postTweet);
 tweetRouter.patch('/likes/:tweetId', authenticateUser, setLike);
-tweetRouter.patch('/retweets/:tweetId', setRetweet);
+tweetRouter.patch('/retweets/:tweetId', authenticateUser, setRetweet);
 tweetRouter.get('/', authenticateUser, getTweets);
 
 module.exports = tweetRouter;

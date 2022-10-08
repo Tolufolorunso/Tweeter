@@ -58,7 +58,7 @@ const Nav = () => {
             <div onClick={handleDropdown}>
               <Avater src={avaterImage} alt="user avater" />
             </div>
-            <span>tolulope</span>
+            <span>@{user.username}</span>
             <span onClick={handleDropdown} style={{ cursor: 'pointer' }}>
               <GiArrowDunk />
             </span>

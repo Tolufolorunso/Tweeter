@@ -57,33 +57,25 @@ const TweetProvider = ({ children }) => {
   };
 
   const setLike = async (tweetID) => {
-    console.log(tweetID);
-    // try {
-    //   let res = await tweetsFetch.patch(
-    //     `/tweets/likes/${data.tweetId}`,
-    //     tweetID
-    //   );
-    //   if (res.data.status) {
-    //     console.log(res.data);
-    //   }
-    // } catch (error) {
-    //   console.log(error.response);
-    // }
+    try {
+      let res = await tweetsFetch.patch(`/tweets/likes/${tweetID}`);
+      if (res.data.status && res.data.like.acknowledged) {
+        console.log('hello');
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   const setRetweet = async (tweetID) => {
-    console.log(tweetID);
-    // try {
-    //   let res = await tweetsFetch.patch(
-    //     `/tweets/retweets/${tweetID}`,
-    //     data
-    //   );
-    //   if (res.data.status) {
-    //     console.log(res.data);
-    //   }
-    // } catch (error) {
-    //   console.log(error.response);
-    // }
+    try {
+      let res = await tweetsFetch.patch(`/tweets/retweets/${tweetID}`);
+      if (res.data.status) {
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   return (

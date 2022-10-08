@@ -7,12 +7,14 @@ const TweetInfo = ({ others: { comments, likes, retweet } }) => {
     <div className="tweetInfo mx">
       <ul>
         <li>
-          {comments.length} {comments.length > 1 ? 'comments' : 'comment'}
+          {likes.length} {likes.length > 1 ? 'likes' : 'like'}
         </li>
         <li>
           {retweet.length} {retweet.length > 1 ? 'retweets' : 'retweet'}
         </li>
-        <li>235 saved</li>
+        <li>
+          {comments.length} {comments.length > 1 ? 'comments' : 'comment'}
+        </li>
       </ul>
     </div>
   );

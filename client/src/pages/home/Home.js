@@ -38,7 +38,6 @@ const Home = () => {
                 </div>
               ) : (
                 tweetsArr.map((tweet) => {
-                  console.log(tweet.likes);
                   return <Tweet tweet={tweet} key={tweet._id} />;
                 })
               )}
