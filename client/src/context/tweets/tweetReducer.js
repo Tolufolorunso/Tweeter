@@ -5,6 +5,7 @@ import {
   POST_TWEET_BEGIN,
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
+  LIKE_SUCCESS,
 } from './action';
 
 const reducer = (state, { type, payload }) => {
@@ -30,6 +31,19 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (POST_TWEET_ERROR === type) {
+    return { ...state, isLoading: false };
+  }
+
+  if (LIKE_SUCCESS === type) {
+    console.log(payload);
+    let tweets = state.tweets.map((tweet) => {
+      if (tweet._id === payload.tweetID) {
+        // console.log(payload, tweet.likes);
+        return tweet.likes.push(payload.username);
+      }
+      return tweet;
+    });
+    console.log(tweets);
     return { ...state, isLoading: false };
   }
 

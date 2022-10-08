@@ -6,7 +6,7 @@ import { useAuthContext } from './context/auth/authContext';
 import { useEffect } from 'react';
 
 function App() {
-  const { user, token, getMe } = useAuthContext();
+  const { user, token } = useAuthContext();
 
   // useEffect(() => {
   //   getMe();

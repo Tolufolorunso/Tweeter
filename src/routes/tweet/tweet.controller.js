@@ -37,7 +37,7 @@ const postTweet = async (req, res) => {
 };
 
 const getTweets = async (req, res) => {
-  const tweets = await Tweet.find({});
+  const tweets = await Tweet.find({}).sort('-createdAt');
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'fetched successfully',
@@ -51,7 +51,7 @@ const setLike = async (req, res) => {
 
   const like = await Tweet.updateOne(
     { _id: tweetId },
-    { $push: { likes: { username, tweetId } } }
+    { $push: { likes: username } }
   );
 
   res.status(StatusCodes.OK).json({

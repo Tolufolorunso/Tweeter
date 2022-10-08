@@ -24,7 +24,7 @@ const TweetActions = ({ others: { retweet, _id } }) => {
   };
 
   const handleLike = () => {
-    setLike(_id);
+    setLike(_id, user.username);
   };
 
   const handleSave = () => {

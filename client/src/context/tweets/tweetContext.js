@@ -7,6 +7,7 @@ import {
   POST_TWEET_BEGIN,
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
+  LIKE_SUCCESS,
 } from './action';
 import reducer from './tweetReducer';
 import tweetsFetch from '../../api/fetchApi';
@@ -56,11 +57,11 @@ const TweetProvider = ({ children }) => {
     }
   };
 
-  const setLike = async (tweetID) => {
+  const setLike = async (tweetID, username) => {
     try {
       let res = await tweetsFetch.patch(`/tweets/likes/${tweetID}`);
       if (res.data.status && res.data.like.acknowledged) {
-        console.log('hello');
+        dispatch({ type: LIKE_SUCCESS, payload: { tweetID, username } });
       }
     } catch (error) {
       console.log(error.response);
