@@ -6,21 +6,24 @@ import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useAuthContext } from '../../context/auth/authContext';
 
 const TweetActions = ({ others: { retweet, likes, _id } }) => {
-  const { setLike, setRetweet, setUnlike } = useTweetContext();
+  const { setLike, setUnlike, setRetweet, setUnRetweet } = useTweetContext();
   const { user } = useAuthContext();
 
-  // console.log(_id);
+  const isRetweet = () => retweet.includes(user.username);
 
-  const isRetweet = () => {
-    return retweet.find((r) => r.username === user?.username);
-  };
+  const isLike = () => likes.includes(user.username);
 
   const handleComment = () => {
     console.log('clicked');
   };
 
   const handleRetweet = () => {
-    setRetweet(_id);
+    console.log(retweet);
+    if (retweet.includes(user.username)) {
+      setUnRetweet(_id, user.username);
+    } else {
+      setRetweet(_id, user.username);
+    }
   };
 
   const handleLike = () => {
@@ -42,13 +45,18 @@ const TweetActions = ({ others: { retweet, likes, _id } }) => {
           <MdOutlineModeComment className="icons" /> <span>Comment</span>
         </li>
         <li
-          className={`tweetActions-li ${isRetweet() ? 'retweeted' : null}`}
+          className={`tweetActions-li ${isRetweet() && 'retweeted'}`}
           onClick={handleRetweet}
         >
-          <AiOutlineRetweet className="icons" /> <span>Retweeted</span>
+          <AiOutlineRetweet className="icons" />{' '}
+          <span>{isRetweet() ? 'Retweeted' : 'Retweet'}</span>
         </li>
-        <li className="tweetActions-li" onClick={handleLike}>
-          <FcLike className="icons" /> <span>Like</span>
+        <li
+          className={`tweetActions-li ${isLike() && 'liked'}`}
+          onClick={handleLike}
+        >
+          <FcLike className="icons" />{' '}
+          <span>{isLike() ? 'Liked' : 'Like'}</span>
         </li>
         <li className="tweetActions-li saved" onClick={handleSave}>
           <BsFillBookmarkFill className="icons" /> <span>Saved</span>

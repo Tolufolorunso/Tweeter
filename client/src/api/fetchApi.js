@@ -25,11 +25,9 @@ fetchApi.interceptors.response.use(
     return response;
   },
   (error) => {
-    // console.log(error.response)
+    console.log(error.response.status);
     if (error.response.status === 401) {
       // localStorage.clear();
-      // return <Navigate to="/landing" />;
-      // logoutUser()
     }
     return Promise.reject(error);
   }

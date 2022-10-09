@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import DefaultImage from '../assets/images/landingpageimage.png';
 
-const Avater = ({ src, alt, style }) => {
+const Avater = ({ src, name, alt, style }) => {
   return (
     <Wrapper style={style}>
-      <img src={src || DefaultImage} alt={alt} />
+      {src ? <img src={src || DefaultImage} alt={alt} /> : <span>TK</span>}
     </Wrapper>
   );
 };
@@ -12,6 +12,11 @@ const Avater = ({ src, alt, style }) => {
 const Wrapper = styled.div`
   height: 40px;
   width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;
+  border-radius: 50%;
 
   img {
     width: 100%;

@@ -9,6 +9,8 @@ import {
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
   UNLIKE_SUCCESS,
+  RETWEET_SUCCESS,
+  UNRETWEET_SUCCESS,
 } from './action';
 import reducer from './tweetReducer';
 import tweetsFetch from '../../api/fetchApi';
@@ -80,10 +82,23 @@ const TweetProvider = ({ children }) => {
     }
   };
 
-  const setRetweet = async (tweetID) => {
+  const setRetweet = async (tweetID, username) => {
     try {
       let res = await tweetsFetch.patch(`/tweets/retweets/${tweetID}`);
       if (res.data.status) {
+        dispatch({ type: RETWEET_SUCCESS, payload: { tweetID, username } });
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const setUnRetweet = async (tweetID, username) => {
+    try {
+      let res = await tweetsFetch.patch(`/tweets/unretweets/${tweetID}`);
+      if (res.data.status) {
+        dispatch({ type: UNRETWEET_SUCCESS, payload: { tweetID, username } });
         console.log(res.data);
       }
     } catch (error) {
@@ -93,7 +108,15 @@ const TweetProvider = ({ children }) => {
 
   return (
     <TweetContext.Provider
-      value={{ ...state, postTweet, getTweets, setLike, setUnlike, setRetweet }}
+      value={{
+        ...state,
+        postTweet,
+        getTweets,
+        setLike,
+        setUnlike,
+        setRetweet,
+        setUnRetweet,
+      }}
     >
       {children}
     </TweetContext.Provider>

@@ -59,11 +59,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    userImg: {
-      type: String,
-      default:
-        'https://res.cloudinary.com/tolufolorunso/image/upload/v1664848329/tweeter/blank-profile-picture-gc8eaa7382_640.png',
-    },
+    userImg: String,
     coverImg: {
       type: String,
     },

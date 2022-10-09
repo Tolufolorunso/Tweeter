@@ -82,14 +82,31 @@ const setUnLike = async (req, res) => {
 const setRetweet = async (req, res) => {
   const { username } = req.user;
   const { tweetId } = req.params;
+
   const retweet = await Tweet.updateOne(
     { _id: tweetId },
-    { $push: { retweet: { username, tweetId } } }
+    { $push: { retweet: username } }
   );
 
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'retweeted',
+    retweet,
+  });
+};
+
+const setUnRetweet = async (req, res) => {
+  const { username } = req.user;
+  const { tweetId } = req.params;
+  console.log(username, tweetId);
+  const retweet = await Tweet.updateOne(
+    { _id: tweetId },
+    { $pull: { retweet: username } }
+  );
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'unretweeted',
     retweet,
   });
 };
@@ -100,4 +117,5 @@ module.exports = {
   setLike,
   setUnLike,
   setRetweet,
+  setUnRetweet,
 };
