@@ -37,7 +37,19 @@ const postTweet = async (req, res) => {
 };
 
 const getTweets = async (req, res) => {
-  const tweets = await Tweet.find({}).sort('-createdAt');
+  let userId = req.user;
+  const tweets = await Tweet.find({ userId }).sort('-createdAt');
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'fetched successfully',
+    tweets,
+  });
+};
+
+const getTimeline = async (req, res) => {
+  let userId = req.user;
+  const tweets = await Tweet.find({ userId }).sort('-createdAt');
+  // const followersTweets = Promise.all([])
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'fetched successfully',

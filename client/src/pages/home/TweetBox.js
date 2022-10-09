@@ -10,7 +10,7 @@ import { useTweetContext } from '../../context/tweets/tweetContext';
 
 const TweetBox = () => {
   const { user } = useAuthContext();
-  const { postTweet, isLoading } = useTweetContext();
+  const { postTweet } = useTweetContext();
   let [canReply, setCanReply] = useState('everyone');
   let [isCanReplyOpen, setIsCanReplyOpen] = useState(false);
   const [tweetText, setTweetText] = useState('');
@@ -111,12 +111,13 @@ const TweetBox = () => {
             <span>{canReply} can reply</span>
           </p>
           <Button
-            text={!isLoading ? 'Tweet' : 'Tweeting...'}
+            text="Tweet"
             style={{ marginLeft: 'auto' }}
-            disabled={isLoading}
+            // disabled={isLoading}
           />
         </div>
       </form>
+      {/* <img src="" alt="" /> */}
       {!isCanReplyOpen || (
         <div className="can-reply">
           <Text title="Who can reply" tag="h3" />
