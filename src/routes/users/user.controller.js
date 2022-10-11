@@ -8,9 +8,9 @@ const {
 } = require('../../errors');
 
 const getUser = async (req, res) => {
-  const { userID } = req.params;
+  const { username } = req.params;
 
-  const user = await User.findById(userID);
+  const user = await User.findOne({ username });
 
   if (!user) {
     throw new NotFoundError(`User with the ${userID}, doesn't exist`);

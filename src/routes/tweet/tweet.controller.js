@@ -37,8 +37,8 @@ const postTweet = async (req, res) => {
 };
 
 const getTweets = async (req, res) => {
-  let userId = req.user;
-  const tweets = await Tweet.find({ userId }).sort('-createdAt');
+  let { username } = req.params;
+  const tweets = await Tweet.find({ username }).sort('-createdAt');
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'fetched successfully',

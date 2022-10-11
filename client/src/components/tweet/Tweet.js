@@ -8,6 +8,8 @@ import Text from '../Text';
 // import ReplyToTweet from './ReplyToTweet';
 // import Replies from './Replies';
 
+import DefaultAvater from '../../assets/images/defaultAvater.png';
+
 import {
   Replies,
   ReplyToTweet,
@@ -30,7 +32,10 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
       {tweetText && <Text title={tweetText} style={tweetTextStyle} tag="p" />}
       {tweetImg && (
         <div className="imageWrapper">
-          <img src={tweetImg} alt={tweetText.substring(0, 10)} />
+          <img
+            src={tweetImg || DefaultAvater}
+            alt={tweetText.substring(0, 10)}
+          />
         </div>
       )}
       <TweetInfo others={others} />

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../context/auth/authContext';
 
 const NavProfileDropdown = ({ handleDropdown }) => {
-  const { logout } = useAuthContext();
+  const { logout, user } = useAuthContext();
   const handleLogout = () => {
     logout();
   };
@@ -17,7 +17,7 @@ const NavProfileDropdown = ({ handleDropdown }) => {
     <Wrapper onClick={handleDropdown}>
       <div className="link">
         <FaUserCircle />
-        <Link to="/profile" className="hey">
+        <Link to={`/profile/${user.username}`} className="hey">
           My Profile
         </Link>
       </div>

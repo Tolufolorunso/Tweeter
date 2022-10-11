@@ -85,15 +85,12 @@ const AuthProvider = ({ children }) => {
     });
   };
 
-  const getMe = async () => {
+  const getUser = async (username) => {
     try {
-      const res = await authFetch('/users/me');
-      console.log(res);
+      const res = await authFetch(`/users/${username}`);
+      console.log(res.data);
     } catch (error) {
-      localStorage.clear();
-      dispatch({
-        type: LOGOUT,
-      });
+      console.log(error);
     }
   };
 
@@ -104,7 +101,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, register, login, logout, getMe }}>
+    <AuthContext.Provider
+      value={{ ...state, register, login, logout, getUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

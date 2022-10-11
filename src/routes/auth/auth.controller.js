@@ -25,8 +25,6 @@ const register = async (req, res, next) => {
     delete req.body.email;
   }
 
-  console.log(28, { ...req.body });
-
   const emailOrPhoneExist = await User.findOne(emailOrPhoneExistObj);
   const usernameExist = await User.findOne({ username });
 
@@ -35,19 +33,21 @@ const register = async (req, res, next) => {
   }
 
   let user = await User.create({ ...req.body, dateOfBirth });
-  console.log(36, user);
+
   const token = createJWT({
     name: user.name,
     username: user.username,
   });
 
-  user = user.toObject();
-  delete user.password;
+  // user = user.toObject();
+  // delete user.password;
+
+  let { password, ...other } = user;
 
   res.status(StatusCodes.CREATED).json({
     status: true,
     message: 'User created successfully',
-    user,
+    user: other,
     token,
   });
 };

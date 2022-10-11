@@ -30,6 +30,6 @@ tweetRouter.patch('/likes/:tweetId', authenticateUser, setLike);
 tweetRouter.patch('/unlikes/:tweetId', authenticateUser, setUnLike);
 tweetRouter.patch('/retweets/:tweetId', authenticateUser, setRetweet);
 tweetRouter.patch('/unretweets/:tweetId', authenticateUser, setUnRetweet);
-tweetRouter.get('/', authenticateUser, getTweets);
+tweetRouter.get('/:username', authenticateUser, getTweets);
 
 module.exports = tweetRouter;

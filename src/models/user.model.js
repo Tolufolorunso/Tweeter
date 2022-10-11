@@ -59,9 +59,17 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    userImg: String,
+    userImg: {
+      type: String,
+      default: null,
+    },
     coverImg: {
       type: String,
+      default: null,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     bio: {
       type: String,

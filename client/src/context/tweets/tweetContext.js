@@ -47,10 +47,10 @@ const TweetProvider = ({ children }) => {
     }
   };
 
-  const getTweets = async () => {
+  const getTweets = async (username) => {
     dispatch({ type: GET_TWEETS_BEGIN });
     try {
-      let res = await tweetsFetch.get('/tweets');
+      let res = await tweetsFetch.get(`/tweets/${username}`);
       if (res.data.status) {
         dispatch({ type: GET_TWEETS_SUCCESS, payload: res.data.tweets });
       }
