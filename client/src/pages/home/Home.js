@@ -7,6 +7,7 @@ import TweetBox from './TweetBox';
 import WhoToFollow from './WhoToFollow';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useEffect } from 'react';
+const token = localStorage.getItem('token');
 
 const Home = () => {
   const { getTweets, tweets } = useTweetContext();
@@ -18,10 +19,13 @@ const Home = () => {
   }, [tweets]);
 
   useEffect(() => {
-    getTweets();
+    if (token) {
+      console.log(token);
+      getTweets();
+    }
     setIsLoading(false);
     // eslint-disable-next-line
-  }, []);
+  }, [token]);
 
   return (
     <HomeWrapper>

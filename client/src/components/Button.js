@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
-const Button = ({ text, size, radius, bgColor, color, icon, style }) => {
+const Button = ({
+  text,
+  size,
+  radius,
+  bgColor,
+  color,
+  icon,
+  style,
+  onClick,
+}) => {
   return (
     <Wrapper
       size={size}
@@ -8,6 +17,7 @@ const Button = ({ text, size, radius, bgColor, color, icon, style }) => {
       bgColor={bgColor}
       color={color}
       style={style}
+      onClick={onClick}
     >
       {icon ? <span>{icon}</span> : null} <span>{text}</span>
     </Wrapper>

@@ -16,7 +16,7 @@ const authenticationMiddleware = async (req, res, next) => {
   // console.log(token);
   try {
     const decoded = await isTokenValid(token);
-    const { username, name } = decoded;
+    const { username, name, id } = decoded;
 
     const currentUser = await userModel.findOne({ username });
     // console.log(currentUser);
@@ -24,7 +24,7 @@ const authenticationMiddleware = async (req, res, next) => {
     if (!currentUser) {
       throw new UnauthenticatedError("The user doesn't exists");
     }
-    req.user = { name, username };
+    req.user = { name, username, id };
     next();
   } catch (error) {
     // console.log(29, error.message);

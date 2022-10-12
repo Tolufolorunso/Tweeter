@@ -3,7 +3,7 @@ import { AiOutlineRetweet } from 'react-icons/ai';
 import { FcLike } from 'react-icons/fc';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useTweetContext } from '../../context/tweets/tweetContext';
-import { useAuthContext } from '../../context/auth/authContext';
+import { useAuthContext } from '../../context/user/userContext';
 
 const TweetActions = ({ others: { retweet, likes, _id } }) => {
   const { setLike, setUnlike, setRetweet, setUnRetweet } = useTweetContext();

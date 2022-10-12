@@ -4,7 +4,7 @@ import { useState } from 'react';
 import RegisterStepOne from './Register.stepOne';
 import RegisterSteptwo from './Register.stepTwo';
 import RegisterStepThree from './Register.stepThree';
-import { useAuthContext } from '../../../context/auth/authContext';
+import { useAuthContext } from '../../../context/user/userContext';
 
 const initialState = {
   username: 'tolufolorunso',
@@ -31,7 +31,7 @@ const RegisterModal = ({ closeModal }) => {
   const [stepName, setStepName] = useState('stepOne');
   const [emailOrPhone, setEmailOrPhone] = useState('email');
 
-  const { isLoading, register, error, hello } = useAuthContext();
+  const { isLoading, register, error } = useAuthContext();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });

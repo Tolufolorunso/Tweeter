@@ -25,8 +25,13 @@ fetchApi.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error.response.status);
-    if (error.response.status === 401) {
+    // console.log(error.response);
+    console.log(token);
+    if (
+      error.response.status === 401 &&
+      error.response.statusText === 'Unauthorized'
+    ) {
+      console.log(401);
       // localStorage.clear();
     }
     return Promise.reject(error);

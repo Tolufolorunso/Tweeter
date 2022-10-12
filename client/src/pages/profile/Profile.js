@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useState } from 'react';
-import { useAuthContext } from '../../context/auth/authContext';
+import { useAuthContext } from '../../context/user/userContext';
 // import ProfileAside from './ProfileAside';
 import authFetch from '../../api/fetchApi';
 

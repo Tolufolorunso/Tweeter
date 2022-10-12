@@ -5,7 +5,7 @@ import { Avater, Button, Text } from '../../components';
 
 // import AvaterImage from '../../assets/images/landingpageimage.png';
 import { useEffect, useState } from 'react';
-import { useAuthContext } from '../../context/auth/authContext';
+import { useAuthContext } from '../../context/user/userContext';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 
 const TweetBox = () => {

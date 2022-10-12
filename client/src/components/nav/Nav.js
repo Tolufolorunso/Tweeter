@@ -11,7 +11,7 @@ import LogoMobile from '../../assets/images/tweeter-small.svg';
 import Avater from '../Avater';
 import NavProfileDropdown from './NavProfileDropdown';
 import { useEffect, useState } from 'react';
-import { useAuthContext } from '../../context/auth/authContext';
+import { useAuthContext } from '../../context/user/userContext';
 
 const Nav = () => {
   const [dropdown, setDropdown] = useState(false);

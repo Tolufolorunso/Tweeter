@@ -37,11 +37,11 @@ const register = async (req, res, next) => {
   const token = createJWT({
     name: user.name,
     username: user.username,
+    id: user._id,
   });
 
-  // user = user.toObject();
+  user = user.toObject();
   // delete user.password;
-
   let { password, ...other } = user;
 
   res.status(StatusCodes.CREATED).json({
@@ -84,6 +84,7 @@ const login = async (req, res) => {
   const token = createJWT({
     name: user.name,
     username: user.username,
+    id: user._id,
   });
 
   user = user.toObject();

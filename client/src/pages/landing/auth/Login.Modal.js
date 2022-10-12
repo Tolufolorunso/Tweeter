@@ -6,7 +6,7 @@ import AuthWrapper from './auth.styled';
 import Logo from '../../../assets/images/tweeter-small.svg';
 import { Heading } from '../../../components';
 import { useState } from 'react';
-import { useAuthContext } from '../../../context/auth/authContext';
+import { useAuthContext } from '../../../context/user/userContext';
 
 const LoginModal = ({ closeModal }) => {
   const { isLoading, login, error } = useAuthContext();

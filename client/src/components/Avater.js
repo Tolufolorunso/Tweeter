@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import DefaultImage from '../assets/images/landingpageimage.png';
 
 const Avater = ({ src, name, alt, style }) => {
   return (
     <Wrapper style={style}>
-      {src ? <img src={src || DefaultImage} alt={alt} /> : <span>TK</span>}
+      {src ? <img src={src} alt={alt} /> : <span>TK</span>}
     </Wrapper>
   );
 };
@@ -24,6 +23,7 @@ const Wrapper = styled.div`
     display: block;
     object-fit: cover;
     border-radius: 3px;
+    overflow: hidden;
   }
 `;
 
