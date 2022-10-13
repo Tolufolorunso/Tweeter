@@ -1,9 +1,22 @@
 import defaultCoverImage from '../../assets/images/cover-image.jpeg';
 
-const CoverPicture = ({ src, userName }) => {
+let style = {
+  display: 'grid',
+  placeItems: 'center',
+  height: '100%',
+  color: 'white',
+  backgroundColor: 'black',
+};
+
+const CoverPicture = ({ src, userName, userNotFound }) => {
+  console.log(userNotFound);
   return (
     <div className="cover-picture">
-      <img src={src || defaultCoverImage} alt={`${userName}'s cover-pic`} />
+      {userNotFound ? (
+        <div style={style}>404</div>
+      ) : (
+        <img src={src || defaultCoverImage} alt={`${userName}'s cover-pic`} />
+      )}
     </div>
   );
 };

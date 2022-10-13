@@ -13,7 +13,7 @@ const getUser = async (req, res) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    throw new NotFoundError(`User with the ${userID}, doesn't exist`);
+    throw new NotFoundError(`The username: "${username}", doesn't exist`);
   }
 
   res.status(StatusCodes.OK).json({
@@ -59,8 +59,15 @@ const follow = async (req, res) => {
   }
 
   await user.updateOne({ $push: { followers: id } });
-  await currentUser.updateOne({ $push: { following: userId } });
-  res.status(StatusCodes.OK).json({ message: 'followed' });
+  await currentUser.updateOne({
+    $push: { following: userId },
+  });
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'followed',
+    following: [...currentUser.following, userId],
+  });
 };
 
 const unfollow = async (req, res) => {
@@ -78,7 +85,7 @@ const unfollow = async (req, res) => {
   }
 
   await user.updateOne({ $pull: { followers: id } });
-  await currentUser.updateOne({ $pull: { following: id } });
+  await currentUser.updateOne({ $pull: { following: userId } });
   res.status(StatusCodes.OK).json({ message: 'unfollowed' });
 };
 

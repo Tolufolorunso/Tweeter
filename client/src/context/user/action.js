@@ -8,4 +8,7 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 
 export const LOGOUT = 'LOGOUT';
 
+export const FOLLOW_SUCCESS = 'FOLLOW_SUCCESS';
+export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
+
 export const CLEAR_ERROR = 'CLEAR_ERROR';

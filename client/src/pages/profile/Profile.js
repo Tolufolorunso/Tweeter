@@ -20,6 +20,7 @@ const Profile = () => {
   const [tweetsData, setTweetsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userDetail, setUserDetail] = useState(null);
+  const [userNotFound, setUserNotFound] = useState(null);
 
   useEffect(() => {
     setTweetsData(tweets);
@@ -32,7 +33,11 @@ const Profile = () => {
         setUserDetail(res.data.user);
       }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
+      if (error.response.status === 404) {
+        setUserNotFound(error.response.data);
+        console.log(userNotFound);
+      }
     }
   };
 
@@ -57,9 +62,14 @@ const Profile = () => {
 
   return (
     <ProfileWrapper>
-      <CoverPicture src={userDetail?.coverImg} userName="user name" />
+      <CoverPicture
+        src={userDetail?.coverImg}
+        userName="user name"
+        userNotFound={userNotFound}
+      />
       <div className="container">
-        <ProfileDetail user={userDetail} />
+        {!userNotFound ? <ProfileDetail user={userDetail} /> : null}
+
         <div className="home">
           <ProfileAside lists={lists} />
           <div className="home__main">
@@ -72,6 +82,8 @@ const Profile = () => {
                 <div style={{ textAlign: 'center', color: 'green' }}>
                   <h2>Loading</h2>
                 </div>
+              ) : userNotFound ? (
+                <h1>{userNotFound.message}</h1>
               ) : (
                 tweetsData.map((tweet) => {
                   return <Tweet tweet={tweet} key={tweet._id} />;

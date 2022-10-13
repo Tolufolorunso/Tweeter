@@ -9,6 +9,8 @@ import {
   REGISTER_SUCCESS,
   LOGOUT,
   CLEAR_ERROR,
+  FOLLOW_SUCCESS,
+  UNFOLLOW_SUCCESS,
 } from './action';
 import reducer from './userReducer';
 import authFetch from '../../api/fetchApi';
@@ -20,6 +22,8 @@ const initialState = {
   isLoading: false,
   user: user ? JSON.parse(user) : null,
   token: token ? token : null,
+  following: [],
+  followers: [],
   error: '',
 };
 
@@ -98,6 +102,17 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await authFetch.patch(`/users/${userId}/follow`);
       console.log(res.data);
+      dispatch({ type: FOLLOW_SUCCESS, payload: res.data.following });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const unfollow = async (userId) => {
+    try {
+      const res = await authFetch.patch(`/users/${userId}/unfollow`);
+      console.log(res.data);
+      dispatch({ type: UNFOLLOW_SUCCESS, payload: res.data.following });
     } catch (error) {
       console.log(error.response);
     }
@@ -111,7 +126,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ ...state, register, login, logout, follow, getUser }}
+      value={{ ...state, register, login, logout, follow, unfollow, getUser }}
     >
       {children}
     </AuthContext.Provider>

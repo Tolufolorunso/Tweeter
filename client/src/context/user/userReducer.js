@@ -7,6 +7,8 @@ import {
   LOGIN_ERROR,
   LOGOUT,
   CLEAR_ERROR,
+  FOLLOW_SUCCESS,
+  UNFOLLOW_SUCCESS,
 } from './action';
 
 const reducer = (state, { type, payload }) => {
@@ -41,6 +43,8 @@ const reducer = (state, { type, payload }) => {
       isLoading: false,
       user: payload.user,
       token: payload.token,
+      following: payload.user.following,
+      followers: payload.user.followers,
     };
   }
 
@@ -50,6 +54,11 @@ const reducer = (state, { type, payload }) => {
 
   if (LOGOUT === type) {
     return { ...state, isLoading: false, error: '', user: null, token: null };
+  }
+
+  if (FOLLOW_SUCCESS === type) {
+    console.log(payload);
+    return { ...state, following: payload };
   }
 
   if (CLEAR_ERROR === type) {

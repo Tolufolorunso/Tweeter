@@ -7,12 +7,22 @@ const button = { fontWeight: 500, padding: '3px 8px' };
 const avaterStyle = { height: '70px', width: '70px', marginTop: '-50px' };
 
 const ProfileDetail = ({ user }) => {
-  const { follow, user: self } = useAuthContext();
+  const {
+    follow,
+    unfollow,
+    following,
+    followers,
+    user: self,
+  } = useAuthContext();
   console.log(11, user?.following, user?._id);
 
   console.log(self?.following.includes(user?._id));
   const handleFollow = () => {
     follow(user._id);
+  };
+
+  const handleUnFollow = () => {
+    unfollow(user._id);
   };
 
   return (
@@ -23,13 +33,13 @@ const ProfileDetail = ({ user }) => {
           <Text title={user?.name} tag="h3" fs={1.5} />
           <div>
             <Text
-              title={`${user?.following.length} Following`}
+              title={`${following.length} Following`}
               tag="span"
               fs={0.75}
               style={{ marginRight: '5px' }}
             />
             <Text
-              title={`${user?.followers.length} Followers`}
+              title={`${followers.length} Followers`}
               tag="span"
               fs={0.75}
             />
@@ -43,12 +53,12 @@ const ProfileDetail = ({ user }) => {
             <IoMdPersonAdd />
             Edit Profile
           </Link>
-        ) : self?.following.includes(user?._id) ? (
+        ) : following.includes(user?._id) ? (
           <Button
             icon={<IoMdPersonAdd />}
             text="Unfollow"
             style={button}
-            onClick={handleFollow}
+            onClick={handleUnFollow}
           />
         ) : (
           <Button
