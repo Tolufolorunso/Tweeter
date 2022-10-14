@@ -9,7 +9,6 @@ let style = {
 };
 
 const CoverPicture = ({ src, userName, userNotFound }) => {
-  console.log(userNotFound);
   return (
     <div className="cover-picture">
       {userNotFound ? (

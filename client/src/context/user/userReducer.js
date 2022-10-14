@@ -57,7 +57,11 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (FOLLOW_SUCCESS === type) {
-    console.log(payload);
+    return { ...state, following: payload };
+  }
+
+  if (UNFOLLOW_SUCCESS === type) {
+    localStorage.setItem('following', JSON.stringify(payload));
     return { ...state, following: payload };
   }
 
@@ -65,7 +69,7 @@ const reducer = (state, { type, payload }) => {
     return { ...state, isLoading: false, error: '' };
   }
 
-  throw new Error(`No such acyion :${type}`);
+  throw new Error(`No such action :${type}`);
 };
 
 export default reducer;

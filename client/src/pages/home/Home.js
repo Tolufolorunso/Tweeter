@@ -20,7 +20,6 @@ const Home = () => {
 
   useEffect(() => {
     if (token) {
-      console.log(token);
       getTweets();
     }
     setIsLoading(false);

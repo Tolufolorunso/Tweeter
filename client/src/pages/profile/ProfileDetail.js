@@ -14,9 +14,7 @@ const ProfileDetail = ({ user }) => {
     followers,
     user: self,
   } = useAuthContext();
-  console.log(11, user?.following, user?._id);
 
-  console.log(self?.following.includes(user?._id));
   const handleFollow = () => {
     follow(user._id);
   };

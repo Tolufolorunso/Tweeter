@@ -36,7 +36,6 @@ const Profile = () => {
       // console.log(error.response);
       if (error.response.status === 404) {
         setUserNotFound(error.response.data);
-        console.log(userNotFound);
       }
     }
   };

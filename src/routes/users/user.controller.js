@@ -28,7 +28,10 @@ const updateUser = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  res.status(StatusCodes.OK).json({ message: 'getAllUsers' });
+  const users = await User.find({});
+  res
+    .status(StatusCodes.OK)
+    .json({ status: true, message: 'getAllUsers', users });
 };
 
 const getMe = async (req, res) => {
@@ -86,7 +89,12 @@ const unfollow = async (req, res) => {
 
   await user.updateOne({ $pull: { followers: id } });
   await currentUser.updateOne({ $pull: { following: userId } });
-  res.status(StatusCodes.OK).json({ message: 'unfollowed' });
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    following: currentUser.following.filter((f) => f !== userId),
+    message: 'unfollowed',
+  });
 };
 
 module.exports = {
