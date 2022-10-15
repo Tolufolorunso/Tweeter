@@ -10,8 +10,11 @@ import { useState } from 'react';
 import { useAuthContext } from '../../context/user/userContext';
 // import ProfileAside from './ProfileAside';
 import authFetch from '../../api/fetchApi';
+import io from 'socket.io-client';
 
 const lists = ['Tweets', 'Tweets & replies', 'media', 'Likes'];
+const ENDPOINT = 'http://localhost:5000';
+let socket;
 
 const Profile = () => {
   let { username } = useParams();
@@ -21,10 +24,18 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userDetail, setUserDetail] = useState(null);
   const [userNotFound, setUserNotFound] = useState(null);
+  // const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     setTweetsData(tweets);
   }, [tweets]);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit('setup', 'hello');
+    console.log('hello');
+    // setSocket(newSocket);
+  });
 
   const fetchUser = async () => {
     try {
