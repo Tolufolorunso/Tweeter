@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const User = require('../../models/user.model');
+const Tweet = require('../../models/tweet.model');
 
 const {
   NotFoundError,
@@ -97,6 +98,33 @@ const unfollow = async (req, res) => {
   });
 };
 
+const saveTweet = async (req, res) => {
+  const { tweetId } = req.params;
+  const { id } = req.user;
+
+  const tweet = await Tweet.findById(tweetId);
+
+  console.log(tweetId, tweet);
+
+  if (!tweet) {
+    throw new NotFoundError(`Tweet not found`);
+  }
+
+  const user = await User.findById(id);
+
+  if (user.savedTweet.includes(tweetId)) {
+    throw new BadRequestError(`Tweet saved already`);
+  }
+
+  await user.updateOne({ $push: { savedTweet: tweetId } });
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    savedTweet: [...user.savedTweet, tweetId],
+    message: 'Tweet bookmarked',
+  });
+};
+
 module.exports = {
   updateUser,
   getUser,
@@ -104,4 +132,5 @@ module.exports = {
   getMe,
   follow,
   unfollow,
+  saveTweet,
 };
