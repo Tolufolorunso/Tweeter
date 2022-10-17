@@ -125,6 +125,29 @@ const saveTweet = async (req, res) => {
   });
 };
 
+const unsavedTweet = async (req, res) => {
+  const { tweetId } = req.params;
+  const { id } = req.user;
+
+  // if (!tweet) {
+  //   throw new NotFoundError(`Tweet not found`);
+  // }
+
+  const user = await User.findById(id);
+
+  // if (user.savedTweet.includes(tweetId)) {
+  //   throw new BadRequestError(`Tweet saved already`);
+  // }
+
+  await user.updateOne({ $pull: { savedTweet: tweetId } });
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    savedTweet: user.savedTweet.filter((f) => f !== tweetId),
+    message: 'Tweet unbookmarked',
+  });
+};
+
 module.exports = {
   updateUser,
   getUser,
@@ -133,4 +156,5 @@ module.exports = {
   follow,
   unfollow,
   saveTweet,
+  unsavedTweet,
 };
