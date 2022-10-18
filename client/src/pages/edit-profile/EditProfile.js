@@ -1,9 +1,16 @@
 import React from 'react';
 import EditProfileWrapper from './editProfile.styled';
+import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../context/user/userContext';
 
 const EditProfile = () => {
+  const { user } = useAuthContext();
+
   return (
     <EditProfileWrapper>
+      <div className="back">
+        <Link to={`/profile/${user.username}`}>{'<'} back</Link>
+      </div>
       <form className="form">
         <div className="form__heading">
           <h3>Change Info</h3>
@@ -67,7 +74,7 @@ const EditProfile = () => {
           />
         </div>
         <div className="form__group">
-          <input type="submit" className="submit-btn forum__group--input" />
+          <button className="form__group--btn">save</button>
         </div>
       </form>
     </EditProfileWrapper>
