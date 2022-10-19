@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 const EditProfileWrapper = styled.main`
+  .back {
+    margin-bottom: 3rem;
+    width: min(845.91px, 100% - 2rem);
+    margin-inline: auto;
+  }
   .form {
     margin-bottom: 3rem;
     border: 1px solid #e0e0e0;
