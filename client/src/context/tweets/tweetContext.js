@@ -54,6 +54,8 @@ const TweetProvider = ({ children }) => {
       if (res.data.status) {
         dispatch({ type: GET_TWEETS_SUCCESS, payload: res.data.tweets });
       }
+      console.log(res.data.tweets);
+      return res.data.tweets;
     } catch (error) {
       console.log(error.response);
       dispatch({ type: GET_TWEETS_ERROR });

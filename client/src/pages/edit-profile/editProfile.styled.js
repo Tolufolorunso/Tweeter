@@ -80,7 +80,7 @@ const EditProfileWrapper = styled.main`
   }
 
   @media (max-width: 55em) {
-    padding: 0.8rem;
+    /* padding: 0.8rem; */
     .form__group {
       max-width: 100%;
     }

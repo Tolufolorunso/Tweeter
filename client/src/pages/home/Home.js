@@ -7,24 +7,24 @@ import TweetBox from './TweetBox';
 import WhoToFollow from './WhoToFollow';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useEffect } from 'react';
-const token = localStorage.getItem('token');
+const user = JSON.parse(localStorage.getItem('user'));
 
 const Home = () => {
-  const { getTweets, tweets } = useTweetContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const { getTweets, isLoading } = useTweetContext();
   const [tweetsArr, setTweetsArr] = useState([]);
 
-  useEffect(() => {
-    setTweetsArr(tweets);
-  }, [tweets]);
+  const fetchTweets = async () => {
+    let tweets;
+    if (user.username) {
+      tweets = await getTweets(user.username);
+      setTweetsArr(tweets);
+    }
+  };
 
   useEffect(() => {
-    if (token) {
-      getTweets();
-    }
-    setIsLoading(false);
+    fetchTweets();
     // eslint-disable-next-line
-  }, [token]);
+  }, [user]);
 
   return (
     <HomeWrapper>

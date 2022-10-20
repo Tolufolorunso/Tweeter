@@ -25,7 +25,36 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  res.send('updateUser');
+  const { phone, name, bio, email } = req.body;
+  if (req.user.username !== req.params.username) {
+    throw new UnauthenticatedError("You don't have permission to do that");
+  }
+
+  if (!name) {
+    throw new BadRequestError(`Name field is required`);
+  }
+
+  // const emailExists = await User.findOne({ email });
+  // if (emailExists)
+  //   throw new UnauthenticatedError('Email exists, try another one');
+
+  let data = {
+    phone,
+    name,
+    bio,
+    email,
+  };
+
+  const user = await User.findByIdAndUpdate(req.user.id, data, {
+    runValidators: true,
+    new: true,
+  });
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'Updated successfully',
+    user,
+  });
 };
 
 const getAllUsers = async (req, res) => {

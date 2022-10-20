@@ -9,7 +9,7 @@ const { findOne } = require('../../models/tweet.model');
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
-  console.log(req.body.tweetText, 11);
+  // console.log(req.body.tweetText, 11);
 
   if (!req.file && !req.body.tweetText) {
     throw new BadRequestError('Upload atleast one image or enter tweet');

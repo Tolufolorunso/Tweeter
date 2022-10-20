@@ -56,8 +56,6 @@ const login = async (req, res) => {
   const { loginValue, password } = req.body;
   const loginObj = {};
 
-  console.log(loginValue);
-
   if (validateEmail(loginValue)) {
     loginObj.email = loginValue;
   } else if (validateOnlyNumbers(loginValue)) {

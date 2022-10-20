@@ -5,6 +5,7 @@ import { useAuthContext } from '../../context/user/userContext';
 import Form from './Form';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import CoverPicture from './CoverPicture';
 
 const values = {
   name: '',
@@ -15,7 +16,7 @@ const values = {
 };
 
 const EditProfile = () => {
-  const { user } = useAuthContext();
+  const { user, updateProfile, isLoading } = useAuthContext();
   const [userDetail, setUserDetials] = useState(values);
 
   const handleOnChange = (e) => {
@@ -26,7 +27,11 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(userDetail);
+    const isSuccessful = updateProfile(user.username, userDetail);
+
+    if (isSuccessful) {
+      console.log('proceed');
+    }
   };
 
   useEffect(() => {
@@ -42,6 +47,7 @@ const EditProfile = () => {
 
   return (
     <EditProfileWrapper>
+      <CoverPicture src={user?.coverImg} userName="user name" />
       <div className="back">
         <Link to={`/profile/${user.username}`}>{'<'} back</Link>
       </div>
@@ -50,6 +56,7 @@ const EditProfile = () => {
           userDetail={userDetail}
           handleOnChange={handleOnChange}
           handleSubmit={handleSubmit}
+          isLoading={isLoading}
         />
       )}
     </EditProfileWrapper>

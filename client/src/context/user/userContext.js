@@ -11,12 +11,15 @@ import {
   CLEAR_ERROR,
   FOLLOW_SUCCESS,
   UNFOLLOW_SUCCESS,
+  UPDATEPROFILE_BEGIN,
+  UPDATEPROFILE_ERROR,
+  UPDATEPROFILE_SUCCESS,
 } from './action';
 import reducer from './userReducer';
 import authFetch from '../../api/fetchApi';
 
 const token = localStorage.getItem('token');
-const user = localStorage.getItem('user');
+let user = localStorage.getItem('user');
 const following = localStorage.getItem('following');
 const followers = localStorage.getItem('followers');
 
@@ -100,6 +103,31 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  const updateProfile = async (username, data) => {
+    dispatch({ type: UPDATEPROFILE_BEGIN });
+    try {
+      const res = await authFetch.patch(`/users/${username}`, data);
+      if (res.data.status) {
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        dispatch({ type: UPDATEPROFILE_SUCCESS, payload: res.data.user });
+      }
+      return true;
+    } catch (error) {
+      if (error.response?.data) {
+        dispatch({
+          type: UPDATEPROFILE_ERROR,
+          payload: error.response.data.message,
+        });
+      } else {
+        dispatch({
+          type: UPDATEPROFILE_ERROR,
+          payload: 'Something went wrong',
+        });
+      }
+      clearError();
+    }
+  };
+
   const setUser = async (payload) => {
     console.log(payload);
     dispatch({ type: LOGIN_SUCCESS, payload });
@@ -132,7 +160,16 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ ...state, register, login, logout, follow, unfollow, setUser }}
+      value={{
+        ...state,
+        register,
+        login,
+        logout,
+        updateProfile,
+        follow,
+        unfollow,
+        setUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

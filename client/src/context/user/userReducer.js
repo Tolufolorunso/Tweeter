@@ -9,6 +9,9 @@ import {
   CLEAR_ERROR,
   FOLLOW_SUCCESS,
   UNFOLLOW_SUCCESS,
+  UPDATEPROFILE_BEGIN,
+  UPDATEPROFILE_ERROR,
+  UPDATEPROFILE_SUCCESS,
 } from './action';
 
 const reducer = (state, { type, payload }) => {
@@ -50,6 +53,22 @@ const reducer = (state, { type, payload }) => {
 
   if (LOGIN_ERROR === type) {
     return { ...state, isLoading: false, error: payload };
+  }
+
+  if (UPDATEPROFILE_BEGIN === type) {
+    return { ...state, isLoading: true };
+  }
+
+  if (UPDATEPROFILE_SUCCESS === type) {
+    return {
+      ...state,
+      isLoading: false,
+      user: payload,
+    };
+  }
+
+  if (UPDATEPROFILE_ERROR === type) {
+    return { ...state, isLoading: false };
   }
 
   if (LOGOUT === type) {

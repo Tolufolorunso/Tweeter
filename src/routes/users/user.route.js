@@ -14,7 +14,10 @@ const authenticateUser = require('../../middlewares/authentication');
 
 const userRouter = express.Router();
 
-userRouter.route('/:username').get(authenticateUser, getUser).patch(updateUser);
+userRouter
+  .route('/:username')
+  .get(authenticateUser, getUser)
+  .patch(authenticateUser, updateUser);
 userRouter.patch('/:userId/follow', authenticateUser, follow);
 userRouter.patch('/:userId/unfollow', authenticateUser, unfollow);
 userRouter.patch('/:tweetId/savetweet', authenticateUser, saveTweet);

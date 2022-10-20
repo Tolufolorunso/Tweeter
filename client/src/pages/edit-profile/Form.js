@@ -1,6 +1,6 @@
 import Input from './Input';
 
-const Form = ({ handleOnChange, userDetail, handleSubmit }) => {
+const Form = ({ handleOnChange, userDetail, handleSubmit, isLoading }) => {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__heading">
@@ -38,7 +38,9 @@ const Form = ({ handleOnChange, userDetail, handleSubmit }) => {
         disable
       />
       <div className="form__group">
-        <button className="form__group--btn">save</button>
+        <button className="form__group--btn">
+          {isLoading ? 'Updating' : 'Update'}
+        </button>
       </div>
     </form>
   );

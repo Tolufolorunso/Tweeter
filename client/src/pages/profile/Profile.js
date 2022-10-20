@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useAuthContext } from '../../context/user/userContext';
 // import ProfileAside from './ProfileAside';
 import authFetch from '../../api/fetchApi';
+
 // import io from 'socket.io-client';
 
 const lists = ['Tweets', 'Tweets & replies', 'media', 'Likes'];

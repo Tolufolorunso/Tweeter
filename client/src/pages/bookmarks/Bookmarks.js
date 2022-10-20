@@ -3,21 +3,24 @@ import { ProfileAside, Tweet } from '../../components';
 import BookmarkWrapper from './bookmarks.styled';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useEffect, useState } from 'react';
+const user = JSON.parse(localStorage.getItem('user'));
 
 const lists = ['Tweets', 'Tweets & replies', 'media', 'Likes'];
 
 const Bookmark = () => {
-  const { getTweets, tweets } = useTweetContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const { getTweets, isLoading } = useTweetContext();
   const [tweetsArr, setTweetsArr] = useState([]);
 
-  useEffect(() => {
-    setTweetsArr(tweets);
-  }, [tweets]);
+  const fetchTweets = async () => {
+    let tweets;
+    if (user.username) {
+      tweets = await getTweets(user.username);
+      setTweetsArr(tweets);
+    }
+  };
 
   useEffect(() => {
-    getTweets();
-    setIsLoading(false);
+    fetchTweets();
     // eslint-disable-next-line
   }, []);
 
@@ -34,7 +37,7 @@ const Bookmark = () => {
                 </div>
               ) : (
                 tweetsArr.map((tweet) => {
-                  return <Tweet tweet={tweet} key={tweet.id} />;
+                  return <Tweet tweet={tweet} key={tweet._id} />;
                 })
               )}
             </div>
