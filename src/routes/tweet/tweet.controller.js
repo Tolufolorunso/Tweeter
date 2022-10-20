@@ -15,9 +15,9 @@ const postTweet = async (req, res) => {
     throw new BadRequestError('Upload atleast one image or enter tweet');
   }
 
-  let getHashTags = findHashtags(req.body.tweetText);
+  // let getHashTags = findHashtags(req.body.tweetText);
 
-  let hashTags = await Hash.find({});
+  // let hashTags = await Hash.find({});
 
   // console.log(hashTags.countDocument);
 

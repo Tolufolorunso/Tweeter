@@ -1,30 +1,24 @@
-import React, { useState } from 'react';
 import { Tweet } from '../../components';
+// import LoadingBar from 'react-top-loading-bar';
 import HomeWrapper from './home.styled';
 import Trend from './Trend';
 import TweetBox from './TweetBox';
 // import { tweetData } from './tweetData';
 import WhoToFollow from './WhoToFollow';
 import { useTweetContext } from '../../context/tweets/tweetContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 const user = JSON.parse(localStorage.getItem('user'));
 
 const Home = () => {
-  const { getTweets, isLoading } = useTweetContext();
-  const [tweetsArr, setTweetsArr] = useState([]);
-
-  const fetchTweets = async () => {
-    let tweets;
-    if (user.username) {
-      tweets = await getTweets(user.username);
-      setTweetsArr(tweets);
-    }
-  };
+  const { getTweets, isLoading, tweets } = useTweetContext();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchTweets();
+    setLoading(true);
+    getTweets(user.username);
+    setLoading(false);
     // eslint-disable-next-line
-  }, [user]);
+  }, []);
 
   return (
     <HomeWrapper>
@@ -35,12 +29,13 @@ const Home = () => {
               <TweetBox />
             </div>
             <div className="mb-6 tweets">
-              {isLoading ? (
+              {!isLoading || <h1>Hello Loading...</h1>}
+              {loading ? (
                 <div style={{ textAlign: 'center', color: 'green' }}>
                   <h2>Loading</h2>
                 </div>
               ) : (
-                tweetsArr.map((tweet) => {
+                tweets.map((tweet) => {
                   return <Tweet tweet={tweet} key={tweet._id} />;
                 })
               )}
