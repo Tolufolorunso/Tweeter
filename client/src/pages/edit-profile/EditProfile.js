@@ -41,6 +41,7 @@ const EditProfile = () => {
         name: user.name,
         bio: user.bio,
         email: user?.email,
+        phone: user?.phone,
       };
     });
   }, [user]);
