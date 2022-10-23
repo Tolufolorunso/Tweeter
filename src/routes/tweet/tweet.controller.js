@@ -9,15 +9,15 @@ const { findOne } = require('../../models/tweet.model');
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
-  // console.log(req.body.tweetText, 11);
+  // console.log(req.body, 11);
 
   if (!req.file && !req.body.tweetText) {
     throw new BadRequestError('Upload atleast one image or enter tweet');
   }
 
-  // let getHashTags = findHashtags(req.body.tweetText);
-
-  // let hashTags = await Hash.find({});
+  let getHashTags = findHashtags(req.body.tweetText);
+  console.log(getHashTags);
+  let hashTags = await Hash.findOneAndUpdate({});
 
   // console.log(hashTags.countDocument);
 
@@ -47,13 +47,24 @@ const getTweets = async (req, res) => {
 };
 
 const getTimeline = async (req, res) => {
-  let userId = req.user;
-  const tweets = await Tweet.find({ userId }).sort('-createdAt');
-  // const followersTweets = Promise.all([])
+  let { id } = req.user;
+  const user = await User.findById(id);
+  const tweets = await Tweet.find({ userId: user._id })
+    .populate('userId')
+    .sort('-createdAt');
+
+  const followingTweets = await Promise.all(
+    user.following.map((friendId) => {
+      console.log(friendId);
+      return Tweet.find({ userId: friendId }).populate('userId');
+    })
+  );
+
   res.status(StatusCodes.OK).json({
     status: true,
+    index: tweets.concat(...followingTweets).length,
     message: 'fetched successfully',
-    tweets,
+    tweets: tweets.concat(...followingTweets),
   });
 };
 
@@ -130,4 +141,5 @@ module.exports = {
   setUnLike,
   setRetweet,
   setUnRetweet,
+  getTimeline,
 };

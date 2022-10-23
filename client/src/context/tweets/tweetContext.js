@@ -60,6 +60,20 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const getTimeline = async (username) => {
+    dispatch({ type: GET_TWEETS_BEGIN });
+    try {
+      let res = await tweetsFetch.get(`/tweets/timeline`);
+      console.log(res.data);
+      if (res.data.status) {
+        dispatch({ type: GET_TWEETS_SUCCESS, payload: res.data.tweets });
+      }
+    } catch (error) {
+      console.log(error.response);
+      dispatch({ type: GET_TWEETS_ERROR });
+    }
+  };
+
   const setLike = async (tweetID, username) => {
     try {
       let res = await tweetsFetch.patch(`/tweets/likes/${tweetID}`);
@@ -116,6 +130,7 @@ const TweetProvider = ({ children }) => {
         setUnlike,
         setRetweet,
         setUnRetweet,
+        getTimeline,
       }}
     >
       {children}

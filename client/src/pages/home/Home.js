@@ -10,12 +10,13 @@ import { useEffect, useState } from 'react';
 const user = JSON.parse(localStorage.getItem('user'));
 
 const Home = () => {
-  const { getTweets, isLoading, tweets } = useTweetContext();
+  const { getTweets, getTimeline, isLoading, tweets } = useTweetContext();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    getTweets(user.username);
+    // getTweets(user.username);
+    getTimeline();
     setLoading(false);
     // eslint-disable-next-line
   }, []);

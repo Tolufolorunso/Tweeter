@@ -28,7 +28,7 @@ const tweetTextStyle = {
 const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
   return (
     <TweetWrapper className="mb-2">
-      <TweetHeader AvaterImage={userImg} />
+      <TweetHeader AvaterImage={userImg} userInfo={others.userId} />
       {tweetText && <Text title={tweetText} style={tweetTextStyle} tag="p" />}
       {tweetImg && (
         <div className="imageWrapper">

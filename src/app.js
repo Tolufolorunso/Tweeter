@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
-// const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2;
 
 const app = express();
 
@@ -18,11 +18,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Cloudinary v2
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.CLOUD_API_KEY,
-//   api_secret: process.env.CLOUD_API_SECRET,
-// });
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 //middleware
 const notFoundMiddleware = require('./middlewares/not-found');
@@ -31,12 +31,12 @@ const errorHandlerMiddleware = require('./middlewares/error-handler');
 // Body Parser Middleware
 
 app.set('trust proxy', 1);
-// app.use(
-//   rateLimiter({
-//     windowMs: 15 * 60 * 1000,
-//     max: 100,
-//   })
-// );
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+  })
+);
 app.use(express.json());
 
 // app.use(helmet());

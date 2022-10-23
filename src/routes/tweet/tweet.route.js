@@ -21,11 +21,13 @@ const {
   setRetweet,
   setUnLike,
   setUnRetweet,
+  getTimeline,
 } = require('./tweet.controller');
 
 const tweetRouter = express.Router();
 
 tweetRouter.post('/', authenticateUser, upload.single('tweetImg'), postTweet);
+tweetRouter.get('/timeline', authenticateUser, getTimeline);
 tweetRouter.patch('/likes/:tweetId', authenticateUser, setLike);
 tweetRouter.patch('/unlikes/:tweetId', authenticateUser, setUnLike);
 tweetRouter.patch('/retweets/:tweetId', authenticateUser, setRetweet);
