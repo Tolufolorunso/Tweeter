@@ -9,14 +9,14 @@ const { findOne } = require('../../models/tweet.model');
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
-  // console.log(req.body, 11);
+  // console.log(req.body);
 
   if (!req.file && !req.body.tweetText) {
     throw new BadRequestError('Upload atleast one image or enter tweet');
   }
 
   let getHashTags = findHashtags(req.body.tweetText);
-  console.log(getHashTags);
+  // console.log(getHashTags);
   let hashTags = await Hash.findOneAndUpdate({});
 
   // console.log(hashTags.countDocument);
@@ -27,7 +27,10 @@ const postTweet = async (req, res) => {
   //   validateBeforeSave: false,
   // });
 
-  const tweet = await Tweet.create({ ...req.body, tweetImg: req.file?.path });
+  const tweet = await Tweet.create({
+    ...req.body,
+    tweetImg: req.file?.filename,
+  });
 
   res.status(StatusCodes.OK).json({
     status: true,

@@ -13,6 +13,7 @@ const values = {
   phone: '',
   email: '',
   password: '*****************',
+  userImg: '',
 };
 
 const EditProfile = () => {
@@ -42,6 +43,7 @@ const EditProfile = () => {
         bio: user.bio,
         email: user?.email,
         phone: user?.phone,
+        userImg: user.userImg,
       };
     });
   }, [user]);

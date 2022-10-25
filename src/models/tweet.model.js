@@ -4,7 +4,7 @@ const TweetSchema = new mongoose.Schema(
   {
     tweetText: {
       type: String,
-      minlength: 3,
+      minlength: 1,
       maxlength: 120,
       trim: true,
     },

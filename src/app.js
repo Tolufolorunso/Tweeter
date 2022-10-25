@@ -18,11 +18,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Cloudinary v2
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.CLOUD_API_KEY,
+//   api_secret: process.env.CLOUD_API_SECRET,
+// });
 
 //middleware
 const notFoundMiddleware = require('./middlewares/not-found');
@@ -45,6 +45,8 @@ app.use(xss());
 
 // Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
+console.log(express.static(path.join(__dirname, 'uploads')));
 
 // App Routes
 app.use('/api/v1/auth', require('./routes/auth/auth.route'));

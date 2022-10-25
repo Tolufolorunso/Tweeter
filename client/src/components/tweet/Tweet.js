@@ -26,6 +26,7 @@ const tweetTextStyle = {
 };
 
 const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
+  console.log(tweetImg);
   return (
     <TweetWrapper className="mb-2">
       <TweetHeader AvaterImage={userImg} userInfo={others.userId} />
@@ -33,7 +34,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
       {tweetImg && (
         <div className="imageWrapper">
           <img
-            src={tweetImg || DefaultAvater}
+            src={`http://localhost:5000/${tweetImg}`}
             alt={tweetText.substring(0, 10)}
           />
         </div>

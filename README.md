@@ -63,13 +63,13 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 
 #### Challenge Specified:
 
-- User story: I can see my profile or others' profile
+- User story: I can see my profile or others' profilem (done)
 - User story: When I am on a profile, I can see Tweets and Retweets. I can also filter by Tweets, Tweets and replies, Media and Likes
 - User story: When I am on a profile, I can see followers and following
 - User story: When I am on a profile, I can see follow or unfollow the user
 - User story: I can navigate between Home, Explore and Bookmarks
 - User story: I can navigate to My Profile, Group Chat (optional), Setting/Authentication App.
-- User story: When I am on Home, I can post a new Tweet
+- User story: When I am on Home, I can post a new Tweet (done)
 - User story: When I post a new Tweet, I can choose to upload an image and set the Tweet to be public or only-follower
 - User story: When I am on Home, I can see Tweets of people who I follow
 - User story: I can Comment, Retweet, Like or Save a Tweet

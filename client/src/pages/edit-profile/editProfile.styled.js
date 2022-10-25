@@ -79,6 +79,14 @@ const EditProfileWrapper = styled.main`
     opacity: 0.8;
   }
 
+  .profile-image {
+    width: 72px;
+    height: 72px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
   @media (max-width: 55em) {
     /* padding: 0.8rem; */
     .form__group {
