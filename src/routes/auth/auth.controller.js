@@ -14,23 +14,34 @@ const register = async (req, res, next) => {
   // console.log(dateOfBirth);
 
   // Checking for either email or phone
-  let emailOrPhoneExistObj = {};
-  if (email) {
-    emailOrPhoneExistObj.email = email;
-    delete req.body.phone;
-  }
+  // let emailOrPhoneExistObj = {};
+  // if (email) {
+  //   emailOrPhoneExistObj.email = email;
+  //   delete req.body.phone;
+  // }
 
-  if (phone) {
-    emailOrPhoneExistObj.phone = phone;
-    delete req.body.email;
-  }
+  // if (phone) {
+  //   emailOrPhoneExistObj.phone = phone;
+  //   delete req.body.email;
+  // }
 
-  const emailOrPhoneExist = await User.findOne(emailOrPhoneExistObj);
-  const usernameExist = await User.findOne({ username });
+  // const userExists = await User.findOne({
+  //   $or: [{ email }, { username }, { phone }],
+  // });
 
-  if (usernameExist || emailOrPhoneExist) {
-    throw new BadRequestError('User already exist');
-  }
+  const userExists = await User.findOne({
+    $or: [{ username }, { phone }],
+  });
+
+  console.log(userExists);
+
+  // if (userExists.email === email) {
+  //   throw new BadRequestError('email already exist');
+  // } else if (userExists.phone === phone) {
+  //   throw new BadRequestError('Phone already exist');
+  // } else if (userExists.username === username) {
+  //   throw new BadRequestError('Username already exist');
+  // }
 
   let user = await User.create({ ...req.body, dateOfBirth });
 
@@ -54,21 +65,18 @@ const register = async (req, res, next) => {
 
 const login = async (req, res) => {
   const { loginValue, password } = req.body;
-  const loginObj = {};
-
-  if (validateEmail(loginValue)) {
-    loginObj.email = loginValue;
-  } else if (validateOnlyNumbers(loginValue)) {
-    loginObj.phone = loginValue;
-  } else {
-    loginObj.username = loginValue;
-  }
 
   if (!loginValue || !password) {
     throw new BadRequestError('Enter all fields');
   }
 
-  let user = await User.findOne(loginObj).select('+password');
+  let user = await User.findOne({
+    $or: [
+      { email: loginValue },
+      { username: loginValue },
+      { phone: loginValue },
+    ],
+  }).select('+password');
 
   if (!user) {
     throw new UnauthenticatedError('invalid credentials');
