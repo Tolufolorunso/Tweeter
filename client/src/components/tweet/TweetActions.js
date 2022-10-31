@@ -6,19 +6,17 @@ import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useAuthContext } from '../../context/user/userContext';
 
 const TweetActions = ({ others: { retweet, likes, _id } }) => {
-  const { setLike, setUnlike, setRetweet, setUnRetweet } = useTweetContext();
+  const { setLike, setRetweet, setUnRetweet } = useTweetContext();
   const { user } = useAuthContext();
 
-  const isRetweet = () => retweet.includes(user.username);
-
-  const isLike = () => likes.includes(user.username);
+  const isRetweet = () => retweet.includes(user._id);
+  const isLike = () => likes.includes(user._id);
 
   const handleComment = () => {
     console.log('clicked');
   };
 
   const handleRetweet = () => {
-    console.log(retweet);
     if (retweet.includes(user.username)) {
       setUnRetweet(_id, user.username);
     } else {
@@ -27,11 +25,7 @@ const TweetActions = ({ others: { retweet, likes, _id } }) => {
   };
 
   const handleLike = () => {
-    if (likes.includes(user.username)) {
-      setUnlike(_id, user.username);
-    } else {
-      setLike(_id, user.username);
-    }
+    setLike(_id, user.username);
   };
 
   const handleSave = () => {
@@ -55,8 +49,8 @@ const TweetActions = ({ others: { retweet, likes, _id } }) => {
           className={`tweetActions-li ${isLike() && 'liked'}`}
           onClick={handleLike}
         >
-          <FcLike className="icons" />{' '}
-          <span>{isLike() ? 'Liked' : 'Like'}</span>
+          <FcLike className="icons" style={{pointerEvent: "none"}}/>{' '}
+          <span style={{pointerEvent: "none"}}>{isLike() ? 'Liked' : 'Like'}</span>
         </li>
         <li className="tweetActions-li saved" onClick={handleSave}>
           <BsFillBookmarkFill className="icons" /> <span>Saved</span>

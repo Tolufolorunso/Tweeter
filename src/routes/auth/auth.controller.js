@@ -9,7 +9,7 @@ const { validateEmail, validateOnlyNumbers } = require('../../utils/loginType');
 
 const register = async (req, res, next) => {
   // console.log(11, req.body);
-  let { email, username, phone, day, month, year } = req.body;
+  let { email, username, phone, password, name, day, month, year } = req.body;
   dateOfBirth = new Date(`${year}-${month}-${day}`);
   // console.log(dateOfBirth);
 
@@ -30,10 +30,10 @@ const register = async (req, res, next) => {
   // });
 
   const userExists = await User.findOne({
-    $or: [{ username }, { phone }],
+    $or: [{ username }, { phone }, { email }],
   });
 
-  console.log(userExists);
+  console.log(36, userExists);
 
   // if (userExists.email === email) {
   //   throw new BadRequestError('email already exist');
@@ -43,7 +43,15 @@ const register = async (req, res, next) => {
   //   throw new BadRequestError('Username already exist');
   // }
 
-  let user = await User.create({ ...req.body, dateOfBirth });
+  const userData = { dateOfBirth, username, name, password }
+
+  if (email) {
+    userData.email = email
+  } else {
+    userData.phone = phone
+  }
+
+  let user = await User.create(userData);
 
   const token = createJWT({
     name: user.name,
@@ -53,7 +61,7 @@ const register = async (req, res, next) => {
 
   user = user.toObject();
   // delete user.password;
-  let { password, ...other } = user;
+  let { password: pass, ...other } = user;
 
   res.status(StatusCodes.CREATED).json({
     status: true,

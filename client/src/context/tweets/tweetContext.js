@@ -8,7 +8,6 @@ import {
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
-  UNLIKE_SUCCESS,
   RETWEET_SUCCESS,
   UNRETWEET_SUCCESS,
 } from './action';
@@ -76,25 +75,23 @@ const TweetProvider = ({ children }) => {
 
   const setLike = async (tweetID, username) => {
     try {
-      let res = await tweetsFetch.patch(`/tweets/likes/${tweetID}`);
-      if (res.data.status && res.data.like.acknowledged) {
-        dispatch({ type: LIKE_SUCCESS, payload: { tweetID, username } });
-      }
+      let res = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
+      dispatch({ type: LIKE_SUCCESS, payload: res.data.tweets });
     } catch (error) {
-      console.log(error.response);
+      return error
     }
   };
 
-  const setUnlike = async (tweetID, username) => {
-    try {
-      let res = await tweetsFetch.patch(`/tweets/unlikes/${tweetID}`);
-      if (res.data.status) {
-        dispatch({ type: UNLIKE_SUCCESS, payload: { tweetID, username } });
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+  // const setUnlike = async (tweetID, username) => {
+  //   try {
+  //     let res = await tweetsFetch.patch(`/tweets/unlikes/${tweetID}`);
+  //     if (res.data.status) {
+  //       dispatch({ type: UNLIKE_SUCCESS, payload: { tweetID, username } });
+  //     }
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
 
   const setRetweet = async (tweetID, username) => {
     try {
@@ -127,7 +124,7 @@ const TweetProvider = ({ children }) => {
         postTweet,
         getTweets,
         setLike,
-        setUnlike,
+        // setUnlike,
         setRetweet,
         setUnRetweet,
         getTimeline,

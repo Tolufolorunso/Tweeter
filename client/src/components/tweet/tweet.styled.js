@@ -71,17 +71,24 @@ const TweetWrapper = styled.section`
   .tweetActions ul li .icons {
     font-size: var(--fs-16);
     color: #4f4f4f;
+    pointer-events: none;
   }
 
   .retweeted,
   .retweeted .icons {
     color: #27ae60 !important;
+    
   }
 
   .liked,
   .liked .icons {
     color: #eb5757 !important;
   }
+
+  .liked .icons,.liked span {
+    pointer-events: none
+  }
+
 
   .saved {
     color: #2d9cdb;

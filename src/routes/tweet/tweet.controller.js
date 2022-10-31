@@ -6,6 +6,7 @@ const Hash = require('../../models/hashTag.model');
 const Tweet = require('../../models/tweet.model');
 const { BadRequestError, UnauthenticatedError } = require('../../errors');
 const { findOne } = require('../../models/tweet.model');
+const { findById } = require('../../models/user.model');
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
@@ -58,7 +59,6 @@ const getTimeline = async (req, res) => {
 
   const followingTweets = await Promise.all(
     user.following.map((friendId) => {
-      console.log(friendId);
       return Tweet.find({ userId: friendId }).populate('userId');
     })
   );
@@ -72,36 +72,24 @@ const getTimeline = async (req, res) => {
 };
 
 const setLike = async (req, res) => {
-  const { username } = req.user;
+  const { id: userId } = req.user;
   const { tweetId } = req.params;
 
-  const like = await Tweet.updateOne(
-    { _id: tweetId },
-    { $push: { likes: username } }
-  );
+  let user = await User.findById(userId)
 
+
+  const isLiked = user.likes && user.likes.includes(tweetId)
+
+  const option = isLiked ? '$pull' : '$addToSet'
+
+  await User.findByIdAndUpdate(userId, { [option]: { likes: tweetId } })
+  const tweets = await Tweet.findByIdAndUpdate(tweetId, { [option]: { likes: userId } }, { new: true })
+
+  console.log(tweets)
   res.status(StatusCodes.OK).json({
     status: true,
     message: 'fetched successfully',
-    like,
-  });
-};
-
-const setUnLike = async (req, res) => {
-  const { username } = req.user;
-  const { tweetId } = req.params;
-
-  const unlike = await Tweet.updateOne(
-    { _id: tweetId },
-    { $pull: { likes: username } }
-  );
-
-  console.log(unlike);
-
-  res.status(StatusCodes.OK).json({
-    status: true,
-    message: 'fetched successfully',
-    unlike,
+    tweets
   });
 };
 
@@ -141,7 +129,6 @@ module.exports = {
   postTweet,
   getTweets,
   setLike,
-  setUnLike,
   setRetweet,
   setUnRetweet,
   getTimeline,

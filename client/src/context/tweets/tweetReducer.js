@@ -6,7 +6,6 @@ import {
   POST_TWEET_SUCCESS,
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
-  UNLIKE_SUCCESS,
   RETWEET_SUCCESS,
   UNRETWEET_SUCCESS,
 } from './action';
@@ -38,32 +37,9 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (LIKE_SUCCESS === type) {
-    // console.log(payload);
-    state.tweets.map((tweet) => {
-      if (tweet._id === payload.tweetID) {
-        return tweet.likes.push(payload.username);
-      }
-      return tweet;
-    });
-
+    const index = state.tweets.findIndex(tweet => tweet._id === payload._id)
+    state.tweets.splice(index, 1, payload)
     return { ...state, isLoading: false };
-  }
-
-  if (UNLIKE_SUCCESS === type) {
-    const newArr = state.tweets.map((tweet) => {
-      if (tweet._id === payload.tweetID) {
-        let i = tweet.likes.filter((like) => {
-          return like !== payload.username;
-        });
-        tweet.likes = i;
-        return tweet;
-      }
-      return tweet;
-    });
-
-    // console.log(newArr);
-
-    return { ...state, isLoading: false, tweets: newArr };
   }
 
   if (RETWEET_SUCCESS === type) {

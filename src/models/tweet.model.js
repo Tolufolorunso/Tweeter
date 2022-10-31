@@ -22,10 +22,7 @@ const TweetSchema = new mongoose.Schema(
       type: String,
       default: 'everyone',
     },
-    likes: {
-      type: Array,
-      default: [],
-    },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     comments: {
       type: Array,
       default: [],

@@ -29,6 +29,7 @@ const UserSchema = new mongoose.Schema(
       },
       unique: true,
       lowercase: true,
+      trim: true,
     },
     phone: {
       type: String,
@@ -36,46 +37,18 @@ const UserSchema = new mongoose.Schema(
         validator: validator.isMobilePhone,
         message: (props) => `${props.value} is not a valid phone!`,
       },
-      default: '00000',
+      trim: true,
     },
-    password: {
-      type: String,
-      required: [true, 'Password required'],
-      minlength: 3,
-      select: false,
-    },
-    dateOfBirth: {
-      type: Date,
-      required: [true, 'Date of birth required'],
-    },
-    followers: {
-      type: Array,
-      default: [],
-    },
-    following: {
-      type: Array,
-      default: [],
-    },
-    savedTweet: {
-      type: Array,
-      default: [],
-    },
-    userImg: {
-      type: String,
-      default: null,
-    },
-    coverImg: {
-      type: String,
-      default: null,
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-    bio: {
-      type: String,
-      default: '',
-    },
+    password: { type: String, required: [true, 'Password required'], minlength: 3, select: false, },
+    dateOfBirth: { type: Date, required: [true, 'Date of birth required'], },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet', }],
+    followers: { type: Array, default: [], },
+    following: { type: Array, default: [], },
+    savedTweet: { type: Array, default: [], },
+    userImg: { type: String, default: null, },
+    coverImg: { type: String, default: null, },
+    isAdmin: { type: Boolean, default: false, },
+    bio: { type: String, default: '', },
   },
   { timestamps: true }
 );
