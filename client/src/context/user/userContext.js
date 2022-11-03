@@ -63,22 +63,14 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (data) => {
+  const login = async (userLogin) => {
     dispatch({ type: LOGIN_BEGIN });
     try {
-      const res = await authFetch.post('/auth/login', data);
-      if (res.data.status) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        localStorage.setItem(
-          'following',
-          JSON.stringify(res.data.user.following)
-        );
-        localStorage.setItem(
-          'followers',
-          JSON.stringify(res.data.user.followers)
-        );
-        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      const {data} = await authFetch.post('/auth/login', userLogin);
+      if (data.status) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        dispatch({ type: LOGIN_SUCCESS, payload: data });
       }
     } catch (error) {
       if (error.response?.data) {

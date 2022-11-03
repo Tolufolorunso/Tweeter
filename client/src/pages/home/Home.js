@@ -1,23 +1,23 @@
-import { Tweet } from '../../components';
+import { Tweet } from "../../components";
 // import LoadingBar from 'react-top-loading-bar';
-import HomeWrapper from './home.styled';
-import Trend from './Trend';
-import TweetBox from './TweetBox';
+import HomeWrapper from "./home.styled";
+import Trend from "./Trend";
+import TweetBox from "./TweetBox";
 // import { tweetData } from './tweetData';
-import WhoToFollow from './WhoToFollow';
-import { useTweetContext } from '../../context/tweets/tweetContext';
-import { useEffect, useState } from 'react';
-const user = JSON.parse(localStorage.getItem('user'));
+import WhoToFollow from "./WhoToFollow";
+import { useTweetContext } from "../../context/tweets/tweetContext";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context/user/userContext";
+import Timeline from "./Timeline";
+const user = JSON.parse(localStorage.getItem("user"));
 
 const Home = () => {
-  const { getTweets, getTimeline, isLoading, tweets } = useTweetContext();
-  const [loading, setLoading] = useState(false);
+  const { getTimeline } = useTweetContext();
+  const { user, token } = useAuthContext();
+
 
   useEffect(() => {
-    setLoading(true);
-    // getTweets(user.username);
     getTimeline();
-    setLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -29,18 +29,7 @@ const Home = () => {
             <div className="mb-5">
               <TweetBox />
             </div>
-            <div className="mb-6 tweets">
-              {!isLoading || <h1>Hello Loading...</h1>}
-              {loading ? (
-                <div style={{ textAlign: 'center', color: 'green' }}>
-                  <h2>Loading</h2>
-                </div>
-              ) : (
-                tweets.map((tweet) => {
-                  return <Tweet tweet={tweet} key={tweet._id} />;
-                })
-              )}
-            </div>
+            <Timeline />
           </div>
           <aside className="home__aside">
             <Trend />

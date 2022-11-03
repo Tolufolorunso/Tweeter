@@ -132,7 +132,7 @@ const LoginModal = ({ closeModal }) => {
               className="btn submit-btn"
               disabled={isLoading}
             >
-              Submit
+              {isLoading ? 'Loggin...' : 'Log in'}
             </button>
             <Link to="/login" style={{ marginTop: '5px' }}>
               Forgot password

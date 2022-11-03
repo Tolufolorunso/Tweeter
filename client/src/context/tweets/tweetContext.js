@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext } from "react";
 
 import {
   GET_TWEETS_BEGIN,
@@ -10,13 +10,13 @@ import {
   LIKE_SUCCESS,
   RETWEET_SUCCESS,
   UNRETWEET_SUCCESS,
-} from './action';
-import reducer from './tweetReducer';
-import tweetsFetch from '../../api/fetchApi';
+} from "./action";
+import reducer from "./tweetReducer";
+import tweetsFetch from "../../api/fetchApi";
 
 const initialState = {
   isLoading: false,
-  error: '',
+  error: "",
   tweets: [],
 };
 
@@ -30,12 +30,12 @@ const TweetProvider = ({ children }) => {
     dispatch({ type: POST_TWEET_BEGIN });
     try {
       let formData = new FormData();
-      formData.append('tweetImg', data.image.data);
-      formData.append('userImg', data.userImg);
-      formData.append('replyBy', data.replyBy);
-      formData.append('tweetText', data.tweetText);
-      formData.append('userId', data.userId);
-      const res = await tweetsFetch.post('/tweets', formData);
+      formData.append("tweetImg", data.image.data);
+      formData.append("userImg", data.userImg);
+      formData.append("replyBy", data.replyBy);
+      formData.append("tweetText", data.tweetText);
+      formData.append("userId", data.userId);
+      const res = await tweetsFetch.post("/tweets", formData);
       if (res.data.status) {
         console.log(37, res.data);
         dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
@@ -59,13 +59,15 @@ const TweetProvider = ({ children }) => {
     }
   };
 
-  const getTimeline = async (username) => {
+  const getTimeline = async () => {
     dispatch({ type: GET_TWEETS_BEGIN });
     try {
-      let res = await tweetsFetch.get(`/tweets/timeline`);
-      console.log(res.data);
-      if (res.data.status) {
-        dispatch({ type: GET_TWEETS_SUCCESS, payload: res.data.tweets });
+      if (localStorage.getItem('token')) {
+        let { data } = await tweetsFetch.get(`/tweets/timeline`);
+        console.log(data);
+        if (data.status) {
+          dispatch({ type: GET_TWEETS_SUCCESS, payload: data.tweets });
+        }
       }
     } catch (error) {
       console.log(error.response);
@@ -78,7 +80,7 @@ const TweetProvider = ({ children }) => {
       let res = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
       dispatch({ type: LIKE_SUCCESS, payload: res.data.tweets });
     } catch (error) {
-      return error
+      return error;
     }
   };
 
