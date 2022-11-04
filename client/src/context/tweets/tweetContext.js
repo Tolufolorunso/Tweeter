@@ -9,7 +9,6 @@ import {
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
   RETWEET_SUCCESS,
-  UNRETWEET_SUCCESS,
 } from "./action";
 import reducer from "./tweetReducer";
 import tweetsFetch from "../../api/fetchApi";
@@ -64,7 +63,6 @@ const TweetProvider = ({ children }) => {
     try {
       if (localStorage.getItem('token')) {
         let { data } = await tweetsFetch.get(`/tweets/timeline`);
-        console.log(data);
         if (data.status) {
           dispatch({ type: GET_TWEETS_SUCCESS, payload: data.tweets });
         }
@@ -77,42 +75,20 @@ const TweetProvider = ({ children }) => {
 
   const setLike = async (tweetID, username) => {
     try {
-      let res = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
-      dispatch({ type: LIKE_SUCCESS, payload: res.data.tweets });
+      let {data} = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
+      dispatch({ type: LIKE_SUCCESS, payload: data.tweets });
     } catch (error) {
       return error;
     }
   };
 
-  // const setUnlike = async (tweetID, username) => {
-  //   try {
-  //     let res = await tweetsFetch.patch(`/tweets/unlikes/${tweetID}`);
-  //     if (res.data.status) {
-  //       dispatch({ type: UNLIKE_SUCCESS, payload: { tweetID, username } });
-  //     }
-  //   } catch (error) {
-  //     console.log(error.response);
-  //   }
-  // };
-
   const setRetweet = async (tweetID, username) => {
     try {
-      let res = await tweetsFetch.patch(`/tweets/retweets/${tweetID}`);
-      if (res.data.status) {
-        dispatch({ type: RETWEET_SUCCESS, payload: { tweetID, username } });
-        console.log(res.data);
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
-  const setUnRetweet = async (tweetID, username) => {
-    try {
-      let res = await tweetsFetch.patch(`/tweets/unretweets/${tweetID}`);
-      if (res.data.status) {
-        dispatch({ type: UNRETWEET_SUCCESS, payload: { tweetID, username } });
-        console.log(res.data);
+      let {data} = await tweetsFetch.post(`/tweets/${tweetID}/retweets`);
+  
+      console.log(data)
+      if (data.status) {
+        dispatch({ type: RETWEET_SUCCESS, payload: data.tweets });
       }
     } catch (error) {
       console.log(error.response);
@@ -126,9 +102,7 @@ const TweetProvider = ({ children }) => {
         postTweet,
         getTweets,
         setLike,
-        // setUnlike,
         setRetweet,
-        setUnRetweet,
         getTimeline,
       }}
     >

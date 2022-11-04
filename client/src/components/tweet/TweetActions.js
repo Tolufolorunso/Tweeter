@@ -5,11 +5,10 @@ import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useAuthContext } from '../../context/user/userContext';
 
-const TweetActions = ({ others: { retweet, likes, _id } }) => {
-  const { setLike, setRetweet, setUnRetweet } = useTweetContext();
+const TweetActions = ({ others: { retweetUser, likes, _id } }) => {
+  const { setLike, setRetweet } = useTweetContext();
   const { user } = useAuthContext();
-
-  const isRetweet = () => retweet.includes(user._id);
+  const isRetweet = () => retweetUser.includes(user._id);
   const isLike = () => likes.includes(user._id);
 
   const handleComment = () => {
@@ -17,11 +16,7 @@ const TweetActions = ({ others: { retweet, likes, _id } }) => {
   };
 
   const handleRetweet = () => {
-    if (retweet.includes(user.username)) {
-      setUnRetweet(_id, user.username);
-    } else {
       setRetweet(_id, user.username);
-    }
   };
 
   const handleLike = () => {
@@ -42,15 +37,15 @@ const TweetActions = ({ others: { retweet, likes, _id } }) => {
           className={`tweetActions-li ${isRetweet() && 'retweeted'}`}
           onClick={handleRetweet}
         >
-          <AiOutlineRetweet className="icons" />{' '}
-          <span>{isRetweet() ? 'Retweeted' : 'Retweet'}</span>
+          <AiOutlineRetweet className="icons" />
+          <span style={{pointerEvent: "none", width: '9ch'}}>{isRetweet() ? 'Retweeted' : 'Retweet'}</span>
         </li>
         <li
           className={`tweetActions-li ${isLike() && 'liked'}`}
           onClick={handleLike}
         >
           <FcLike className="icons" style={{pointerEvent: "none"}}/>{' '}
-          <span style={{pointerEvent: "none"}}>{isLike() ? 'Liked' : 'Like'}</span>
+          <span style={{pointerEvent: "none", width: '5ch'}}>{isLike() ? 'Liked' : 'Like'}</span>
         </li>
         <li className="tweetActions-li saved" onClick={handleSave}>
           <BsFillBookmarkFill className="icons" /> <span>Saved</span>

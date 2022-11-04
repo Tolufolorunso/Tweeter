@@ -77,7 +77,6 @@ const TweetWrapper = styled.section`
   .retweeted,
   .retweeted .icons {
     color: #27ae60 !important;
-    
   }
 
   .liked,

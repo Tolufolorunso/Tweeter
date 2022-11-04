@@ -33,15 +33,16 @@ const UserSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      validate: {
-        validator: validator.isMobilePhone,
-        message: (props) => `${props.value} is not a valid phone!`,
-      },
+      // validate: {
+      //   validator: validator.isMobilePhone,
+      //   message: (props) => `${props.value} is not a valid phone!`,
+      // },
       trim: true,
     },
     password: { type: String, required: [true, 'Password required'], minlength: 3, select: false, },
     dateOfBirth: { type: Date, required: [true, 'Date of birth required'], },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet', }],
+    retweets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet', }],
     followers: { type: Array, default: [], },
     following: { type: Array, default: [], },
     savedTweet: { type: Array, default: [], },
