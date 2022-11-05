@@ -5,6 +5,7 @@ import DefaultAvater from '../../assets/images/defaultAvater.png';
 const span = { color: '#BDBDBD', fontWeight: 500 };
 
 const TweetHeader = ({ AvaterImage, userInfo }) => {
+  
   return (
     <header className="header">
       <Avater src={!AvaterImage ? AvaterImage : DefaultAvater} alt="tweeter" />

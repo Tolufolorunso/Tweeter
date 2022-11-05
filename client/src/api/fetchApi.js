@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 // import { Navigate } from 'react-router-dom';
-import { BASEURL } from '../utils/contants';
-const token = localStorage.getItem('token');
+import { BASEURL } from "../utils/contants";
+const token = localStorage.getItem("token");
 
 // axios
 const fetchApi = axios.create({
@@ -11,7 +11,7 @@ const fetchApi = axios.create({
 // request
 fetchApi.interceptors.request.use(
   (config) => {
-    config.headers.common['Authorization'] = `Bearer ${token}`;
+    config.headers.common["Authorization"] = `Bearer ${token}`;
     return config;
   },
   (error) => {
@@ -27,12 +27,9 @@ fetchApi.interceptors.response.use(
   (error) => {
     // console.log(error.response);
     console.log(token);
-    if (
-      error.response.status === 401 &&
-      error.response.statusText === 'Unauthorized'
-    ) {
-      console.log(401);
-      // localStorage.clear();
+    if (error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/";
     }
     return Promise.reject(error);
   }

@@ -44,7 +44,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
     <>
       {isRetweet && (
         <p>
-          Retweeted by <Link to={`/profile/${retweetBy}`}>{retweetBy}</Link>
+          Retweeted by <Link to={`/profile/${retweetBy}`}>@{retweetBy}</Link>
         </p>
       )}
       <TweetWrapper className="mb-2">
