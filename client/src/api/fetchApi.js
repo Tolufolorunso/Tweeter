@@ -28,8 +28,8 @@ fetchApi.interceptors.response.use(
     // console.log(error.response);
     console.log(token);
     if (error.response.status === 401) {
-      localStorage.clear();
-      window.location.href = "/";
+      // localStorage.clear();
+      // window.location.href = "/";
     }
     return Promise.reject(error);
   }

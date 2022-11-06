@@ -8,7 +8,7 @@ import Text from "../Text";
 // import ReplyToTweet from './ReplyToTweet';
 // import Replies from './Replies';
 
-import DefaultAvater from "../../assets/images/defaultAvater.png";
+// import DefaultAvater from "../../assets/images/defaultAvater.png";
 
 import {
   Replies,
@@ -30,14 +30,21 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
   const [isRetweet, setIsRetweet] = useState(false);
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
+  
+
+  const handleReply = (e) => {
+    e.preventDefault()
+    console.log(e.target.replyText.value)
+  }
 
   useEffect(() => {
-    if (others.retweetData != undefined) {
+    if (others.retweetData !== undefined) {
       console.log(others.retweetData.tweetText);
       setIsRetweet(true);
       setRetweetText(others.retweetData.tweetText);
       setRetweetBy(others.userId.username);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -75,7 +82,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
             )}
         <TweetInfo others={others} />
         <TweetActions others={others} />
-        <ReplyToTweet />
+        <ReplyToTweet handleReply={handleReply}/>
         <div className="line"></div>
         <Replies />
       </TweetWrapper>

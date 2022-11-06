@@ -1,14 +1,19 @@
-import styled from 'styled-components';
-import { BiImage } from 'react-icons/bi';
-import Avater from '../Avater';
+import styled from "styled-components";
+import { BiImage } from "react-icons/bi";
+import Avater from "../Avater";
 
-const ReplyToTweet = () => {
+const ReplyToTweet = ({handleReply}) => {
   return (
     <Wrapper>
       <Avater alt="user avater" />
       <div className="input-group">
-        <input type="text" placeholder="Tweet your reply" />
-        <BiImage className="image" />
+        <form onSubmit={handleReply}>
+          <input type="text" placeholder="Tweet your reply sss" name="replyText" />
+          <input type="file" id="reply-upload" className="reply-upload"/>
+          <label htmlFor="reply-upload">
+            <BiImage className="image" />
+          </label>
+        </form>
       </div>
     </Wrapper>
   );
@@ -57,6 +62,10 @@ const Wrapper = styled.div`
     color: #bdbdbd;
     font-size: var(--clr-neutral-900);
     top: 15px;
+  }
+
+  .reply-upload {
+    display: none;
   }
 `;
 
