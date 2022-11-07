@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { BiImage } from "react-icons/bi";
 import Avater from "../Avater";
 
-const ReplyToTweet = ({handleReply}) => {
+const ReplyToTweet = ({handleReply,handleReplyFileChange}) => {
   return (
     <Wrapper>
       <Avater alt="user avater" />
       <div className="input-group">
         <form onSubmit={handleReply}>
           <input type="text" placeholder="Tweet your reply sss" name="replyText" />
-          <input type="file" id="reply-upload" className="reply-upload"/>
+          <input type="file" id="reply-upload" className="reply-upload" onChange={handleReplyFileChange}/>
           <label htmlFor="reply-upload">
             <BiImage className="image" />
           </label>

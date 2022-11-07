@@ -31,11 +31,23 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
   
+  const [replyImage, setReplyImage] = useState('');
 
   const handleReply = (e) => {
     e.preventDefault()
-    console.log(e.target.replyText.value)
+    console.log({
+      reply: e.target.replyText.value,
+      replyImage
+    })
   }
+
+  const handleReplyFileChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    };
+    setReplyImage(img);
+  };
 
   useEffect(() => {
     if (others.retweetData !== undefined) {
@@ -82,7 +94,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
             )}
         <TweetInfo others={others} />
         <TweetActions others={others} />
-        <ReplyToTweet handleReply={handleReply}/>
+        <ReplyToTweet handleReply={handleReply} handleReplyFileChange={handleReplyFileChange}/>
         <div className="line"></div>
         <Replies />
       </TweetWrapper>
