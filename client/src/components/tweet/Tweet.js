@@ -18,6 +18,8 @@ import {
   TweetInfo,
 } from "./";
 import { Link } from "react-router-dom";
+import { useTweetContext } from "../../context/tweets/tweetContext";
+import { useAuthContext } from "../../context/user/userContext";
 
 const tweetTextStyle = {
   marginBlock: "1.25rem",
@@ -26,18 +28,26 @@ const tweetTextStyle = {
   color: "#4F4F4F",
 };
 
-const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
+const Tweet = ({ tweet: { tweetText, userImg, tweetImg,_id: tweetId, ...others } }) => {
+  const { postTweet } = useTweetContext();
+  const { user } = useAuthContext();
+
   const [isRetweet, setIsRetweet] = useState(false);
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
-  
   const [replyImage, setReplyImage] = useState('');
 
+
   const handleReply = (e) => {
+    
     e.preventDefault()
-    console.log({
-      reply: e.target.replyText.value,
-      replyImage
+    postTweet({
+      userImg: user.userImg,
+      replyBy: 'everyone',
+      userId: user._id,
+      replyTo: tweetId,
+      image: replyImage,
+      tweetText: e.target.replyText.value,
     })
   }
 
@@ -94,7 +104,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
             )}
         <TweetInfo others={others} />
         <TweetActions others={others} />
-        <ReplyToTweet handleReply={handleReply} handleReplyFileChange={handleReplyFileChange}/>
+        <ReplyToTweet handleReply={handleReply} handleReplyFileChange={handleReplyFileChange} />
         <div className="line"></div>
         <Replies />
       </TweetWrapper>

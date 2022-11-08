@@ -25,22 +25,27 @@ const TweetProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const postTweet = async (data) => {
-    console.log(data);
+
     dispatch({ type: POST_TWEET_BEGIN });
     try {
       let formData = new FormData();
-      formData.append("tweetImg", data.image.data);
+      formData.append("tweetImg", data.image?.data);
       formData.append("userImg", data.userImg);
       formData.append("replyBy", data.replyBy);
       formData.append("tweetText", data.tweetText);
+      if(data.replyTo) {
+        formData.append("replyTo", data.replyTo);
+      }
       formData.append("userId", data.userId);
       const res = await tweetsFetch.post("/tweets", formData);
+
       if (res.data.status) {
         console.log(37, res.data);
-        dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
+        // dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
       }
+
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       dispatch({ type: POST_TWEET_ERROR });
     }
   };

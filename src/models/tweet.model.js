@@ -29,6 +29,7 @@ const TweetSchema = new mongoose.Schema(
     },
     retweetUser:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     retweetData:  { type: mongoose.Schema.Types.ObjectId, ref: 'Tweet' },
+    replyTo:  { type: mongoose.Schema.Types.ObjectId, ref: 'Tweet' },
     saved: {
       type: Array,
       default: [],

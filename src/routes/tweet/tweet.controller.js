@@ -11,7 +11,7 @@ const { post } = require("./tweet.route");
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
-  // console.log(req.body);
+  console.log(req.body);
 
   if (!req.file && !req.body.tweetText) {
     throw new BadRequestError("Upload atleast one image or enter tweet");
