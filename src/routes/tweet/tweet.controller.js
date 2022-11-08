@@ -29,10 +29,13 @@ const postTweet = async (req, res) => {
   //   validateBeforeSave: false,
   // });
 
-  const tweet = await Tweet.create({
+  let tweet = await Tweet.create({
     ...req.body,
     tweetImg: req.file?.filename,
   });
+
+  // const t = Tweet.populate("userId")
+  tweet = await Tweet.populate(tweet, { path: "userId" });
 
   res.status(StatusCodes.OK).json({
     status: true,
@@ -57,16 +60,18 @@ const getTimeline = async (req, res) => {
   let tweets = await Tweet.find({ userId: user._id })
     .populate("userId")
     .populate("retweetData")
+    .populate("replyTo")
     .sort("-createdAt");
 
+    console.log(tweets)
   const followingTweets = await Promise.all(
     user.following.map((friendId) => {
       return Tweet.find({ userId: friendId }).populate("userId");
     })
   );
 
-  tweets = await User.populate(tweets, {path: 'retweetData.userId'}) 
-
+  tweets = await User.populate(tweets, { path: "replyTo.userId" });
+  tweets = await User.populate(tweets, { path: "retweetData.userId" });
 
   res.status(StatusCodes.OK).json({
     status: true,
@@ -127,7 +132,6 @@ const setRetweet = async (req, res) => {
     { [option]: { retweetUser: userId } },
     { new: true }
   );
-
 
   res.status(StatusCodes.OK).json({
     status: true,

@@ -28,28 +28,29 @@ const tweetTextStyle = {
   color: "#4F4F4F",
 };
 
-const Tweet = ({ tweet: { tweetText, userImg, tweetImg,_id: tweetId, ...others } }) => {
+const Tweet = ({
+  tweet: { tweetText, userImg, tweetImg, ...others },
+}) => {
   const { postTweet } = useTweetContext();
   const { user } = useAuthContext();
 
   const [isRetweet, setIsRetweet] = useState(false);
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
-  const [replyImage, setReplyImage] = useState('');
+  const [replyImage, setReplyImage] = useState("");
 
 
   const handleReply = (e) => {
-    
-    e.preventDefault()
+    e.preventDefault();
     postTweet({
       userImg: user.userImg,
-      replyBy: 'everyone',
+      replyBy: "everyone",
       userId: user._id,
-      replyTo: tweetId,
+      replyTo: others._id,
       image: replyImage,
       tweetText: e.target.replyText.value,
-    })
-  }
+    });
+  };
 
   const handleReplyFileChange = (e) => {
     const img = {
@@ -71,6 +72,11 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg,_id: tweetId, ...others }
 
   return (
     <>
+      {isRetweet && (
+        <p>
+          Retweeted by <Link to={`/profile/${retweetBy}`}>@{retweetBy}</Link>
+        </p>
+      )}
       {isRetweet && (
         <p>
           Retweeted by <Link to={`/profile/${retweetBy}`}>@{retweetBy}</Link>
@@ -104,7 +110,10 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg,_id: tweetId, ...others }
             )}
         <TweetInfo others={others} />
         <TweetActions others={others} />
-        <ReplyToTweet handleReply={handleReply} handleReplyFileChange={handleReplyFileChange} />
+        <ReplyToTweet
+          handleReply={handleReply}
+          handleReplyFileChange={handleReplyFileChange}
+        />
         <div className="line"></div>
         <Replies />
       </TweetWrapper>

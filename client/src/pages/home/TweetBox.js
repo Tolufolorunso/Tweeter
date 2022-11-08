@@ -61,6 +61,9 @@ const TweetBox = () => {
       image,
       tweetText,
     });
+
+    setTweetText('')
+    setAvaterImage('')
   };
 
   const handleCanReply = (e) => {
@@ -83,6 +86,7 @@ const TweetBox = () => {
             onChange={handleChange}
             className="tweetbox"
             placeholder="What's happening?"
+            value={tweetText}
           ></textarea>
         </div>
         <div className="footer">

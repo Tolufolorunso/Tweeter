@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tweet } from "../../components";
 import { useTweetContext } from "../../context/tweets/tweetContext";
-import { useAuthContext } from "../../context/user/userContext";
+// import { useAuthContext } from "../../context/user/userContext";
 
 const Timeline = () => {
-  const { getTweets, getTimeline, tweets, isLoading } = useTweetContext();
+  const { tweets } = useTweetContext();
   // const { user, token } = useAuthContext();
-  // const [tweetsArr, setTweetsArr] = useState([]);
+  const [tweetsArr, setTweetsArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(()=>{
+      setIsLoading(false)
+      setTweetsArr(tweets)
+  },[tweets])
+  
   return (
     <div className="mb-6 tweets">
       {isLoading ? (
@@ -14,7 +21,7 @@ const Timeline = () => {
           <h2>Loading</h2>
         </div>
       ) : (
-        tweets.map((tweet) => {
+        tweetsArr.map((tweet) => {
           return <Tweet tweet={tweet} key={tweet._id} />;
         })
       )}

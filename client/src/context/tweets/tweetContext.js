@@ -17,6 +17,7 @@ const initialState = {
   isLoading: false,
   error: "",
   tweets: [],
+  tweet: null
 };
 
 const TweetContext = React.createContext();
@@ -40,8 +41,8 @@ const TweetProvider = ({ children }) => {
       const res = await tweetsFetch.post("/tweets", formData);
 
       if (res.data.status) {
-        console.log(37, res.data);
-        // dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
+        console.log(37, res.data.tweet);
+        dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
       }
 
     } catch (error) {
