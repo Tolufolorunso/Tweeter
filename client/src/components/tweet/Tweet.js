@@ -76,7 +76,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
   }, []);
 
   return (
-    <>
+    <div className="hey">
       {isRetweet && (
         <p className="flex f-align-c gap-small ">
           <AiOutlineRetweet className="icons" /> <Link to={`/profile/${retweetBy}`}>@{retweetBy} Retweeted</Link>
@@ -117,7 +117,7 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
         <div className="line"></div>
         <Replies />
       </TweetWrapper>
-    </>
+    </div>
   );
 };
 

@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 
-const ProfileAside = ({ lists }) => {
-  const [active, setActive] = useState('Tweets');
+const ProfileAside = ({ lists,selected,setSelectedTab }) => {
 
   return (
     <aside className="aside bg-white">
       <ul className="aside__lists">
-        {lists.map((li) => {
+        {lists.map((list) => {
           return (
             <li
-              className={active === li ? 'aside__active' : undefined}
-              onClick={() => setActive(li)}
-              key={li}
+              className={selected === list ? 'aside__active' : undefined}
+              onClick={() => setSelectedTab(list)}
+              key={list}
             >
-              {li}
+              {list}
             </li>
           );
         })}

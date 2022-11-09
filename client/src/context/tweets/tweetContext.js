@@ -9,7 +9,10 @@ import {
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
   RETWEET_SUCCESS,
-  SAVE_TWEET_SUCCESS
+  SAVE_TWEET_SUCCESS,
+  GET_BOOKMARKS_BEGIN,
+  GET_BOOKMARKS_SUCCESS,
+  GET_BOOKMARKS_ERROR,
 } from "./action";
 import reducer from "./tweetReducer";
 import tweetsFetch from "../../api/fetchApi";
@@ -42,12 +45,11 @@ const TweetProvider = ({ children }) => {
       const res = await tweetsFetch.post("/tweets", formData);
 
       if (res.data.status) {
-        console.log(37, res.data.tweet);
         dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
       }
 
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       dispatch({ type: POST_TWEET_ERROR });
     }
   };
@@ -60,7 +62,7 @@ const TweetProvider = ({ children }) => {
         dispatch({ type: GET_TWEETS_SUCCESS, payload: res.data.tweets });
       }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       dispatch({ type: GET_TWEETS_ERROR });
     }
   };
@@ -83,6 +85,7 @@ const TweetProvider = ({ children }) => {
   const setLike = async (tweetID, username) => {
     try {
       let {data} = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
+      
       dispatch({ type: LIKE_SUCCESS, payload: data.tweets });
     } catch (error) {
       return error;
@@ -102,16 +105,31 @@ const TweetProvider = ({ children }) => {
     }
   };
 
-  const saveTweet = async (tweetID, username) => {
-    console.log(tweetID)
+  const saveTweet = async (tweetID, location) => {
     try {
       let {data} = await tweetsFetch.post(`/tweets/${tweetID}/save`);
-      console.log(data)
       if (data.status) {
-        dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.tweets });
+        if(location.includes('bookmarks')) {
+          dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.tweets });
+        } else {
+          dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.message });
+        }
       }
     } catch (error) {
       console.log(error.response);
+    }
+  };
+
+  const getBookmarks = async (username) => {
+    dispatch({ type: GET_BOOKMARKS_BEGIN });
+    try {
+      let {data} = await tweetsFetch.get(`/tweets/${username}/bookmarks`);
+      if (data.status) {
+        dispatch({ type: GET_BOOKMARKS_SUCCESS, payload: data.tweets });
+      }
+    } catch (error) {
+      console.log(error.response);
+      dispatch({ type: GET_BOOKMARKS_ERROR, payload: 'error' });
     }
   };
 
@@ -125,6 +143,7 @@ const TweetProvider = ({ children }) => {
         setRetweet,
         saveTweet,
         getTimeline,
+        getBookmarks
       }}
     >
       {children}

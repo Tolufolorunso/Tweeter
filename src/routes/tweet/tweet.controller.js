@@ -63,7 +63,7 @@ const getTimeline = async (req, res) => {
     .populate("replyTo")
     .sort("-createdAt");
 
-    console.log(tweets)
+  console.log(tweets);
   const followingTweets = await Promise.all(
     user.following.map((friendId) => {
       return Tweet.find({ userId: friendId }).populate("userId");
@@ -96,7 +96,7 @@ const setLike = async (req, res) => {
     tweetId,
     { [option]: { likes: userId } },
     { new: true }
-  );
+  ).populate('userId');
 
   res.status(StatusCodes.OK).json({
     status: true,
@@ -131,7 +131,7 @@ const setRetweet = async (req, res) => {
     tweetId,
     { [option]: { retweetUser: userId } },
     { new: true }
-  );
+  ).populate('userId');
 
   res.status(StatusCodes.OK).json({
     status: true,
@@ -144,11 +144,39 @@ const saveTweet = async (req, res) => {
   const { id } = req.user;
   const { tweetId } = req.params;
 
-  await User.findByIdAndUpdate(id, {$addToSet: {savedTweet: tweetId} })
+  let user = await User.findById(id);
 
+  const isSaved = user.savedTweet && user.savedTweet.includes(tweetId);
+  const option = isSaved ? "$pull" : "$addToSet";
+
+ let savedTweets =await User.findByIdAndUpdate(id, { [option]: { savedTweet: tweetId } }, {new: true}).populate('savedTweet');
+//  savedTweets = User.populate(user, { path: "user.savedTweet" })
+
+  console.log(savedTweets)
+  if (isSaved) {
+    res.status(StatusCodes.OK).json({
+      status: true,
+      message: "Tweet unsaved",
+      tweets: user.savedTweet
+    });
+  } else {
+    res.status(StatusCodes.OK).json({
+      status: true,
+      message: "Tweet saved",
+      tweets: user.savedTweet
+    });
+  }
+};
+
+const getBookmarks = async (req, res) => {
+  const { id } = req.user;
+
+  let user = await User.findById(id).populate('savedTweet');
+  
   res.status(StatusCodes.OK).json({
     status: true,
-    message: 'Tweet saved',
+    message: "bookmarks",
+    tweets: user.savedTweet
   });
 };
 
@@ -159,4 +187,5 @@ module.exports = {
   setRetweet,
   saveTweet,
   getTimeline,
+  getBookmarks
 };

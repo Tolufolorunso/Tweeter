@@ -2,16 +2,17 @@ import { ProfileAside, Tweet } from '../../components';
 // import { tweetData } from '../home/tweetData';
 import BookmarkWrapper from './bookmarks.styled';
 import { useTweetContext } from '../../context/tweets/tweetContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 const user = JSON.parse(localStorage.getItem('user'));
 
 const lists = ['Tweets', 'Tweets & replies', 'media', 'Likes'];
 
 const Bookmark = () => {
-  const { getTweets, tweets, isLoading } = useTweetContext();
+  const { getBookmarks, tweets, isLoading } = useTweetContext();
+const [selectedTab, setSelectedTab] = useState('Tweets')
 
   useEffect(() => {
-    getTweets(user.username);
+    getBookmarks(user.username);
     // eslint-disable-next-line
   }, []);
 
@@ -19,7 +20,7 @@ const Bookmark = () => {
     <BookmarkWrapper>
       <div className="container">
         <div className="bookmark">
-          <ProfileAside lists={lists} bookmark />
+          <ProfileAside lists={lists} bookmark selected={selectedTab} setSelectedTab={setSelectedTab}/>
           <div className="bookmark__main ">
             <div className="mb-6 tweets">
               {isLoading ? (

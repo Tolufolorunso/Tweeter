@@ -7,7 +7,10 @@ import {
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
   RETWEET_SUCCESS,
-  SAVE_TWEET_SUCCESS
+  SAVE_TWEET_SUCCESS,
+  GET_BOOKMARKS_BEGIN,
+  GET_BOOKMARKS_SUCCESS,
+  GET_BOOKMARKS_ERROR,
 } from "./action";
 
 const reducer = (state, { type, payload }) => {
@@ -49,9 +52,24 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (SAVE_TWEET_SUCCESS === type) {
+    if(typeof payload === 'object') {
+      return { ...state, isLoading: false, };
+    }
+    return { ...state, isLoading: false, message: payload };
+
+  }
+
+  if (GET_BOOKMARKS_BEGIN === type) {
+    return { ...state, isLoading: true };
+  }
+
+  if (GET_BOOKMARKS_ERROR === type) {
     return { ...state, isLoading: false };
   }
 
+  if (GET_BOOKMARKS_SUCCESS === type) {
+    return { ...state, isLoading: false,tweets: payload };
+  }
   throw new Error(`No such acyion :${type}`);
 };
 
