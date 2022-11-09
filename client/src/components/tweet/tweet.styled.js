@@ -1,10 +1,17 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const TweetWrapper = styled.section`
   background-color: var(--clr-neutral-100);
   padding: 11px 20px;
   border-radius: 8px;
   font-family: var(--ff-secondary);
+  cursor: pointer;
+
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  &:hover {
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    transform: scale(0.97);
+  }
 
   .header {
     display: flex;
@@ -48,14 +55,14 @@ const TweetWrapper = styled.section`
   .tweetActions {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    /* gap: 1rem; */
     color: #4f4f4f;
   }
 
   .tweetActions ul {
-    width: 100%;
+    /* width: 100%; */
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     list-style: none;
     letter-spacing: -0.035em;
     font-weight: 500;
@@ -66,6 +73,14 @@ const TweetWrapper = styled.section`
     display: flex;
     align-items: center;
     gap: var(--fs-12);
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 0.5rem 2rem;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover {
+      background-color: #f2f2f2;
+    }
   }
 
   .tweetActions ul li .icons {
@@ -84,10 +99,10 @@ const TweetWrapper = styled.section`
     color: #eb5757 !important;
   }
 
-  .liked .icons,.liked span {
-    pointer-events: none
+  .liked .icons,
+  .liked span {
+    pointer-events: none;
   }
-
 
   .saved {
     color: #2d9cdb;

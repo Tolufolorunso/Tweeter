@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Text = ({ title, tag, fs, style }) => {
+const Text = ({ title, tag, fs, style,onClick }) => {
   return (
-    <Wrapper as={tag} fs={fs} style={style}>
+    <Wrapper as={tag} fs={fs} style={style} onClick={onClick}>
       {title}
     </Wrapper>
   );

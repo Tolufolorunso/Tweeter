@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import TweetWrapper from "./tweet.styled";
 // import AvaterImage from '../../assets/images/landingpageimage.png';
 // import TweetHeader from './TweetHeader';
@@ -20,6 +22,7 @@ import {
 import { Link } from "react-router-dom";
 import { useTweetContext } from "../../context/tweets/tweetContext";
 import { useAuthContext } from "../../context/user/userContext";
+import { AiOutlineRetweet } from "react-icons/ai";
 
 const tweetTextStyle = {
   marginBlock: "1.25rem",
@@ -28,17 +31,16 @@ const tweetTextStyle = {
   color: "#4F4F4F",
 };
 
-const Tweet = ({
-  tweet: { tweetText, userImg, tweetImg, ...others },
-}) => {
+const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
   const { postTweet } = useTweetContext();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
+
 
   const [isRetweet, setIsRetweet] = useState(false);
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
   const [replyImage, setReplyImage] = useState("");
-
 
   const handleReply = (e) => {
     e.preventDefault();
@@ -60,9 +62,12 @@ const Tweet = ({
     setReplyImage(img);
   };
 
+  const handlePageClick = () => {
+    navigate(`/${others.userId.username}/posts/${others._id}`)
+  };
+
   useEffect(() => {
     if (others.retweetData !== undefined) {
-      console.log(others.retweetData.tweetText);
       setIsRetweet(true);
       setRetweetText(others.retweetData.tweetText);
       setRetweetBy(others.userId.username);
@@ -73,23 +78,18 @@ const Tweet = ({
   return (
     <>
       {isRetweet && (
-        <p>
-          Retweeted by <Link to={`/profile/${retweetBy}`}>@{retweetBy}</Link>
+        <p className="flex f-align-c gap-small ">
+          <AiOutlineRetweet className="icons" /> <Link to={`/profile/${retweetBy}`}>@{retweetBy} Retweeted</Link>
         </p>
       )}
-      {isRetweet && (
-        <p>
-          Retweeted by <Link to={`/profile/${retweetBy}`}>@{retweetBy}</Link>
-        </p>
-      )}
-      <TweetWrapper className="mb-2">
+      <TweetWrapper className="mb-2" >
         <TweetHeader AvaterImage={userImg} userInfo={others.userId} />
         {isRetweet
           ? retweetText && (
-              <Text title={retweetText} style={tweetTextStyle} tag="p" />
+              <Text title={retweetText} style={tweetTextStyle} tag="p" onClick={handlePageClick}/>
             )
           : tweetText && (
-              <Text title={tweetText} style={tweetTextStyle} tag="p" />
+              <Text title={tweetText} style={tweetTextStyle} tag="p" onClick={handlePageClick}/>
             )}
         {isRetweet
           ? tweetImg && (

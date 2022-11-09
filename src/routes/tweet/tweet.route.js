@@ -20,7 +20,7 @@ const {
   getTweets,
   setLike,
   setRetweet,
-  // setUnRetweet,
+  saveTweet,
   getTimeline,
 } = require('./tweet.controller');
 
@@ -30,6 +30,7 @@ tweetRouter.post('/', authenticateUser, upload.single('tweetImg'), postTweet);
 tweetRouter.get('/timeline', authenticateUser, getTimeline);
 tweetRouter.patch('/:tweetId/likes', authenticateUser, setLike);
 tweetRouter.post('/:tweetId/retweets', authenticateUser, setRetweet);
+tweetRouter.post('/:tweetId/save', authenticateUser, saveTweet);
 // tweetRouter.patch('/unretweets/:tweetId', authenticateUser, setUnRetweet);
 tweetRouter.get('/:username', authenticateUser, getTweets);
 

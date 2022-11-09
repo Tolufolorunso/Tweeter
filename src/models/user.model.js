@@ -45,7 +45,7 @@ const UserSchema = new mongoose.Schema(
     retweets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tweet', }],
     followers: { type: Array, default: [], },
     following: { type: Array, default: [], },
-    savedTweet: { type: Array, default: [], },
+    savedTweet: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tweet" }],
     userImg: { type: String, default: null, },
     coverImg: { type: String, default: null, },
     isAdmin: { type: Boolean, default: false, },

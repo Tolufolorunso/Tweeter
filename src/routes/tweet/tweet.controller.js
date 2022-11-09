@@ -140,27 +140,23 @@ const setRetweet = async (req, res) => {
   });
 };
 
-// const setUnRetweet = async (req, res) => {
-//   const { username } = req.user;
-//   const { tweetId } = req.params;
-//   console.log(username, tweetId);
-//   const retweet = await Tweet.updateOne(
-//     { _id: tweetId },
-//     { $pull: { retweet: username } }
-//   );
+const saveTweet = async (req, res) => {
+  const { id } = req.user;
+  const { tweetId } = req.params;
 
-//   res.status(StatusCodes.OK).json({
-//     status: true,
-//     message: 'unretweeted',
-//     retweet,
-//   });
-// };
+  await User.findByIdAndUpdate(id, {$addToSet: {savedTweet: tweetId} })
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: 'Tweet saved',
+  });
+};
 
 module.exports = {
   postTweet,
   getTweets,
   setLike,
   setRetweet,
-  // setUnRetweet,
+  saveTweet,
   getTimeline,
 };

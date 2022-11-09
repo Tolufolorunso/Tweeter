@@ -10,6 +10,7 @@ import { StyleSheetManager } from 'styled-components';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <React.StrictMode>
   <AuthProvider>
     <TweetProvider>
       <StyleSheetManager>
@@ -17,4 +18,5 @@ root.render(
       </StyleSheetManager>
     </TweetProvider>
   </AuthProvider>
+  </React.StrictMode>
 );

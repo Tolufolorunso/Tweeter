@@ -4,15 +4,18 @@ import { FcLike } from 'react-icons/fc';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import { useTweetContext } from '../../context/tweets/tweetContext';
 import { useAuthContext } from '../../context/user/userContext';
+import { useNavigate } from "react-router-dom";
 
-const TweetActions = ({ others: { retweetUser, likes, _id } }) => {
-  const { setLike, setRetweet } = useTweetContext();
+const TweetActions = ({ others: { retweetUser,userId, likes, _id } }) => {
+  const { setLike, setRetweet,saveTweet } = useTweetContext();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
+
   const isRetweet = () => retweetUser.includes(user._id);
   const isLike = () => likes.includes(user._id);
 
   const handleComment = () => {
-    console.log('clicked');
+    navigate(`/${userId.username}/posts/${_id}`)
   };
 
   const handleRetweet = () => {
@@ -24,7 +27,7 @@ const TweetActions = ({ others: { retweetUser, likes, _id } }) => {
   };
 
   const handleSave = () => {
-    console.log('save');
+    saveTweet(_id, user.username)
   };
   return (
     <div className="tweetActions">

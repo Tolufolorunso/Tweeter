@@ -12,6 +12,7 @@ import AuthLayout from './pages/AuthLayout';
 
 import { useAuthContext } from './context/user/userContext';
 import Toast from './components/Toast';
+import { TweetPage } from './components';
 
 function App() {
   const { user, token } = useAuthContext();
@@ -32,6 +33,7 @@ function App() {
             <Route path="/profile/:username/edit" element={<EditProfile />} />
             <Route path="/bookmarks" element={<Bookmarks />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/:username/posts/:tweetId" element={<TweetPage />} />
           </Route>
           <Route
             path="/landing"

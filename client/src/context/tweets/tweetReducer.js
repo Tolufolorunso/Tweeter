@@ -7,6 +7,7 @@ import {
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
   RETWEET_SUCCESS,
+  SAVE_TWEET_SUCCESS
 } from "./action";
 
 const reducer = (state, { type, payload }) => {
@@ -44,6 +45,10 @@ const reducer = (state, { type, payload }) => {
   if (RETWEET_SUCCESS === type) {
     const index = state.tweets.findIndex((tweet) => tweet._id === payload._id);
     state.tweets.splice(index, 1, payload);
+    return { ...state, isLoading: false };
+  }
+
+  if (SAVE_TWEET_SUCCESS === type) {
     return { ...state, isLoading: false };
   }
 

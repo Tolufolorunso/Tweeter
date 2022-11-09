@@ -9,6 +9,7 @@ import {
   POST_TWEET_ERROR,
   LIKE_SUCCESS,
   RETWEET_SUCCESS,
+  SAVE_TWEET_SUCCESS
 } from "./action";
 import reducer from "./tweetReducer";
 import tweetsFetch from "../../api/fetchApi";
@@ -101,6 +102,19 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const saveTweet = async (tweetID, username) => {
+    console.log(tweetID)
+    try {
+      let {data} = await tweetsFetch.post(`/tweets/${tweetID}/save`);
+      console.log(data)
+      if (data.status) {
+        dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.tweets });
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <TweetContext.Provider
       value={{
@@ -109,6 +123,7 @@ const TweetProvider = ({ children }) => {
         getTweets,
         setLike,
         setRetweet,
+        saveTweet,
         getTimeline,
       }}
     >
