@@ -31,7 +31,9 @@ const tweetTextStyle = {
   color: "#4F4F4F",
 };
 
-const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
+const Tweet = ({tweet}) => {
+  const { tweetText, userImg, tweetImg, ...others } = tweet
+
   const { postTweet } = useTweetContext();
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -41,6 +43,9 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
   const [replyImage, setReplyImage] = useState("");
+  const [comments, setComments] = useState(tweet.comments)
+
+  // console.log(comments)
 
   const handleReply = (e) => {
     e.preventDefault();
@@ -115,7 +120,8 @@ const Tweet = ({ tweet: { tweetText, userImg, tweetImg, ...others } }) => {
           handleReplyFileChange={handleReplyFileChange}
         />
         <div className="line"></div>
-        <Replies />
+        {comments.length >= 1 ? <Replies comments={comments} id={others._id} username={others.userId.username}/> : null }
+        
       </TweetWrapper>
     </div>
   );

@@ -23,10 +23,7 @@ const TweetSchema = new mongoose.Schema(
       default: "everyone",
     },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    comments: {
-      type: Array,
-      default: [],
-    },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tweet" }],
     retweetUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     retweetData: { type: mongoose.Schema.Types.ObjectId, ref: "Tweet" },
     replyTo: { type: mongoose.Schema.Types.ObjectId, ref: "Tweet" },

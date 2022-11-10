@@ -5,9 +5,6 @@ const User = require("../../models/user.model");
 const Hash = require("../../models/hashTag.model");
 const Tweet = require("../../models/tweet.model");
 const { BadRequestError, UnauthenticatedError } = require("../../errors");
-const { findOne } = require("../../models/tweet.model");
-const { findById } = require("../../models/user.model");
-const { post } = require("./tweet.route");
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
@@ -29,10 +26,17 @@ const postTweet = async (req, res) => {
   //   validateBeforeSave: false,
   // });
 
+
   let tweet = await Tweet.create({
     ...req.body,
     tweetImg: req.file?.filename,
   });
+
+  if(req.body.replyTo) {
+    await Tweet.findByIdAndUpdate(req.body.replyTo, { $push: { comments: tweet._id } })
+  }
+
+
 
   // const t = Tweet.populate("userId")
   tweet = await Tweet.populate(tweet, { path: "userId" });
@@ -61,6 +65,7 @@ const getTimeline = async (req, res) => {
     .populate("userId")
     .populate("retweetData")
     .populate("replyTo")
+    .populate('comments')
     .sort("-createdAt");
 
   console.log(tweets);

@@ -45,6 +45,7 @@ const TweetProvider = ({ children }) => {
       const res = await tweetsFetch.post("/tweets", formData);
 
       if (res.data.status) {
+        
         dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
       }
 
