@@ -1,21 +1,21 @@
-import { Link, NavLink } from 'react-router-dom';
-import { IoMdHome } from 'react-icons/io';
-import { MdExplore } from 'react-icons/md';
-import { BsFillBookmarkFill } from 'react-icons/bs';
-import { GiArrowDunk } from 'react-icons/gi';
+import { Link, NavLink } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
+import { MdExplore } from "react-icons/md";
+import { BsFillBookmarkFill } from "react-icons/bs";
+import { GiArrowDunk } from "react-icons/gi";
 
-import NavWrapper from './nav.styled';
-import Logo from '../../assets/images/tweeter.svg';
-import LogoMobile from '../../assets/images/tweeter-small.svg';
+import NavWrapper from "./nav.styled";
+import Logo from "../../assets/images/tweeter.svg";
+import LogoMobile from "../../assets/images/tweeter-small.svg";
 // import AvaterImage from '../../assets/images/landingpageimage.png';
-import Avater from '../Avater';
-import NavProfileDropdown from './NavProfileDropdown';
-import { useEffect, useState } from 'react';
-import { useAuthContext } from '../../context/user/userContext';
+import Avater from "../Avater";
+import NavProfileDropdown from "./NavProfileDropdown";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context/user/userContext";
 
 const Nav = () => {
   const [dropdown, setDropdown] = useState(false);
-  const [avaterImage, setAvaterImage] = useState('');
+  const [avaterImage, setAvaterImage] = useState("");
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const Nav = () => {
               <Avater src={avaterImage} alt="user avater" />
             </div>
             <span>@{user.username}</span>
-            <span onClick={handleDropdown} style={{ cursor: 'pointer' }}>
+            <span onClick={handleDropdown} style={{ cursor: "pointer" }}>
               <GiArrowDunk />
             </span>
           </div>

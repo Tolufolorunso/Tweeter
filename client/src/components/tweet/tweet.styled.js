@@ -5,17 +5,18 @@ const TweetWrapper = styled.section`
   padding: 11px 20px;
   border-radius: 8px;
   font-family: var(--ff-secondary);
-  cursor: pointer;
+  /* cursor: pointer; */
 
   transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   &:hover {
     /* background-color: rgba(0, 0, 0, 0.7); */
-    transform: scale(0.97);
+    /* transform: scale(0.97); */
   }
 
   .header {
     display: flex;
     gap: 1.1rem;
+    position: relative;
   }
 
   .header__title {
@@ -23,6 +24,11 @@ const TweetWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .header__more {
+    margin-left: auto;
+    cursor: pointer;
   }
 
   .imageWrapper {
@@ -112,6 +118,45 @@ const TweetWrapper = styled.section`
     cursor: pointer;
   }
 
+  .tweet__more {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    box-shadow: 0 0 3px 3px rgb(0 0 0 / 30%);
+    border-radius: 8px;
+    padding: 3px 0.7rem 3px 0.7rem;
+    transition: all 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    /* gap: 2px; */
+    z-index: 20;
+
+    button {
+      outline: none;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      display: inline-block;
+      background: transparent;
+      padding: 5px 15px;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+      color: #4f4f4f;
+
+      &:hover {
+        background-color: #F2F2F2;
+      }
+    }
+  }
+
+  .tweet__more.active-more {
+    opacity: 1;
+    pointer-events: all;
+  }
+
   @media (max-width: 45em) {
     font-size: var(--fs-14);
     .imageWrapper {
@@ -122,7 +167,9 @@ const TweetWrapper = styled.section`
       display: none;
     }
 
-    .tweetActions ul {justify-content:space-between}
+    .tweetActions ul {
+      justify-content: space-between;
+    }
   }
 `;
 
