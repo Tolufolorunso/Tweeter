@@ -82,7 +82,7 @@ const TweetWrapper = styled.section`
     cursor: pointer;
     background-color: transparent;
     border-radius: 8px;
-    /* padding: 0.5rem 2rem; */
+    padding: 0.5rem 0.8rem;
     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
     &:hover {
       background-color: #f2f2f2;
