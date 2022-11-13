@@ -19,7 +19,6 @@ const para = {
 };
 
 const RepliesList = ({ comment }) => {
-  console.log(comment);
   return (
     <div className="user-reply gap-small">
       <Avater />

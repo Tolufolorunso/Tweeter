@@ -33,7 +33,6 @@ const tweetTextStyle = {
 
 const Tweet = ({tweet}) => {
   const { tweetText, userImg, tweetImg, ...others } = tweet
-
   const { postTweet } = useTweetContext();
   const { user } = useAuthContext();
   const navigate = useNavigate();

@@ -155,6 +155,11 @@ const saveTweet = async (req, res) => {
   const option = isSaved ? "$pull" : "$addToSet";
 
  let savedTweets =await User.findByIdAndUpdate(id, { [option]: { savedTweet: tweetId } }, {new: true}).populate('savedTweet');
+ const tweets = await Tweet.findByIdAndUpdate(
+  tweetId,
+  { [option]: { saved: id } },
+  { new: true }
+).populate('saved');
 //  savedTweets = User.populate(user, { path: "user.savedTweet" })
 
   console.log(savedTweets)

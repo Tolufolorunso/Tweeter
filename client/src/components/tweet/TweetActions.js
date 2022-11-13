@@ -6,7 +6,9 @@ import { useTweetContext } from "../../context/tweets/tweetContext";
 import { useAuthContext } from "../../context/user/userContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const TweetActions = ({ others: { retweetUser, userId, likes, _id } }) => {
+const TweetActions = ({
+  others: { retweetUser, userId, likes, _id, saved },
+}) => {
   const location = useLocation();
   const { setLike, setRetweet, saveTweet } = useTweetContext();
   const { user } = useAuthContext();
@@ -14,6 +16,9 @@ const TweetActions = ({ others: { retweetUser, userId, likes, _id } }) => {
 
   const isRetweet = () => retweetUser.includes(user._id);
   const isLike = () => likes.includes(user._id);
+  const isSaved = () => saved.includes(user._id);
+
+  console.log(isSaved());
 
   const handleComment = () => {
     navigate(`/${userId.username}/posts/${_id}`);
@@ -29,8 +34,8 @@ const TweetActions = ({ others: { retweetUser, userId, likes, _id } }) => {
 
   const handleSave = (e) => {
     saveTweet(_id, location.pathname);
-    if(location.pathname.includes('bookmarks')) {
-      e.target.closest('.hey').remove()
+    if (location.pathname.includes("bookmarks")) {
+      e.target.closest(".hey").remove();
     }
   };
   return (
@@ -58,8 +63,12 @@ const TweetActions = ({ others: { retweetUser, userId, likes, _id } }) => {
             {isLike() ? "Liked" : "Like"}
           </span>
         </li>
-        <li className="tweetActions-li saved" onClick={handleSave}>
-          <BsFillBookmarkFill className="icons" /> <span>Saved</span>
+        <li
+          className={`tweetActions-li ${isSaved() && "saved"}`}
+          onClick={handleSave}
+        >
+          <BsFillBookmarkFill className="icons" />{" "}
+          <span>{isSaved() ? "saved" : "save"}</span>
         </li>
       </ul>
       <div className="line"></div>
