@@ -23,6 +23,7 @@ const {
   saveTweet,
   getTimeline,
   getBookmarks,
+  deleteTweet,
 } = require('./tweet.controller');
 
 const tweetRouter = express.Router();
@@ -34,5 +35,6 @@ tweetRouter.post('/:tweetId/retweets', authenticateUser, setRetweet);
 tweetRouter.post('/:tweetId/save', authenticateUser, saveTweet);
 tweetRouter.get('/:username/bookmarks', authenticateUser, getBookmarks);
 tweetRouter.get('/:username', authenticateUser, getTweets);
+tweetRouter.delete('/:tweetId', authenticateUser, deleteTweet);
 
 module.exports = tweetRouter;

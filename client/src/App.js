@@ -13,6 +13,7 @@ import AuthLayout from './pages/AuthLayout';
 import { useAuthContext } from './context/user/userContext';
 import Toast from './components/Toast';
 import { TweetPage } from './components';
+// import Confirm from './components/Confirm';
 
 function App() {
   const { user, token } = useAuthContext();
@@ -20,6 +21,7 @@ function App() {
   return (
     <>
       <Toast />
+      {/* <Confirm heading="Delete Tweet" title="Are you sure you want to delete tweet" action="Delete" /> */}
       <BrowserRouter>
         <Routes>
           <Route
@@ -42,6 +44,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      {/* <Confirm heading="Delete Tweet" title="Are you sure you want to delete tweet" action="Delete" /> */}
     </>
   );
 }

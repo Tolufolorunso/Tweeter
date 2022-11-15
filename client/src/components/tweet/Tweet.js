@@ -23,6 +23,7 @@ import { Link } from "react-router-dom";
 import { useTweetContext } from "../../context/tweets/tweetContext";
 import { useAuthContext } from "../../context/user/userContext";
 import { AiOutlineRetweet } from "react-icons/ai";
+import Confirm from "../Confirm";
 
 const tweetTextStyle = {
   marginBlock: "1.25rem",
@@ -31,18 +32,17 @@ const tweetTextStyle = {
   color: "#4F4F4F",
 };
 
-const Tweet = ({tweet}) => {
-  const { tweetText, userImg, tweetImg, ...others } = tweet
-  const { postTweet } = useTweetContext();
+const Tweet = ({ tweet }) => {
+  const { tweetText, userImg, tweetImg, ...others } = tweet;
+  const { postTweet, deleteTweet } = useTweetContext();
   const { user } = useAuthContext();
   const navigate = useNavigate();
-
 
   const [isRetweet, setIsRetweet] = useState(false);
   const [retweetBy, setRetweetBy] = useState("");
   const [retweetText, setRetweetText] = useState("");
   const [replyImage, setReplyImage] = useState("");
-  const [comments, setComments] = useState(tweet.comments)
+  const [comments, setComments] = useState(tweet.comments);
 
   // console.log(comments)
 
@@ -67,7 +67,21 @@ const Tweet = ({tweet}) => {
   };
 
   const handlePageClick = () => {
-    navigate(`/${others.userId.username}/posts/${others._id}`)
+    navigate(`/${others.userId.username}/posts/${others._id}`);
+  };
+
+  const [more, setMore] = useState(false);
+  const handleClickTweetMore = () => {
+    setMore(!more);
+  };
+
+  const handleDeleteTweet = (e) => {
+    setMore(false);
+    const isDeleted = deleteTweet(others._id);
+
+    if (isDeleted) {
+      e.target.closest(".hey").remove();
+    }
   };
 
   useEffect(() => {
@@ -80,49 +94,73 @@ const Tweet = ({tweet}) => {
   }, []);
 
   return (
-    <div className="hey">
-      {isRetweet && (
-        <p className="flex f-align-c gap-small ">
-          <AiOutlineRetweet className="icons" /> <Link to={`/profile/${retweetBy}`}>@{retweetBy} Retweeted</Link>
-        </p>
-      )}
-      <TweetWrapper className="mb-2" >
-        <TweetHeader AvaterImage={userImg} userInfo={others.userId} />
-        {isRetweet
-          ? retweetText && (
-              <Text title={retweetText} style={tweetTextStyle} tag="p" onClick={handlePageClick}/>
-            )
-          : tweetText && (
-              <Text title={tweetText} style={tweetTextStyle} tag="p" onClick={handlePageClick}/>
-            )}
-        {isRetweet
-          ? tweetImg && (
-              <div className="imageWrapper">
-                <img
-                  src={`http://localhost:5000/${tweetImg}`}
-                  alt={tweetText.substring(0, 10)}
+    <>
+      <div className="hey">
+        {isRetweet && (
+          <p className="flex f-align-c gap-small">
+            <AiOutlineRetweet className="icons" />{" "}
+            <Link to={`/profile/${retweetBy}`}>@{retweetBy} Retweeted</Link>
+          </p>
+        )}
+        <TweetWrapper className="mb-2">
+          <TweetHeader
+            AvaterImage={userImg}
+            userInfo={others.userId}
+            deleteTweet={handleDeleteTweet}
+            more={more}
+            handleClickTweetMore={handleClickTweetMore}
+          />
+          {isRetweet
+            ? retweetText && (
+                <Text
+                  title={retweetText}
+                  style={tweetTextStyle}
+                  tag="p"
+                  onClick={handlePageClick}
                 />
-              </div>
-            )
-          : tweetImg && (
-              <div className="imageWrapper">
-                <img
-                  src={`http://localhost:5000/${tweetImg}`}
-                  alt={tweetText.substring(0, 10)}
+              )
+            : tweetText && (
+                <Text
+                  title={tweetText}
+                  style={tweetTextStyle}
+                  tag="p"
+                  onClick={handlePageClick}
                 />
-              </div>
-            )}
-        <TweetInfo others={others} />
-        <TweetActions others={others} />
-        <ReplyToTweet
-          handleReply={handleReply}
-          handleReplyFileChange={handleReplyFileChange}
-        />
-        <div className="line"></div>
-        {comments.length >= 1 ? <Replies comments={comments} id={others._id} username={others.userId.username}/> : null }
-        
-      </TweetWrapper>
-    </div>
+              )}
+          {isRetweet
+            ? tweetImg && (
+                <div className="imageWrapper">
+                  <img
+                    src={`http://localhost:5000/${tweetImg}`}
+                    alt={tweetText.substring(0, 10)}
+                  />
+                </div>
+              )
+            : tweetImg && (
+                <div className="imageWrapper">
+                  <img
+                    src={`http://localhost:5000/${tweetImg}`}
+                    alt={tweetText.substring(0, 10)}
+                  />
+                </div>
+              )}
+          <TweetInfo others={others} />
+          <TweetActions others={others} />
+          <ReplyToTweet
+            handleReply={handleReply}
+            handleReplyFileChange={handleReplyFileChange}
+          />
+          <div className="line"></div>
+          {comments.length >= 1 ? (
+            <Replies
+              comments={comments}
+              id={others._id}
+              username={others.userId.username}
+            />
+          ) : null}
+        </TweetWrapper>
+      </div>
+    </>
   );
 };
 

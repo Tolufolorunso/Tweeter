@@ -4,7 +4,8 @@ const findHashtags = require("find-hashtags");
 const User = require("../../models/user.model");
 const Hash = require("../../models/hashTag.model");
 const Tweet = require("../../models/tweet.model");
-const { BadRequestError, UnauthenticatedError } = require("../../errors");
+const { BadRequestError, UnauthenticatedError, NotFoundError } = require("../../errors");
+const { findById } = require("../../models/user.model");
 
 const postTweet = async (req, res) => {
   // console.log(req.file);
@@ -26,17 +27,16 @@ const postTweet = async (req, res) => {
   //   validateBeforeSave: false,
   // });
 
-
   let tweet = await Tweet.create({
     ...req.body,
     tweetImg: req.file?.filename,
   });
 
-  if(req.body.replyTo) {
-    await Tweet.findByIdAndUpdate(req.body.replyTo, { $push: { comments: tweet._id } })
+  if (req.body.replyTo) {
+    await Tweet.findByIdAndUpdate(req.body.replyTo, {
+      $push: { comments: tweet._id },
+    });
   }
-
-
 
   // const t = Tweet.populate("userId")
   tweet = await Tweet.populate(tweet, { path: "userId" });
@@ -65,7 +65,7 @@ const getTimeline = async (req, res) => {
     .populate("userId")
     .populate("retweetData")
     .populate("replyTo")
-    .populate('comments')
+    .populate("comments")
     .sort("-createdAt");
 
   console.log(tweets);
@@ -101,7 +101,7 @@ const setLike = async (req, res) => {
     tweetId,
     { [option]: { likes: userId } },
     { new: true }
-  ).populate('userId');
+  ).populate("userId");
 
   res.status(StatusCodes.OK).json({
     status: true,
@@ -136,7 +136,7 @@ const setRetweet = async (req, res) => {
     tweetId,
     { [option]: { retweetUser: userId } },
     { new: true }
-  ).populate('userId');
+  ).populate("userId");
 
   res.status(StatusCodes.OK).json({
     status: true,
@@ -154,26 +154,30 @@ const saveTweet = async (req, res) => {
   const isSaved = user.savedTweet && user.savedTweet.includes(tweetId);
   const option = isSaved ? "$pull" : "$addToSet";
 
- let savedTweets =await User.findByIdAndUpdate(id, { [option]: { savedTweet: tweetId } }, {new: true}).populate('savedTweet');
- const tweets = await Tweet.findByIdAndUpdate(
-  tweetId,
-  { [option]: { saved: id } },
-  { new: true }
-).populate('saved');
-//  savedTweets = User.populate(user, { path: "user.savedTweet" })
+  let savedTweets = await User.findByIdAndUpdate(
+    id,
+    { [option]: { savedTweet: tweetId } },
+    { new: true }
+  ).populate("savedTweet");
+  const tweets = await Tweet.findByIdAndUpdate(
+    tweetId,
+    { [option]: { saved: id } },
+    { new: true }
+  ).populate("saved");
+  //  savedTweets = User.populate(user, { path: "user.savedTweet" })
 
-  console.log(savedTweets)
+  console.log(savedTweets);
   if (isSaved) {
     res.status(StatusCodes.OK).json({
       status: true,
       message: "Tweet unsaved",
-      tweets: user.savedTweet
+      tweets: user.savedTweet,
     });
   } else {
     res.status(StatusCodes.OK).json({
       status: true,
       message: "Tweet saved",
-      tweets: user.savedTweet
+      tweets: user.savedTweet,
     });
   }
 };
@@ -181,12 +185,37 @@ const saveTweet = async (req, res) => {
 const getBookmarks = async (req, res) => {
   const { id } = req.user;
 
-  let user = await User.findById(id).populate('savedTweet');
-  
+  let user = await User.findById(id).populate("savedTweet");
+
   res.status(StatusCodes.OK).json({
     status: true,
     message: "bookmarks",
-    tweets: user.savedTweet
+    tweets: user.savedTweet,
+  });
+};
+
+const deleteTweet = async (req, res) => {
+  const { id } = req.user;
+  const { tweetId } = req.params;
+
+  const tweet = await Tweet.findById(tweetId);
+
+  if(tweet === null) {
+    throw new NotFoundError('Tweet not found. Nothing to delete')
+  }
+
+  if(id.toString() !== tweet.userId.toString()) {
+    return res.status(StatusCodes.FORBIDDEN).json({
+      status: false,
+      message: "You dont have permission to delete the tweet",
+    });
+  };
+
+  await Tweet.findByIdAndDelete(tweetId) 
+
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: "deleted",
   });
 };
 
@@ -197,5 +226,6 @@ module.exports = {
   setRetweet,
   saveTweet,
   getTimeline,
-  getBookmarks
+  getBookmarks,
+  deleteTweet,
 };

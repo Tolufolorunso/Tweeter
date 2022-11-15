@@ -18,8 +18,6 @@ const TweetActions = ({
   const isLike = () => likes.includes(user._id);
   const isSaved = () => saved.includes(user._id);
 
-  console.log(isSaved());
-
   const handleComment = () => {
     navigate(`/${userId.username}/posts/${_id}`);
   };

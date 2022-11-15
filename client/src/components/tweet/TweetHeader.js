@@ -2,15 +2,11 @@ import Avater from "../Avater";
 import Text from "../Text";
 import DefaultAvater from "../../assets/images/defaultAvater.png";
 import { BiImage } from "react-icons/bi";
-import { useState } from "react";
+// import { useState } from "react";
 
 const span = { color: "#BDBDBD", fontWeight: 500 };
 
-const TweetHeader = ({ AvaterImage, userInfo }) => {
-  const [more, setMore] = useState(false)
-  const handleTweetMore = () => {
-    setMore(!more)
-  };
+const TweetHeader = ({ AvaterImage, userInfo,handleClickTweetMore, deleteTweet,more}) => {
 
   return (
     <header className="header">
@@ -20,10 +16,10 @@ const TweetHeader = ({ AvaterImage, userInfo }) => {
         <Text title="24 August at 20:43" fs="0.75" tag="span" style={span} />
       </div>
       <div className="header__more">
-        <BiImage className="image" onClick={handleTweetMore} />
+        <BiImage className="image" onClick={handleClickTweetMore} />
       </div>
       <div className={`tweet__more ${more ? 'active-more' : ''}`}>
-        <button>delete</button>
+        <button onClick={deleteTweet}>delete</button>
         <button>delete</button>
         <button>delete</button>
         <button>delete</button>

@@ -21,7 +21,7 @@ const initialState = {
   isLoading: false,
   error: "",
   tweets: [],
-  tweet: null
+  tweet: null,
 };
 
 const TweetContext = React.createContext();
@@ -30,7 +30,6 @@ const TweetProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const postTweet = async (data) => {
-
     dispatch({ type: POST_TWEET_BEGIN });
     try {
       let formData = new FormData();
@@ -38,17 +37,15 @@ const TweetProvider = ({ children }) => {
       formData.append("userImg", data.userImg);
       formData.append("replyBy", data.replyBy);
       formData.append("tweetText", data.tweetText);
-      if(data.replyTo) {
+      if (data.replyTo) {
         formData.append("replyTo", data.replyTo);
       }
       formData.append("userId", data.userId);
       const res = await tweetsFetch.post("/tweets", formData);
 
       if (res.data.status) {
-        
         dispatch({ type: POST_TWEET_SUCCESS, payload: res.data.tweet });
       }
-
     } catch (error) {
       // console.log(error);
       dispatch({ type: POST_TWEET_ERROR });
@@ -68,10 +65,20 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const deleteTweet = async (tweetId) => {
+    try {
+      let res = await tweetsFetch.delete(`/tweets/${tweetId}`);
+      console.log(res)
+      return true
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getTimeline = async () => {
     dispatch({ type: GET_TWEETS_BEGIN });
     try {
-      if (localStorage.getItem('token')) {
+      if (localStorage.getItem("token")) {
         let { data } = await tweetsFetch.get(`/tweets/timeline`);
         if (data.status) {
           dispatch({ type: GET_TWEETS_SUCCESS, payload: data.tweets });
@@ -85,8 +92,8 @@ const TweetProvider = ({ children }) => {
 
   const setLike = async (tweetID, username) => {
     try {
-      let {data} = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
-      
+      let { data } = await tweetsFetch.patch(`/tweets/${tweetID}/likes`);
+
       dispatch({ type: LIKE_SUCCESS, payload: data.tweets });
     } catch (error) {
       return error;
@@ -95,9 +102,9 @@ const TweetProvider = ({ children }) => {
 
   const setRetweet = async (tweetID, username) => {
     try {
-      let {data} = await tweetsFetch.post(`/tweets/${tweetID}/retweets`);
-  
-      console.log(data)
+      let { data } = await tweetsFetch.post(`/tweets/${tweetID}/retweets`);
+
+      console.log(data);
       if (data.status) {
         dispatch({ type: RETWEET_SUCCESS, payload: data.tweets });
       }
@@ -108,9 +115,9 @@ const TweetProvider = ({ children }) => {
 
   const saveTweet = async (tweetID, location) => {
     try {
-      let {data} = await tweetsFetch.post(`/tweets/${tweetID}/save`);
+      let { data } = await tweetsFetch.post(`/tweets/${tweetID}/save`);
       if (data.status) {
-        if(location.includes('bookmarks')) {
+        if (location.includes("bookmarks")) {
           dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.tweets });
         } else {
           dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.message });
@@ -124,13 +131,13 @@ const TweetProvider = ({ children }) => {
   const getBookmarks = async (username) => {
     dispatch({ type: GET_BOOKMARKS_BEGIN });
     try {
-      let {data} = await tweetsFetch.get(`/tweets/${username}/bookmarks`);
+      let { data } = await tweetsFetch.get(`/tweets/${username}/bookmarks`);
       if (data.status) {
         dispatch({ type: GET_BOOKMARKS_SUCCESS, payload: data.tweets });
       }
     } catch (error) {
       console.log(error.response);
-      dispatch({ type: GET_BOOKMARKS_ERROR, payload: 'error' });
+      dispatch({ type: GET_BOOKMARKS_ERROR, payload: "error" });
     }
   };
 
@@ -144,7 +151,8 @@ const TweetProvider = ({ children }) => {
         setRetweet,
         saveTweet,
         getTimeline,
-        getBookmarks
+        getBookmarks,
+        deleteTweet,
       }}
     >
       {children}
