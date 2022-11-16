@@ -1,22 +1,22 @@
-import styled from 'styled-components';
-import { BiImage, BiWorld } from 'react-icons/bi';
-import { HiUsers } from 'react-icons/hi';
-import { Avater, Button, Text } from '../../components';
+import styled from "styled-components";
+import { BiImage, BiWorld } from "react-icons/bi";
+import { HiUsers } from "react-icons/hi";
+import { Avater, Button, Text } from "../../components";
 
 // import AvaterImage from '../../assets/images/landingpageimage.png';
-import { useEffect, useState } from 'react';
-import { useAuthContext } from '../../context/user/userContext';
-import { useTweetContext } from '../../context/tweets/tweetContext';
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context/user/userContext";
+import { useTweetContext } from "../../context/tweets/tweetContext";
 
 const TweetBox = () => {
   const { user } = useAuthContext();
   const { postTweet } = useTweetContext();
-  let [canReply, setCanReply] = useState('everyone');
+  let [canReply, setCanReply] = useState("everyone");
   let [isCanReplyOpen, setIsCanReplyOpen] = useState(false);
-  const [tweetText, setTweetText] = useState('');
-  const [avaterImage, setAvaterImage] = useState('');
+  const [tweetText, setTweetText] = useState("");
+  const [avaterImage, setAvaterImage] = useState("");
 
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     setAvaterImage(user.userImg);
@@ -31,7 +31,7 @@ const TweetBox = () => {
       preview: URL.createObjectURL(e.target.files[0]),
       data: e.target.files[0],
     };
-    
+
     setImage(img);
   };
 
@@ -62,8 +62,8 @@ const TweetBox = () => {
       tweetText,
     });
 
-    setTweetText('')
-    setAvaterImage('')
+    setTweetText("");
+    setImage("");
   };
 
   const handleCanReply = (e) => {
@@ -77,7 +77,7 @@ const TweetBox = () => {
 
   return (
     <Wrapper>
-      <Text title="Tweet something" tag="h3" style={{ color: '#4F4F4F' }} />
+      <Text title="Tweet something" tag="h3" style={{ color: "#4F4F4F" }} />
       <div className="line"></div>
       <form onSubmit={handleTweet}>
         <div className="input-box">
@@ -104,10 +104,10 @@ const TweetBox = () => {
 
           <p
             style={{
-              display: 'flex',
-              gap: '5px',
-              alignItems: 'center',
-              cursor: 'pointer',
+              display: "flex",
+              gap: "5px",
+              alignItems: "center",
+              cursor: "pointer",
             }}
             onClick={handleEveryoneReply}
           >
@@ -116,7 +116,7 @@ const TweetBox = () => {
           </p>
           <Button
             text="Tweet"
-            style={{ marginLeft: 'auto' }}
+            style={{ marginLeft: "auto" }}
             // disabled={isLoading}
           />
         </div>

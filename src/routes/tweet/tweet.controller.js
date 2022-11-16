@@ -1,18 +1,48 @@
 const { StatusCodes } = require("http-status-codes");
+const path = require("path");
+const { v4: uuidv4 } = require("uuid");
+
 const findHashtags = require("find-hashtags");
 
 const User = require("../../models/user.model");
 const Hash = require("../../models/hashTag.model");
 const Tweet = require("../../models/tweet.model");
-const { BadRequestError, UnauthenticatedError, NotFoundError } = require("../../errors");
+const {
+  BadRequestError,
+  UnauthenticatedError,
+  NotFoundError,
+} = require("../../errors");
 const { findById } = require("../../models/user.model");
 
 const postTweet = async (req, res) => {
-  // console.log(req.file);
-  console.log(req.body);
-
-  if (!req.file && !req.body.tweetText) {
+  if (!req.files && !req.body.tweetText) {
     throw new BadRequestError("Upload atleast one image or enter tweet");
+  }
+
+  let userImage;
+
+  if (req.files) {
+    userImage = req.files.tweetImg;
+  }
+
+  if (req.files && !userImage.mimetype.includes("image")) {
+    throw new BadRequestError("Please upload a valid image");
+  }
+
+  // max upload is 2 megabytes
+  const maxSize = 2000000;
+
+  if (req.files && userImage.size > maxSize) {
+    throw new BadRequestError("Exceeded allowed image max size");
+  }
+  let imagePath;
+  let imageId = uuidv4();
+  if (userImage) {
+    imagePath = path.join(
+      __dirname,
+      "../../uploads/" + `${imageId}-${userImage.name}`
+    );
+    await userImage.mv(imagePath);
   }
 
   let getHashTags = findHashtags(req.body.tweetText);
@@ -29,7 +59,7 @@ const postTweet = async (req, res) => {
 
   let tweet = await Tweet.create({
     ...req.body,
-    tweetImg: req.file?.filename,
+    tweetImg: userImage ? `uploads/${imageId}-${userImage.name}` : "",
   });
 
   if (req.body.replyTo) {
@@ -200,18 +230,18 @@ const deleteTweet = async (req, res) => {
 
   const tweet = await Tweet.findById(tweetId);
 
-  if(tweet === null) {
-    throw new NotFoundError('Tweet not found. Nothing to delete')
+  if (tweet === null) {
+    throw new NotFoundError("Tweet not found. Nothing to delete");
   }
 
-  if(id.toString() !== tweet.userId.toString()) {
+  if (id.toString() !== tweet.userId.toString()) {
     return res.status(StatusCodes.FORBIDDEN).json({
       status: false,
       message: "You dont have permission to delete the tweet",
     });
-  };
+  }
 
-  await Tweet.findByIdAndDelete(tweetId) 
+  await Tweet.findByIdAndDelete(tweetId);
 
   res.status(StatusCodes.OK).json({
     status: true,

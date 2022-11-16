@@ -13,7 +13,7 @@ const multer = require('multer');
 // const upload = multer({ storage: storage });
 
 const authenticateUser = require('../../middlewares/authentication');
-const upload = require('../../utils/upload');
+// const upload = require('../../utils/upload'); 
 
 const {
   postTweet,
@@ -28,7 +28,7 @@ const {
 
 const tweetRouter = express.Router();
 
-tweetRouter.post('/', authenticateUser, upload.single('tweetImg'), postTweet);
+tweetRouter.post('/', authenticateUser, postTweet);
 tweetRouter.get('/timeline', authenticateUser, getTimeline);
 tweetRouter.patch('/:tweetId/likes', authenticateUser, setLike);
 tweetRouter.post('/:tweetId/retweets', authenticateUser, setRetweet);

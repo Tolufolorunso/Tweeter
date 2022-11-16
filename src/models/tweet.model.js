@@ -4,14 +4,10 @@ const TweetSchema = new mongoose.Schema(
   {
     tweetText: {
       type: String,
-      minlength: 1,
       maxlength: 120,
       trim: true,
     },
     tweetImg: {
-      type: String,
-    },
-    userImg: {
       type: String,
     },
     userId: {

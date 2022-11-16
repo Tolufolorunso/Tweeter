@@ -1,20 +1,21 @@
-require('express-async-errors');
+require("express-async-errors");
 
-const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
+const express = require("express");
+const path = require("path");
+const morgan = require("morgan");
+const fileUpload = require("express-fileupload");
 
 // security packages
 // const helmet = require('helmet');
-const cors = require('cors');
-const xss = require('xss-clean');
-const rateLimiter = require('express-rate-limit');
-const cloudinary = require('cloudinary').v2;
+const cors = require("cors");
+const xss = require("xss-clean");
+const rateLimiter = require("express-rate-limit");
+// const cloudinary = require('cloudinary').v2;
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
 // Cloudinary v2
@@ -25,12 +26,12 @@ if (process.env.NODE_ENV === 'development') {
 // });
 
 //middleware
-const notFoundMiddleware = require('./middlewares/not-found');
-const errorHandlerMiddleware = require('./middlewares/error-handler');
+const notFoundMiddleware = require("./middlewares/not-found");
+const errorHandlerMiddleware = require("./middlewares/error-handler");
 
 // Body Parser Middleware
 
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 // app.use(
 //   rateLimiter({
 //     windowMs: 15 * 60 * 1000,
@@ -38,27 +39,27 @@ app.set('trust proxy', 1);
 //   })
 // );
 app.use(express.json());
+app.use(fileUpload());
 
 // app.use(helmet());
 app.use(cors());
 app.use(xss());
 
 // Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
-console.log(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // App Routes
-app.use('/api/v1/auth', require('./routes/auth/auth.route'));
-app.use('/api/v1/users', require('./routes/users/user.route'));
+app.use("/api/v1/auth", require("./routes/auth/auth.route"));
+app.use("/api/v1/users", require("./routes/users/user.route"));
 app.use(
-  '/api/v1/tweets',
+  "/api/v1/tweets",
   // authenticateUser,
-  require('./routes/tweet/tweet.route')
+  require("./routes/tweet/tweet.route")
 );
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // APP ErrorHandler
