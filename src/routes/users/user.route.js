@@ -5,7 +5,7 @@ const {
   getAllUsers,
   getMe,
   follow,
-  unfollow,
+  // unfollow,
   saveTweet,
   unsavedTweet,
 } = require('./user.controller');
@@ -19,7 +19,7 @@ userRouter
   .get(authenticateUser, getUser)
   .patch(authenticateUser, updateUser);
 userRouter.patch('/:userId/follow', authenticateUser, follow);
-userRouter.patch('/:userId/unfollow', authenticateUser, unfollow);
+// userRouter.patch('/:userId/unfollow', authenticateUser, unfollow);
 userRouter.patch('/:tweetId/savetweet', authenticateUser, saveTweet);
 userRouter.patch('/:tweetId/unsavetweet', authenticateUser, unsavedTweet);
 userRouter.get('/', authenticateUser, getAllUsers);

@@ -1,12 +1,12 @@
-const { StatusCodes } = require('http-status-codes');
-const User = require('../../models/user.model');
-const Tweet = require('../../models/tweet.model');
+const { StatusCodes } = require("http-status-codes");
+const User = require("../../models/user.model");
+const Tweet = require("../../models/tweet.model");
 
 const {
   NotFoundError,
   UnauthenticatedError,
   BadRequestError,
-} = require('../../errors');
+} = require("../../errors");
 
 const getUser = async (req, res) => {
   const { username } = req.params;
@@ -19,7 +19,7 @@ const getUser = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     status: true,
-    message: 'successful',
+    message: "successful",
     user,
   });
 };
@@ -52,7 +52,7 @@ const updateUser = async (req, res) => {
 
   res.status(StatusCodes.OK).json({
     status: true,
-    message: 'Updated successfully',
+    message: "Updated successfully",
     user,
   });
 };
@@ -61,7 +61,7 @@ const getAllUsers = async (req, res) => {
   const users = await User.find({});
   res
     .status(StatusCodes.OK)
-    .json({ status: true, message: 'getAllUsers', users });
+    .json({ status: true, message: "getAllUsers", users });
 };
 
 const getMe = async (req, res) => {
@@ -69,12 +69,12 @@ const getMe = async (req, res) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    throw new UnauthenticatedError('User not found');
+    throw new UnauthenticatedError("User not found");
   }
 
   res
     .status(StatusCodes.OK)
-    .json({ status: true, message: 'successful', user });
+    .json({ status: true, message: "successful", user });
 };
 
 const follow = async (req, res) => {
@@ -85,47 +85,53 @@ const follow = async (req, res) => {
   }
 
   const user = await User.findById(userId);
-  const currentUser = await User.findById(req.user.id);
 
-  if (user.followers.includes(id)) {
-    throw new BadRequestError(`you are already following the user`);
+  if (user == null) {
+    throw new NotFoundError("user not found");
   }
 
-  await user.updateOne({ $push: { followers: id } });
-  await currentUser.updateOne({
-    $push: { following: userId },
-  });
+  const isFollowing = user.followers && user.followers.includes(id);
 
+  const option = isFollowing ? "$pull" : "$addToSet";
+
+  const self = await User.findByIdAndUpdate(
+    id,
+    { [option]: { following: userId } },
+    { new: true }
+  );
+
+  await User.findByIdAndUpdate(userId, { [option]: { followers: id } });
   res.status(StatusCodes.OK).json({
     status: true,
-    message: 'followed',
-    following: [...currentUser.following, userId],
+    message: "followed",
+    following: self.following,
+    user: self
   });
 };
 
-const unfollow = async (req, res) => {
-  const { userId } = req.params;
-  const { id } = req.user;
-  if (userId === id) {
-    throw new BadRequestError(`You can not perform that operation`);
-  }
+// const unfollow = async (req, res) => {
+//   const { userId } = req.params;
+//   const { id } = req.user;
+//   if (userId === id) {
+//     throw new BadRequestError(`You can not perform that operation`);
+//   }
 
-  const user = await User.findById(userId);
-  const currentUser = await User.findById(req.user.id);
+//   const user = await User.findById(userId);
+//   const currentUser = await User.findById(req.user.id);
 
-  if (!user.followers.includes(id)) {
-    throw new BadRequestError(`you are not following the user`);
-  }
+//   if (!user.followers.includes(id)) {
+//     throw new BadRequestError(`you are not following the user`);
+//   }
 
-  await user.updateOne({ $pull: { followers: id } });
-  await currentUser.updateOne({ $pull: { following: userId } });
+//   await user.updateOne({ $pull: { followers: id } });
+//   await currentUser.updateOne({ $pull: { following: userId } });
 
-  res.status(StatusCodes.OK).json({
-    status: true,
-    following: currentUser.following.filter((f) => f !== userId),
-    message: 'unfollowed',
-  });
-};
+//   res.status(StatusCodes.OK).json({
+//     status: true,
+//     following: currentUser.following.filter((f) => f !== userId),
+//     message: 'unfollowed',
+//   });
+// };
 
 const saveTweet = async (req, res) => {
   const { tweetId } = req.params;
@@ -150,7 +156,7 @@ const saveTweet = async (req, res) => {
   res.status(StatusCodes.OK).json({
     status: true,
     savedTweet: [...user.savedTweet, tweetId],
-    message: 'Tweet bookmarked',
+    message: "Tweet bookmarked",
   });
 };
 
@@ -173,7 +179,7 @@ const unsavedTweet = async (req, res) => {
   res.status(StatusCodes.OK).json({
     status: true,
     savedTweet: user.savedTweet.filter((f) => f !== tweetId),
-    message: 'Tweet unbookmarked',
+    message: "Tweet unbookmarked",
   });
 };
 
@@ -183,7 +189,7 @@ module.exports = {
   getAllUsers,
   getMe,
   follow,
-  unfollow,
+  // unfollow,
   saveTweet,
   unsavedTweet,
 };

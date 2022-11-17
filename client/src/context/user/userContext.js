@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext } from "react";
 
 import {
   LOGIN_BEGIN,
@@ -10,26 +10,27 @@ import {
   LOGOUT,
   CLEAR_ERROR,
   FOLLOW_SUCCESS,
-  UNFOLLOW_SUCCESS,
   UPDATEPROFILE_BEGIN,
   UPDATEPROFILE_ERROR,
   UPDATEPROFILE_SUCCESS,
-} from './action';
-import reducer from './userReducer';
-import authFetch from '../../api/fetchApi';
+} from "./action";
+import reducer from "./userReducer";
+import authFetch from "../../api/fetchApi";
 
-const token = localStorage.getItem('token');
-let user = localStorage.getItem('user');
-const following = localStorage.getItem('following');
-const followers = localStorage.getItem('followers');
+const token = localStorage.getItem("token");
+let user = localStorage.getItem("user");
+// const following = localStorage.getItem('following');
+// const followers = localStorage.getItem('followers');
 
 const initialState = {
   isLoading: false,
   user: user ? JSON.parse(user) : null,
   token: token ? token : null,
-  following: following ? JSON.parse(following) : [],
-  followers: followers ? JSON.parse(followers) : [],
-  error: '',
+  // following: following ? JSON.parse(following) : [],
+  // followers: followers ? JSON.parse(followers) : [],
+  following: [],
+  followers:  [],
+  error: "",
 };
 
 const AuthContext = React.createContext();
@@ -40,10 +41,10 @@ const AuthProvider = ({ children }) => {
   const register = async (data) => {
     dispatch({ type: REGISTER_BEGIN });
     try {
-      const res = await authFetch.post('/auth/register', data);
+      const res = await authFetch.post("/auth/register", data);
       if (res.data.status) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
 
         dispatch({ type: REGISTER_SUCCESS, payload: res.data });
       }
@@ -56,7 +57,7 @@ const AuthProvider = ({ children }) => {
       } else {
         dispatch({
           type: REGISTER_ERROR,
-          payload: 'Something went wrong',
+          payload: "Something went wrong",
         });
       }
       clearError();
@@ -66,10 +67,10 @@ const AuthProvider = ({ children }) => {
   const login = async (userLogin) => {
     dispatch({ type: LOGIN_BEGIN });
     try {
-      const {data} = await authFetch.post('/auth/login', userLogin);
+      const { data } = await authFetch.post("/auth/login", userLogin);
       if (data.status) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
         dispatch({ type: LOGIN_SUCCESS, payload: data });
       }
     } catch (error) {
@@ -81,7 +82,7 @@ const AuthProvider = ({ children }) => {
       } else {
         dispatch({
           type: LOGIN_ERROR,
-          payload: 'Something went wrong',
+          payload: "Something went wrong",
         });
       }
       clearError();
@@ -100,7 +101,7 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await authFetch.patch(`/users/${username}`, data);
       if (res.data.status) {
-        localStorage.setItem('user', JSON.stringify(res.data.user));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         dispatch({ type: UPDATEPROFILE_SUCCESS, payload: res.data.user });
       }
       return true;
@@ -113,7 +114,7 @@ const AuthProvider = ({ children }) => {
       } else {
         dispatch({
           type: UPDATEPROFILE_ERROR,
-          payload: 'Something went wrong',
+          payload: "Something went wrong",
         });
       }
       clearError();
@@ -127,18 +128,9 @@ const AuthProvider = ({ children }) => {
 
   const follow = async (userId) => {
     try {
-      const res = await authFetch.patch(`/users/${userId}/follow`);
-      localStorage.setItem('following', JSON.stringify(res.data.following));
-      dispatch({ type: FOLLOW_SUCCESS, payload: res.data.following });
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
-  const unfollow = async (userId) => {
-    try {
-      const res = await authFetch.patch(`/users/${userId}/unfollow`);
-      dispatch({ type: UNFOLLOW_SUCCESS, payload: res.data.following });
+      const { data } = await authFetch.patch(`/users/${userId}/follow`);
+      // localStorage.setItem('following', JSON.stringify(data.following));
+      dispatch({ type: FOLLOW_SUCCESS, payload: data.user });
     } catch (error) {
       console.log(error.response);
     }
@@ -159,7 +151,6 @@ const AuthProvider = ({ children }) => {
         logout,
         updateProfile,
         follow,
-        unfollow,
         setUser,
       }}
     >

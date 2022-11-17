@@ -1,19 +1,19 @@
-import CoverPicture from './CoverPicture';
-import ProfileWrapper from './profile.styled';
-import ProfileDetail from './ProfileDetail';
+import CoverPicture from "./CoverPicture";
+import ProfileWrapper from "./profile.styled";
+import ProfileDetail from "./ProfileDetail";
 // import { tweetData } from '../home/tweetData'; // Dummy data
-import { ProfileAside, Tweet } from '../../components';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useTweetContext } from '../../context/tweets/tweetContext';
-import { useState } from 'react';
-import { useAuthContext } from '../../context/user/userContext';
+import { ProfileAside, Tweet } from "../../components";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useTweetContext } from "../../context/tweets/tweetContext";
+import { useState } from "react";
+import { useAuthContext } from "../../context/user/userContext";
 // import ProfileAside from './ProfileAside';
-import authFetch from '../../api/fetchApi';
+import authFetch from "../../api/fetchApi";
 
 // import io from 'socket.io-client';
 
-const lists = ['Tweets', 'Tweets & replies', 'media', 'Likes'];
+const lists = ["Tweets", "Tweets & replies", "media", "Likes"];
 // const ENDPOINT = 'http://localhost:5000';
 // let socket;
 
@@ -53,11 +53,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (user.username === username) {
-      setUserDetail(user);
-    } else {
-      fetchUser();
-    }
+    fetchUser();
     // eslint-disable-next-line
   }, [username, user]);
 
@@ -90,7 +86,7 @@ const Profile = () => {
             /> */}
             <div className="mb-6 tweets">
               {isLoading ? (
-                <div style={{ textAlign: 'center', color: 'green' }}>
+                <div style={{ textAlign: "center", color: "green" }}>
                   <h2>Loading</h2>
                 </div>
               ) : userNotFound ? (

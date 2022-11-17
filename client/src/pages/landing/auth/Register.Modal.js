@@ -8,7 +8,7 @@ import { useAuthContext } from '../../../context/user/userContext';
 
 const initialState = {
   username: 'tolufolorunso',
-  name: 'kola jide',
+  name: 'tolu folorunso',
   email: 'tolu@yahoo.com',
   phone: '',
   password: '12345',

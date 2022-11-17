@@ -46,8 +46,8 @@ const reducer = (state, { type, payload }) => {
       isLoading: false,
       user: payload.user,
       token: payload.token,
-      following: payload.user.following,
-      followers: payload.user.followers,
+      // following: payload.user.following,
+      // followers: payload.user.followers,
     };
   }
 
@@ -76,7 +76,7 @@ const reducer = (state, { type, payload }) => {
   }
 
   if (FOLLOW_SUCCESS === type) {
-    return { ...state, following: payload };
+    return { ...state, following: payload.following, followers: payload.followers, user:payload   };
   }
 
   if (UNFOLLOW_SUCCESS === type) {
