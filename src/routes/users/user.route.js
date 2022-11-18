@@ -8,6 +8,8 @@ const {
   // unfollow,
   saveTweet,
   unsavedTweet,
+  loadFollowers,
+  loadFollowing,
 } = require('./user.controller');
 
 const authenticateUser = require('../../middlewares/authentication');
@@ -18,6 +20,10 @@ userRouter
   .route('/:username')
   .get(authenticateUser, getUser)
   .patch(authenticateUser, updateUser);
+  
+userRouter.get('/:userId/following', authenticateUser, loadFollowing);
+userRouter.get('/:userId/followers', authenticateUser, loadFollowers);
+
 userRouter.patch('/:userId/follow', authenticateUser, follow);
 // userRouter.patch('/:userId/unfollow', authenticateUser, unfollow);
 userRouter.patch('/:tweetId/savetweet', authenticateUser, saveTweet);

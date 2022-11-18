@@ -29,7 +29,7 @@ const initialState = {
   // following: following ? JSON.parse(following) : [],
   // followers: followers ? JSON.parse(followers) : [],
   following: [],
-  followers:  [],
+  followers: [],
   error: "",
 };
 
@@ -136,6 +136,25 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const loadFollowing = async (userId) => {
+    console.log(userId);
+    try {
+      const { data } = await authFetch(`/users/${userId}/following`);
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const loadFollowers = async (userId) => {
+    try {
+      const { data } = await authFetch(`/users/${userId}/followers`);
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   const clearError = (duration = 3000) => {
     setTimeout(function () {
       dispatch({ type: CLEAR_ERROR });
@@ -152,6 +171,8 @@ const AuthProvider = ({ children }) => {
         updateProfile,
         follow,
         setUser,
+        loadFollowing,
+        loadFollowers,
       }}
     >
       {children}

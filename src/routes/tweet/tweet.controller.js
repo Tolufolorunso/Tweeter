@@ -91,28 +91,42 @@ const getTweets = async (req, res) => {
 const getTimeline = async (req, res) => {
   let { id } = req.user;
   const user = await User.findById(id);
-  let tweets = await Tweet.find({ userId: user._id })
+  // let tweets = await Tweet.find({ userId: user._id })
+  //   .populate("userId")
+  //   .populate("retweetData")
+  //   .populate("replyTo")
+  //   .populate("comments")
+  //   .sort("-createdAt");
+
+  // console.log(tweets);
+  // const followingTweets = await Promise.all(
+  //   user.following.map((friendId) => {
+  //     return Tweet.find({ userId: friendId }).populate("userId");
+  //   })
+  // );
+
+  let usersId = user.following;
+  usersId.push(id);
+
+  // console.log(usersId)
+
+  let tweets = await Tweet.find({ userId: { $in: usersId } })
     .populate("userId")
     .populate("retweetData")
     .populate("replyTo")
     .populate("comments")
     .sort("-createdAt");
 
-  console.log(tweets);
-  const followingTweets = await Promise.all(
-    user.following.map((friendId) => {
-      return Tweet.find({ userId: friendId }).populate("userId");
-    })
-  );
-
   tweets = await User.populate(tweets, { path: "replyTo.userId" });
   tweets = await User.populate(tweets, { path: "retweetData.userId" });
+  // console.log(tweets)
 
   res.status(StatusCodes.OK).json({
     status: true,
-    index: tweets.concat(...followingTweets).length,
-    message: "fetched successfully",
-    tweets: tweets.concat(...followingTweets),
+    // index: tweets.concat(...followingTweets).length,
+    // message: "fetched successfully",
+    // tweets: tweets.concat(...followingTweets),
+    tweets
   });
 };
 

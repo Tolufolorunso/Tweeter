@@ -105,7 +105,7 @@ const follow = async (req, res) => {
     status: true,
     message: "followed",
     following: self.following,
-    user: self
+    user: self,
   });
 };
 
@@ -183,6 +183,32 @@ const unsavedTweet = async (req, res) => {
   });
 };
 
+const loadFollowing = async (req, res) => {
+  const {userId} = req.params
+  const user = await User.findById(userId).populate('following')
+  if(user === null) {
+    throw new NotFoundError('User not found')
+  }
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: "Fetched following",
+    following: user.following
+  });
+};
+
+const loadFollowers = async (req, res) => {
+  const {userId} = req.params
+  const user = await User.findById(userId).populate('followers')
+  if(user === null) {
+    throw new NotFoundError('User not found')
+  }
+  res.status(StatusCodes.OK).json({
+    status: true,
+    message: "followers",
+    followers: user.followers
+  });
+};
+
 module.exports = {
   updateUser,
   getUser,
@@ -192,4 +218,6 @@ module.exports = {
   // unfollow,
   saveTweet,
   unsavedTweet,
+  loadFollowing,
+  loadFollowers
 };
