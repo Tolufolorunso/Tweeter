@@ -36,5 +36,6 @@ tweetRouter.post('/:tweetId/save', authenticateUser, saveTweet);
 tweetRouter.get('/:username/bookmarks', authenticateUser, getBookmarks);
 tweetRouter.get('/:username', authenticateUser, getTweets);
 tweetRouter.delete('/:tweetId', authenticateUser, deleteTweet);
+tweetRouter.patch('/:tweetId/pinned', authenticateUser, deleteTweet);
 
 module.exports = tweetRouter;

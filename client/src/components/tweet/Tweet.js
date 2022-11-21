@@ -44,6 +44,8 @@ const Tweet = ({ tweet }) => {
   const [replyImage, setReplyImage] = useState("");
   const [comments, setComments] = useState(tweet.comments);
 
+  console.log(tweet.comments)
+
   // console.log(comments)
 
   const handleReply = (e) => {

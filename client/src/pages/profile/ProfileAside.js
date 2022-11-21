@@ -8,12 +8,12 @@ const ProfileAside = () => {
   return (
     <aside className="aside bg-white">
       <ul className="aside__lists">
-        {lists.map((li) => {
+        {lists.map((li,index) => {
           return (
             <li
               className={active === li ? 'aside__active' : undefined}
               onClick={() => setActive(li)}
-              key={li}
+              key={index}
             >
               {li}
             </li>

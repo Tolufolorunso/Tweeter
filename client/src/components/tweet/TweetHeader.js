@@ -1,11 +1,12 @@
+import { useLocation } from "react-router-dom";
+
 import Avater from "../Avater";
 import Text from "../Text";
 import DefaultAvater from "../../assets/images/defaultAvater.png";
-import { BiImage } from "react-icons/bi";
-import { AiOutlinePushpin } from "react-icons/ai";
+import { AiOutlinePushpin, AiOutlineMore } from "react-icons/ai";
 // import { useState } from "react";
-
 const span = { color: "#BDBDBD", fontWeight: 500 };
+const mainUser = JSON.parse(localStorage.getItem("user"))?.username;
 
 const TweetHeader = ({
   AvaterImage,
@@ -14,6 +15,8 @@ const TweetHeader = ({
   deleteTweet,
   more,
 }) => {
+  const { pathname } = useLocation();
+
   return (
     <header className="header">
       <Avater src={!AvaterImage ? AvaterImage : DefaultAvater} alt="tweeter" />
@@ -22,7 +25,12 @@ const TweetHeader = ({
         <Text title="24 August at 20:43" fs="0.75" tag="span" style={span} />
       </div>
       <div className="header__more">
-        <BiImage className="image" onClick={handleClickTweetMore} />
+        <AiOutlineMore
+          role="button"
+          tabIndex={0}
+          className="image"
+          onClick={handleClickTweetMore}
+        />
       </div>
       <div className={`tweet__more ${more ? "active-more" : ""}`}>
         <button onClick={deleteTweet}>delete</button>
@@ -31,11 +39,15 @@ const TweetHeader = ({
         <button>delete</button>
         <button>delete</button>
       </div>
-      <AiOutlinePushpin
-        onClick={() => {
-          console.log("pin");
-        }}
-      />
+      {pathname.includes("profile") && pathname.includes(mainUser) ? (
+        <AiOutlinePushpin
+          role="button"
+          tabIndex={0}
+          onClick={() => {
+            pinTweet()
+          }}
+        />
+      ) : null}
     </header>
   );
 };

@@ -38,6 +38,7 @@ const RepliesList = ({ comment }) => {
 };
 
 const Replies = ({ comments, id, username }) => {
+  console.log(comments)
   const location = useLocation();
   const path = location.pathname.includes("posts");
   const commentsArr = path ? [...comments].reverse() : [...comments].reverse().splice(0, 3) 

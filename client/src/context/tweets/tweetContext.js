@@ -128,6 +128,22 @@ const TweetProvider = ({ children }) => {
     }
   };
 
+  const pinTweet = async (tweetID) => {
+    try {
+      let { data } = await tweetsFetch.patch(`/tweets/${tweetID}/pinned`);
+      console.log(data)
+      // if (data.status) {
+      //   if (location.includes("bookmarks")) {
+      //     dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.tweets });
+      //   } else {
+      //     dispatch({ type: SAVE_TWEET_SUCCESS, payload: data.message });
+      //   }
+      // }
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   const getBookmarks = async (username) => {
     dispatch({ type: GET_BOOKMARKS_BEGIN });
     try {

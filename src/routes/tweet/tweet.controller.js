@@ -238,6 +238,19 @@ const getBookmarks = async (req, res) => {
   });
 };
 
+const pinTweet = async (req, res) => {
+  const { id } = req.user;
+
+  await Tweet.updateMany({userId: id}, {pinned: true})
+
+  await Tweet.findByIdAndUpdate(id, req.body);
+
+  res.status(StatusCodes.NO_CONTENT).json({
+    status: true,
+    message: "pinned",
+  });
+};
+
 const deleteTweet = async (req, res) => {
   const { id } = req.user;
   const { tweetId } = req.params;
@@ -272,4 +285,5 @@ module.exports = {
   getTimeline,
   getBookmarks,
   deleteTweet,
+  pinTweet
 };

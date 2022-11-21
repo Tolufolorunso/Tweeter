@@ -18,6 +18,7 @@ const TweetSchema = new mongoose.Schema(
       type: String,
       default: "everyone",
     },
+    pinned: {type: Boolean, default: false},
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tweet" }],
     retweetUser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
